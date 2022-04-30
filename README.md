@@ -9,3 +9,8 @@
 - http://qwone.com/~jason/20Newsgroups/
 
 For further information see the Survey_of_Topic_Modeling_Algorithm.pdf
+
+## References
+
+* Angelov: Top2vec: Distributed representations of topics
+* Grootendorst: BERTopic (https://github.com/MaartenGr/BERTopic)
