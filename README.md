@@ -10,6 +10,17 @@
 
 For further information see the Survey_of_Topic_Modeling_Algorithm.pdf
 
+## How to Build
+
++ For Linux, It is enough to run the following command for setting up virtual environment and install dependencies.
+
+```bash
+$ chmod u+x ./build.sh && ./build.sh
+```
+
++ For windows and other operating systems, install `python 3.8`, and install dependencies with `pip install -r requirements.txt`. Be careful about the package versions and make sure that you have the correct version in your current set up!
+
+
 ## References
 
 * Angelov: Top2vec: Distributed representations of topics
