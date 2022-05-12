@@ -79,6 +79,7 @@ $ ./run_jupyter.sh
 * For windows and other operating systems, it can be done via Anaconda or similar tools.
 
 ## References
-* Csv to Markdown Table Converter: https://markdown.co/tool/csv-to-markdown-table.
+* Csv to Markdown Table Converter #1: https://tableconvert.com/.
+* Csv to Markdown Table Converter #2: https://markdown.co/tool/csv-to-markdown-table.
 * Angelov: Top2vec: Distributed representations of topics
 * Grootendorst: BERTopic (https://github.com/MaartenGr/BERTopic)
