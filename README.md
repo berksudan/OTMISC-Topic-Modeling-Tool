@@ -10,16 +10,38 @@
 
 For further information see the Survey_of_Topic_Modeling_Algorithm.pdf
 
-## How to Build
+## Deployment
+
+### Build
 
 + For Linux, It is enough to run the following command for setting up virtual environment and install dependencies.
 
 ```bash
-$ chmod u+x ./build.sh && ./build.sh
+$ ./build.sh
 ```
 
 + For windows and other operating systems, install `python 3.8`, and install dependencies with `pip install -r requirements.txt`. Be careful about the package versions and make sure that you have the correct version in your current set up!
 
+### Activate Project
+
+In order to activate virtual environment and shorten the absolute path displayed in the Linux Terminal, 
+you can simply run the following command:
+
+```bash
+$ source ./activate_project.sh
+```
+
+* For windows and other operating systems, it can be done via Anaconda or similar tools.
+
+### Run
+
+To run the Jupyter Notebook, just execute the following command:
+
+```bash
+$ ./run_jupyter.sh
+```
+
+* For windows and other operating systems, it can be done via Anaconda or similar tools.
 
 ## References
 
