@@ -9,4 +9,5 @@ tensorboard==2.4
 pytorch-lightning==1.0.8
 lmdb==1.3.0
 scikit-image==0.19.2
-
+octis==1.10.3
+bertopic==0.10.0
