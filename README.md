@@ -47,13 +47,13 @@
 
 ### Build
 
-+ For Linux, It is enough to run the following command for setting up virtual environment and install dependencies.
+* For Linux, It is enough to run the following command for setting up virtual environment and install dependencies.
 
 ```bash
 $ ./build.sh
 ```
 
-+ For windows and other operating systems, install `python 3.8`, and install dependencies
+* For windows and other operating systems, install `python 3.8`, and install dependencies
   with `pip install -r requirements.txt`. Be careful about the package versions and make sure that you have the correct
   version in your current set up!
 
