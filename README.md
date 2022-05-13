@@ -50,7 +50,7 @@
 * For Linux, It is enough to run the following command for setting up virtual environment and install dependencies.
 
 ```bash
-$ ./build.sh
+$ ./build_for_linux.sh
 ```
 
 * For windows and other operating systems, install `python 3.8`, and install dependencies
