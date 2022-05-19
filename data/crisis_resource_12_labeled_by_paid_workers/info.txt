@@ -1,0 +1,4 @@
+This resource comprised of ~14,000 labeled tweets collected during several natural disasters including hurricanes, earthquakes, floods, and forest fires. The tweets were annotated following an eyewintess taxonomy defined in the below paper.
+
+Kiran Zahra, Muhammad Imran, Frank Ostermann. Automatic Identification of Eyewitness Messages on Twitter During Disasters. In the Journal of Information Processing & Management (IP&M), 2020.
+

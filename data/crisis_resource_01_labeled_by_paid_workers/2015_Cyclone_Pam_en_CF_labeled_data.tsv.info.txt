@@ -1,0 +1,20 @@
+TASK INSTRUCTIONS
+-------------------
+
+The following tweets were collected during a disaster or an emergency situation. The goal of this task is to categorize each tweet into one of the 9 categories given below.
+
+Only use the tweet content to decide its category. No need to browse URLs in tweets.
+
+=========================
+Category---description:
+=========================
+
+1- Injured or dead people---Reports of casualties and/or injured people due to the crisis
+2- Missing, trapped, or found people---Reports and/or questions about missing or found people
+3- Displaced people and evacuations---People who have relocated due to the crisis, even for a short time (includes evacuations)
+4- Infrastructure and utilities damage---Reports of damaged buildings, roads, bridges, or utilities/services interrupted or restored
+5- Donation needs or offers or volunteering services---Reports of urgent needs or donations of shelter and/or supplies such as food, water, clothing, money, medical supplies or blood; and volunteering services
+6- Caution and advice---Reports of warnings issued or lifted, guidance and tips
+7- Sympathy and emotional support---Prayers, thoughts, and emotional support
+8- Other useful information---Other useful information that helps understand the situation
+9- Not related or irrelevant---Unrelated to the situation or irrelevant 

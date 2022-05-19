@@ -12,3 +12,6 @@ networks/*/__pycache__
 
 # Notebook Checkpoints
 .ipynb_checkpoints
+
+# Ignore Raw Data
+data/raw

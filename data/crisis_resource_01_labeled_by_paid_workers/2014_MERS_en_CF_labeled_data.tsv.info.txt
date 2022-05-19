@@ -1,0 +1,18 @@
+TASK INSTRUCTIONS
+-------------------
+
+The following tweets were collected during a disaster or an emergency situation. The goal of this task is to categorize each tweet into one of the 9 categories given below.
+
+Only use the tweet content to decide its category. No need to browse URLs in tweets.
+
+Category---description:
+-----------------------
+
+1- Disease signs or symptoms---Reports of symptoms such as fever, cough, diarrhea, and shortness of breath or questions related to these symptoms
+2- Disease transmission---Reports of disease transmission or questions related to disease transmission
+3- Disease Prevention---Questions or suggestions related to the prevention of disease or mention of a new prevention strategy
+4- Disease Treatment---Questions or suggestions regarding the treatments of the disease
+5- Death reports---Reports of deaths due to the disease
+6- Affected people---Reports of affected people due to the disease
+7- Other useful information---Other useful information that is related to the disease 
+8- Not related or irrelevant---Unrelated to the situation or irrelevant

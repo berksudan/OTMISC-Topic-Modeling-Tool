@@ -11,3 +11,8 @@ lmdb==1.3.0
 scikit-image==0.19.2
 octis==1.10.3
 bertopic==0.10.0
+top2vec==1.0.27
+top2vec[sentence_encoders]
+top2vec[sentence_transformers]
+top2vec[indexing]
+tabulate==0.8.9
