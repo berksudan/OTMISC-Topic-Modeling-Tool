@@ -57,17 +57,6 @@ $ ./build_for_linux.sh
   with `pip install -r requirements.txt`. Be careful about the package versions and make sure that you have the correct
   version in your current set up!
 
-### Activate Project
-
-In order to activate virtual environment and shorten the absolute path displayed in the Linux Terminal,
-you can simply run the following command:
-
-```bash
-$ source ./activate_project.sh
-```
-
-* For windows and other operating systems, it can be done via Anaconda or similar tools.
-
 ### Run
 
 To run the Jupyter Notebook, just execute the following command:
