@@ -62,7 +62,7 @@
   + *Suggested Value:* 15, source: The Top2Vec paper [1] and [2].
   
 **2. Output Layer:**
-  + ***Definition:*** -
+  + *Definition:* -
   + *Value Options:* "Negative Sampling" or "Hierarchical Softmax", which are both efficient approximations of the full softmax.
   + *Suggested Value:* "Hierarchical Softmax", source: The Top2Vec paper [1]
 
