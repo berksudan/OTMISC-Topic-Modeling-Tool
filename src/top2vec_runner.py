@@ -1,12 +1,57 @@
+import os.path
+import tarfile
 import time
 from collections import OrderedDict
 from multiprocessing import cpu_count
 from typing import List, Dict, Any, Tuple
 
 import pandas as pd
+import requests
 from top2vec import Top2Vec
 
 from utils import load_documents, create_modeling_params_dict, create_modeling_results_dict
+
+EMBEDDING_DIR_PATH = 'pretrained_models'
+EMBEDDING_MODELS = [
+    {'name': 'universal-sentence-encoder', 'source': 'https://tfhub.dev/google/universal-sentence-encoder/4'},
+    {'name': 'universal-sentence-encoder-multilingual',
+     'source': 'https://tfhub.dev/google/universal-sentence-encoder-multilingual/3'},
+    {'name': 'universal-sentence-encoder-large',
+     'source': 'https://tfhub.dev/google/universal-sentence-encoder-large/5'},
+    {'name': 'universal-sentence-encoder-multilingual-large',
+     'source': 'https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/3'},
+]
+
+
+def download_embedding_models(embedding_folder: str, remove_tar_gz: bool) -> None:
+    suffix = '?tf-hub-format=compressed'
+
+    if not os.path.exists(embedding_folder):
+        print(f'[INFO] The embedding folder "{embedding_folder}" download folder was missing, so being created..')
+        os.mkdir(embedding_folder)
+
+    for embedding_model in EMBEDDING_MODELS:
+        target_path = f'{embedding_folder}/{embedding_model["name"]}'
+        download_url = f'{embedding_model["source"]}{suffix}'
+
+        if not os.path.exists(target_path):
+            print(f'[INFO] The embedding model folder:"{target_path}" not found, downloading..')
+            response = requests.get(url=download_url, stream=True)
+            if response.status_code == 200:
+                with open(target_path + '.tar.gz', 'wb') as f:
+                    f.write(response.raw.read())
+            print(f'[INFO] The embedding model folder:"{target_path}" downloaded.')
+
+            file = tarfile.open(target_path + '.tar.gz')
+            print(f'[INFO] Extracting the downloaded embedding model :"{target_path}.tar.gz"..')
+            file.extractall(target_path)
+            print(f'[INFO] Extracted the downloaded embedding model :"{target_path}.tar.gz".')
+            file.close()
+            if remove_tar_gz:
+                os.remove(path=target_path + '.tar.gz')
+                print(f'[INFO] Deleted the downloaded embedding model archive:"{target_path}.tar.gz".')
+        else:
+            print(f'[INFO] The embedding model folder:"{target_path}" found, so no need to download.')
 
 
 def print_topic_stats(stats: List[Dict[str, Any]]) -> None:
@@ -102,16 +147,27 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     -------
 
     """
-    time_start = time.time()
+    possible_embedding_models = ['doc2vec'] + [emb_model['name'] for emb_model in EMBEDDING_MODELS]
+    # if embedding_model not in possible_embedding_models: # todo: remove comment
+    #     raise ValueError(f'"{embedding_model}" should be in {possible_embedding_models}!')
 
+    # download_embedding_models(embedding_folder='pretrained_models', remove_tar_gz=True) # todo: remove comment
+    time_start = time.time()
     print_params(dataset_dir, doc2vec_speed, embedding_model, num_topics, data_col)
     print(f'[INFO] Top2Vec is running for dataset directory:"{dataset_dir}".')
-
     documents = load_documents(dataset_dir, data_col)
-    model = Top2Vec(
-        documents, speed=doc2vec_speed, workers=cpu_count(), min_count=min_count,
-        embedding_model=embedding_model, umap_args=umap_args, hdbscan_args=hdbscan_args
-    )
+
+    if embedding_model in [emb_model['name'] for emb_model in EMBEDDING_MODELS]:  # Model is not Doc2Vec
+        model = Top2Vec(
+            documents, workers=cpu_count(), min_count=min_count, embedding_model=embedding_model,
+            embedding_model_path=f'{EMBEDDING_DIR_PATH}/{embedding_model}', umap_args=umap_args,
+            hdbscan_args=hdbscan_args
+        )
+    else:  # Model is Doc2Vec
+        model = Top2Vec(
+            documents, speed=doc2vec_speed, workers=cpu_count(), min_count=min_count,
+            embedding_model=embedding_model, umap_args=umap_args, hdbscan_args=hdbscan_args
+        )
 
     non_reduced_num_topics = model.get_num_topics(reduced=False)
     print(f'[INFO] Original (Non-reduced) Number of Topics: {non_reduced_num_topics}.')
@@ -143,7 +199,7 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     return model, topic_stats, model_output_df
 
 
-if __name__ == '__main__':
+def test():
     args = {
         'dataset_dir': './data/crisis_resource_toy',
         'data_col': 'text',
@@ -153,8 +209,10 @@ if __name__ == '__main__':
         'num_topics': 4,
 
         # ####### Top2Vec Specific Arguments #########
-        'embedding_model': 'doc2vec',
-        'doc2vec_speed': 'fast-learn',
+        # 'embedding_model': 'doc2vec',
+        # 'embedding_model': 'universal-sentence-encoder-large',
+        'embedding_model': 'distiluse-base-multilingual-cased',  # todo: figure out this, how can i download this?
+        # 'doc2vec_speed': 'fast-learn',
         'min_count': 50,
         'umap_args': {
             'n_neighbors': 15,
@@ -168,3 +226,7 @@ if __name__ == '__main__':
         },
     }
     run(**args)
+
+
+if __name__ == '__main__':
+    test()

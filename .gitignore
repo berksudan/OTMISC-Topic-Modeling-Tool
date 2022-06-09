@@ -15,3 +15,6 @@ networks/*/__pycache__
 
 # Ignore Raw Data
 data/raw
+
+# Pretrained Models
+pretrained_models

@@ -19,3 +19,4 @@ tensorflow-text==2.9.0
 # top2vec[sentence_transformers]==1.0.27
 # top2vec[indexing]==1.0.27
 tabulate==0.8.9
+requests==2.27.1
