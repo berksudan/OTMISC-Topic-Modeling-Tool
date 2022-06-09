@@ -1,0 +1,12 @@
+Copy of crisis resource 12 with only first 100 documents per topic. The bash commands as follows:
+
+``
+head -n100 earthquakes_eyewitness_crowdflower_2000.tsv > earthquakes_eyewitness_crowdflower_100.tsv
+head -n100 floods_eyewitness_crowdflower_2000.tsv > floods_eyewitness_crowdflower_100.tsv
+head -n100 forestfires_eyewitness_crowdflower_2000.tsv > forestfires_eyewitness_crowdflower_100.tsv
+head -n100 hurricanes_eyewitness_crowdflower_2000.tsv > hurricanes_eyewitness_crowdflower_100.tsv
+rm earthquakes_eyewitness_crowdflower_2000.tsv
+rm floods_eyewitness_crowdflower_2000.tsv
+rm forestfires_eyewitness_crowdflower_2000.tsv
+rm hurricanes_eyewitness_crowdflower_2000.tsv
+``
