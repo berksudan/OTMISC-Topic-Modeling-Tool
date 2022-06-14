@@ -4,7 +4,7 @@ import zlib
 from collections import OrderedDict
 from pathlib import Path
 from typing import List
-
+import json
 import pandas as pd
 
 
@@ -27,6 +27,12 @@ def load_documents(dataset_dir: str, dataset_text_col: str) -> List[str]:
     merged_df = pd.concat(dfs, axis=0)
     documents = list(map(lambda doc: '' if pd.isna(doc) else doc, merged_df[dataset_text_col]))  # Replace nan with ''
     return documents
+
+
+def pretty_print_dict(a_dict: typing.Dict, indent=4, info_log: str = None):
+    if info_log:
+        print('[INFO]', info_log)
+    print(json.dumps(a_dict, indent=4))
 
 
 def create_modeling_params_dict(timestamp: float, method_specific_params: dict, dataset_dir: str, data_col: str,

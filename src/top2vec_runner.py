@@ -9,34 +9,33 @@ import pandas as pd
 import requests
 from top2vec import Top2Vec
 
-from utils import load_documents, create_modeling_params_dict, create_modeling_results_dict
+from utils import load_documents, create_modeling_params_dict, create_modeling_results_dict, pretty_print_dict
 
 EMBEDDING_DIR_PATH = 'pretrained_models'
 EMBEDDING_MODELS = [
-    {'name': 'universal-sentence-encoder', 'source': 'https://tfhub.dev/google/universal-sentence-encoder/4'},
+    {'name': 'universal-sentence-encoder',
+     'source': 'https://tfhub.dev/google/universal-sentence-encoder/4?tf-hub-format=compressed'},
     {'name': 'universal-sentence-encoder-multilingual',
-     'source': 'https://tfhub.dev/google/universal-sentence-encoder-multilingual/3'},
+     'source': 'https://tfhub.dev/google/universal-sentence-encoder-multilingual/3?tf-hub-format=compressed'},
     {'name': 'universal-sentence-encoder-large',
-     'source': 'https://tfhub.dev/google/universal-sentence-encoder-large/5'},
+     'source': 'https://tfhub.dev/google/universal-sentence-encoder-large/5?tf-hub-format=compressed'},
     {'name': 'universal-sentence-encoder-multilingual-large',
-     'source': 'https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/3'},
+     'source': 'https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/3?tf-hub-format=compressed'},
 ]
+VALID_EMBEDDING_MODELS = ['doc2vec'] + [emb_model['name'] for emb_model in EMBEDDING_MODELS]
 
 
-def download_embedding_models(embedding_folder: str, remove_tar_gz: bool) -> None:
-    suffix = '?tf-hub-format=compressed'
-
+def download_embedding_models(embedding_folder: str, remove_tar_gz: bool = True) -> None:
     if not os.path.exists(embedding_folder):
         print(f'[INFO] The embedding folder "{embedding_folder}" download folder was missing, so being created..')
         os.mkdir(embedding_folder)
 
     for embedding_model in EMBEDDING_MODELS:
         target_path = f'{embedding_folder}/{embedding_model["name"]}'
-        download_url = f'{embedding_model["source"]}{suffix}'
 
         if not os.path.exists(target_path):
             print(f'[INFO] The embedding model folder:"{target_path}" not found, downloading..')
-            response = requests.get(url=download_url, stream=True)
+            response = requests.get(url=embedding_model["source"], stream=True)
             if response.status_code == 200:
                 with open(target_path + '.tar.gz', 'wb') as f:
                     f.write(response.raw.read())
@@ -78,15 +77,6 @@ def get_topic_stats(model_t2v: Top2Vec, is_reduced: bool = False) -> List[Dict[s
             ('word_scores', ws)
         ]))
     return stats
-
-
-def print_params(dataset_dir: str, speed: str, embedding_model: str, num_topics: int, data_col: str):
-    print('[INFO] Top2Vec Parameters:')
-    print(f'    > Input Dataset Directory:"{dataset_dir}".')
-    print(f'    > Input Dataset Data Column:"{data_col}".')
-    print(f'    > Model Speed:"{speed}".')
-    print(f'    > Embedding Model:"{embedding_model}".')
-    print(f'    > Pre-specified Number of Topics:{num_topics}.')
 
 
 def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict, hdbscan_args: Dict,
@@ -141,19 +131,10 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     num_topics: Given number of topics. If model can reduce the number of topics, it can reduce to num_topics.
 
     data_col: Data column of the given datasets. For 20newsgroup dataset, it is redundant.
-
-
-    Returns
-    -------
-
     """
-    possible_embedding_models = ['doc2vec'] + [emb_model['name'] for emb_model in EMBEDDING_MODELS]
-    # if embedding_model not in possible_embedding_models: # todo: remove comment
-    #     raise ValueError(f'"{embedding_model}" should be in {possible_embedding_models}!')
-
-    # download_embedding_models(embedding_folder='pretrained_models', remove_tar_gz=True) # todo: remove comment
+    assert embedding_model in VALID_EMBEDDING_MODELS, f'"{embedding_model}" must be in {VALID_EMBEDDING_MODELS}!'
+    download_embedding_models(embedding_folder='pretrained_models')
     time_start = time.time()
-    print_params(dataset_dir, doc2vec_speed, embedding_model, num_topics, data_col)
     print(f'[INFO] Top2Vec is running for dataset directory:"{dataset_dir}".')
     documents = load_documents(dataset_dir, data_col)
 
@@ -185,9 +166,10 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
 
     print(f'[INFO] Top2Vec successfully terminated for data:"{dataset_dir}".')
 
+    # Prepare Output
     params_dict = create_modeling_params_dict(
-        timestamp=time_start, method_specific_params={'speed': doc2vec_speed, 'embedding_model': embedding_model},
-        dataset_dir=dataset_dir, data_col=data_col, num_topics=num_topics, method='top2vec'
+        timestamp=time_start, dataset_dir=dataset_dir, data_col=data_col, num_topics=num_topics, method='top2vec',
+        method_specific_params={'doc2vec_speed': doc2vec_speed, 'embedding_model': embedding_model}
     )
     results_dict = create_modeling_results_dict(
         num_detected_topics=non_reduced_num_topics, num_final_topics=len(topic_stats), duration_secs=duration_secs
@@ -199,8 +181,13 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     return model, topic_stats, model_output_df
 
 
-def test():
-    args = {
+def parametric_run(args):
+    pretty_print_dict(args, info_log='Top2Vec Parameters:')
+    run(**args)
+
+
+def default_test():
+    parametric_run(args={
         'dataset_dir': './data/crisis_resource_toy',
         'data_col': 'text',
         # 'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers',
@@ -225,8 +212,8 @@ def test():
             'cluster_selection_method': 'eom'
         },
     }
-    run(**args)
+    )
 
 
 if __name__ == '__main__':
-    test()
+    default_test()
