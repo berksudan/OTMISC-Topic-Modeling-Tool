@@ -91,7 +91,9 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     min_count:  Set in the Top2Vec paper. Ignores all words with total frequency lower than this. For smaller corpora a
                 smaller min_count is necessary. NOTE: This value largely depends on corpus size and its vocabulary.
 
-    embedding_model:    Embedding model for the part where semantic relationships of the data are being learned.
+    embedding_model:    Embedding model for the part where semantic relationships of the data are being learned. Also
+                        note that Doc2Vec is not deterministic but other models are deterministic as long as we
+                        give random seed to UMAP, source: https://github.com/ddangelov/Top2Vec/issues/86.
                         Options: ['doc2vec', 'universal-sentence-encoder', 'universal-sentence-encoder-large',
                         'universal-sentence-encoder-multilingual', 'universal-sentence-encoder-multilingual-large',
                         'distiluse-base-multilingual-cased', 'all-MiniLM-L6-v2',
@@ -136,7 +138,7 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     download_embedding_models(embedding_folder='pretrained_models')
     time_start = time.time()
     print(f'[INFO] Top2Vec is running for dataset directory:"{dataset_dir}".')
-    documents = load_documents(dataset_dir, data_col)
+    documents, labels = load_documents(dataset_dir, data_col)
 
     if embedding_model in [emb_model['name'] for emb_model in EMBEDDING_MODELS]:  # Model is not Doc2Vec
         model = Top2Vec(
@@ -197,14 +199,15 @@ def default_test():
 
         # ####### Top2Vec Specific Arguments #########
         # 'embedding_model': 'doc2vec',
-        # 'embedding_model': 'universal-sentence-encoder-large',
-        'embedding_model': 'distiluse-base-multilingual-cased',  # todo: figure out this, how can i download this?
+        'embedding_model': 'universal-sentence-encoder-large',
+        # 'embedding_model': 'distiluse-base-multilingual-cased',  # todo: figure out this, how can i download this?
         # 'doc2vec_speed': 'fast-learn',
         'min_count': 50,
         'umap_args': {
             'n_neighbors': 15,
             'n_components': 5,
-            'metric': 'cosine'
+            'metric': 'cosine',
+            'random_state': 42  # Try to always include this for reproducibility, github.com/ddangelov/Top2Vec/issues/86
         },
         'hdbscan_args': {
             'min_cluster_size': 15,
