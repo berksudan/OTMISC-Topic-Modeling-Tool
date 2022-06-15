@@ -3,15 +3,16 @@ import tarfile
 import time
 from collections import OrderedDict
 from multiprocessing import cpu_count
+from pathlib import Path
 from typing import List, Dict, Any, Tuple
 
 import pandas as pd
 import requests
 from top2vec import Top2Vec
 
-from utils import load_documents, create_modeling_params_dict, create_modeling_results_dict, pretty_print_dict
+from utils import load_documents, pretty_print_dict
 
-EMBEDDING_DIR_PATH = 'pretrained_models'
+EMBEDDING_DIR_PATH = './pretrained_models'
 EMBEDDING_MODELS = [
     {'name': 'universal-sentence-encoder',
      'source': 'https://tfhub.dev/google/universal-sentence-encoder/4?tf-hub-format=compressed'},
@@ -79,6 +80,44 @@ def get_topic_stats(model_t2v: Top2Vec, is_reduced: bool = False) -> List[Dict[s
     return stats
 
 
+def extract_doc_topic_output(run_id: float, topic_stats: List[Dict], model: Top2Vec,
+                             labels: List[str]) -> pd.DataFrame:
+    doc_topic_outputs = []
+    for topic_stat in topic_stats:
+        docs, doc_scores, document_ids = model.search_documents_by_topic(
+            topic_num=topic_stat['topic_num'], num_docs=topic_stat['topic_size']
+        )
+        for doc_id, doc, score in zip(document_ids, docs, doc_scores):
+            doc_topic_outputs.append({'run_id': run_id,
+                                      'Document ID': doc_id, 'Document': doc, 'Real Label': labels[doc_id],
+                                      'Assigned Topic Num': topic_stat['topic_num'], 'Assignment Score': score})
+
+    return pd.DataFrame(doc_topic_outputs).sort_values('Document ID')
+
+
+def extract_topic_word_output(
+        run_id: float, topic_stats: List[Dict], method_specific_params: dict, dataset_dir: str, data_col: str,
+        num_topics: int, method: str, num_detected_topics: float, num_final_topics: int, duration_secs: float):
+    modeling_params_dict = OrderedDict([
+        ('run_id', run_id),
+        ('method', method),
+        ('method_specific_params', method_specific_params),
+        ('dataset_name', Path(dataset_dir).name),
+        ('data_col', data_col),
+        ('num_given_topics', num_topics),
+    ])
+
+    modeling_results_dict = OrderedDict([
+        ('num_detected_topics', num_detected_topics),
+        ('num_final_topics', num_final_topics),
+        ('duration_secs', duration_secs),
+    ])
+
+    params_df = pd.DataFrame([modeling_params_dict] * len(topic_stats))
+    results_df = pd.DataFrame([modeling_results_dict] * len(topic_stats))
+    return pd.concat([params_df, pd.DataFrame(topic_stats), results_df], axis=1)
+
+
 def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict, hdbscan_args: Dict,
         doc2vec_speed: str = None, num_topics: int = None, data_col: str = None) -> Tuple:
     """
@@ -135,7 +174,7 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     data_col: Data column of the given datasets. For 20newsgroup dataset, it is redundant.
     """
     assert embedding_model in VALID_EMBEDDING_MODELS, f'"{embedding_model}" must be in {VALID_EMBEDDING_MODELS}!'
-    download_embedding_models(embedding_folder='pretrained_models')
+    download_embedding_models(embedding_folder=EMBEDDING_DIR_PATH)
     time_start = time.time()
     print(f'[INFO] Top2Vec is running for dataset directory:"{dataset_dir}".')
     documents, labels = load_documents(dataset_dir, data_col)
@@ -169,27 +208,25 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     print(f'[INFO] Top2Vec successfully terminated for data:"{dataset_dir}".')
 
     # Prepare Output
-    params_dict = create_modeling_params_dict(
-        timestamp=time_start, dataset_dir=dataset_dir, data_col=data_col, num_topics=num_topics, method='top2vec',
-        method_specific_params={'doc2vec_speed': doc2vec_speed, 'embedding_model': embedding_model}
-    )
-    results_dict = create_modeling_results_dict(
+    df_output_doc_topic = extract_doc_topic_output(run_id=int(time_start), topic_stats=topic_stats, model=model,
+                                                   labels=labels)
+    df_output_topic_word = extract_topic_word_output(
+        run_id=int(time_start), topic_stats=topic_stats, dataset_dir=dataset_dir, data_col=data_col,
+        num_topics=num_topics, method='top2vec',
+        method_specific_params={'doc2vec_speed': doc2vec_speed, 'embedding_model': embedding_model},
         num_detected_topics=non_reduced_num_topics, num_final_topics=len(topic_stats), duration_secs=duration_secs
     )
-    params_df = pd.DataFrame([params_dict] * len(topic_stats))
-    results_df = pd.DataFrame([results_dict] * len(topic_stats))
-    model_output_df = pd.concat([params_df, pd.DataFrame(topic_stats), results_df], axis=1)
 
-    return model, topic_stats, model_output_df
+    return model, topic_stats, df_output_doc_topic, df_output_topic_word
 
 
 def parametric_run(args):
     pretty_print_dict(args, info_log='Top2Vec Parameters:')
-    run(**args)
+    return run(**args)
 
 
 def default_test():
-    parametric_run(args={
+    return parametric_run(args={
         'dataset_dir': './data/crisis_resource_toy',
         'data_col': 'text',
         # 'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers',

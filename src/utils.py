@@ -38,22 +38,3 @@ def pretty_print_dict(a_dict: typing.Dict, indent=4, info_log: str = None):
     print(json.dumps(a_dict, indent=indent))
 
 
-def create_modeling_params_dict(timestamp: float, method_specific_params: dict, dataset_dir: str, data_col: str,
-                                num_topics: int, method: str) -> typing.OrderedDict:
-    return OrderedDict([
-        ('timestamp', int(timestamp)),
-        ('method', method),
-        ('method_specific_params', method_specific_params),
-        ('dataset_name', Path(dataset_dir).name),
-        ('data_col', data_col),
-        ('num_given_topics', num_topics),
-    ])
-
-
-def create_modeling_results_dict(num_detected_topics: float, num_final_topics: int,
-                                 duration_secs: float) -> typing.OrderedDict:
-    return OrderedDict([
-        ('num_detected_topics', num_detected_topics),
-        ('num_final_topics', num_final_topics),
-        ('duration_secs', duration_secs),
-    ])
