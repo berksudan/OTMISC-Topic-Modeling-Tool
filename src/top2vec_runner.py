@@ -5,7 +5,7 @@ from collections import OrderedDict
 from multiprocessing import cpu_count
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
-
+from sentence_transformers import SentenceTransformer
 import pandas as pd
 import requests
 from top2vec import Top2Vec
@@ -13,7 +13,7 @@ from top2vec import Top2Vec
 from utils import load_documents, pretty_print_dict
 
 EMBEDDING_DIR_PATH = './pretrained_models'
-EMBEDDING_MODELS = [
+TF_HUB_EMBEDDING_MODELS_WITH_SOURCES = [
     {'name': 'universal-sentence-encoder',
      'source': 'https://tfhub.dev/google/universal-sentence-encoder/4?tf-hub-format=compressed'},
     {'name': 'universal-sentence-encoder-multilingual',
@@ -23,15 +23,25 @@ EMBEDDING_MODELS = [
     {'name': 'universal-sentence-encoder-multilingual-large',
      'source': 'https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/3?tf-hub-format=compressed'},
 ]
-VALID_EMBEDDING_MODELS = ['doc2vec'] + [emb_model['name'] for emb_model in EMBEDDING_MODELS]
+TF_HUB_EMBEDDING_MODELS = [emb_model['name'] for emb_model in TF_HUB_EMBEDDING_MODELS_WITH_SOURCES]
+HUGGING_FACE_EMBEDDING_MODELS = ['distiluse-base-multilingual-cased', 'all-MiniLM-L6-v2',
+                                 'paraphrase-multilingual-MiniLM-L12-v2']
+VALID_EMBEDDING_MODELS = ['doc2vec'] + HUGGING_FACE_EMBEDDING_MODELS + TF_HUB_EMBEDDING_MODELS
 
 
 def download_embedding_models(embedding_folder: str, remove_tar_gz: bool = True) -> None:
     if not os.path.exists(embedding_folder):
-        print(f'[INFO] The embedding folder "{embedding_folder}" download folder was missing, so being created..')
+        print(f'[INFO] The embedding folder "{embedding_folder}" download folder was missing, so creating..')
         os.mkdir(embedding_folder)
 
-    for embedding_model in EMBEDDING_MODELS:
+    for embedding_model in HUGGING_FACE_EMBEDDING_MODELS:
+        target_path = f'{embedding_folder}/sentence-transformers_{embedding_model}'
+        if not os.path.exists(target_path):
+            print(f'[INFO] The embedding model folder:"{target_path}" not found, downloading..')
+            SentenceTransformer(model_name_or_path=embedding_model, cache_folder=embedding_folder)
+            print(f'[INFO] The embedding model folder:"{target_path}" downloaded.')
+
+    for embedding_model in TF_HUB_EMBEDDING_MODELS_WITH_SOURCES:
         target_path = f'{embedding_folder}/{embedding_model["name"]}'
 
         if not os.path.exists(target_path):
@@ -179,17 +189,25 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     print(f'[INFO] Top2Vec is running for dataset directory:"{dataset_dir}".')
     documents, labels = load_documents(dataset_dir, data_col)
 
-    if embedding_model in [emb_model['name'] for emb_model in EMBEDDING_MODELS]:  # Model is not Doc2Vec
+    if embedding_model == 'doc2vec':  # Model is Doc2Vec
+        model = Top2Vec(
+            documents, speed=doc2vec_speed, workers=cpu_count(), min_count=min_count,
+            embedding_model=embedding_model, umap_args=umap_args, hdbscan_args=hdbscan_args
+        )
+    elif embedding_model in TF_HUB_EMBEDDING_MODELS:  # Model is a TF Hub Model (Universal-Sentence-Encoder)
         model = Top2Vec(
             documents, workers=cpu_count(), min_count=min_count, embedding_model=embedding_model,
             embedding_model_path=f'{EMBEDDING_DIR_PATH}/{embedding_model}', umap_args=umap_args,
             hdbscan_args=hdbscan_args
         )
-    else:  # Model is Doc2Vec
+    elif embedding_model in HUGGING_FACE_EMBEDDING_MODELS:  # Model is a Hugging Face Model (Sentence-Transformer)
         model = Top2Vec(
-            documents, speed=doc2vec_speed, workers=cpu_count(), min_count=min_count,
-            embedding_model=embedding_model, umap_args=umap_args, hdbscan_args=hdbscan_args
+            documents, workers=cpu_count(), min_count=min_count, embedding_model=embedding_model,
+            embedding_model_path=f'{EMBEDDING_DIR_PATH}/sentence-transformers_{embedding_model}', umap_args=umap_args,
+            hdbscan_args=hdbscan_args
         )
+    else:
+        raise ValueError(f'Given "{embedding_model}" not in valid embedding models: {VALID_EMBEDDING_MODELS}.')
 
     non_reduced_num_topics = model.get_num_topics(reduced=False)
     print(f'[INFO] Original (Non-reduced) Number of Topics: {non_reduced_num_topics}.')
@@ -240,7 +258,8 @@ def default_test():
 
         # ####### Top2Vec Specific Arguments #########
         # 'embedding_model': 'doc2vec',
-        'embedding_model': 'universal-sentence-encoder-large',
+        #'embedding_model': 'universal-sentence-encoder-large',
+        'embedding_model': 'all-MiniLM-L6-v2',
         # 'embedding_model': 'distiluse-base-multilingual-cased',  # todo: figure out this, how can i download this?
         # 'doc2vec_speed': 'fast-learn',
         'min_count': 50,
