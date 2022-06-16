@@ -81,11 +81,11 @@ def get_topic_stats(model_t2v: Top2Vec, is_reduced: bool = False) -> List[Dict[s
 
 
 def extract_doc_topic_output(run_id: float, topic_stats: List[Dict], model: Top2Vec,
-                             labels: List[str]) -> pd.DataFrame:
+                             labels: List[str], is_reduced: bool) -> pd.DataFrame:
     doc_topic_outputs = []
     for topic_stat in topic_stats:
         docs, doc_scores, document_ids = model.search_documents_by_topic(
-            topic_num=topic_stat['topic_num'], num_docs=topic_stat['topic_size']
+            topic_num=topic_stat['topic_num'], num_docs=topic_stat['topic_size'], reduced=is_reduced
         )
         for doc_id, doc, score in zip(document_ids, docs, doc_scores):
             doc_topic_outputs.append({'run_id': run_id,
@@ -193,15 +193,17 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
 
     non_reduced_num_topics = model.get_num_topics(reduced=False)
     print(f'[INFO] Original (Non-reduced) Number of Topics: {non_reduced_num_topics}.')
-    topic_stats = get_topic_stats(model_t2v=model, is_reduced=False)
+    is_reduced = False
     if num_topics is not None:
         if non_reduced_num_topics > num_topics:
             model.hierarchical_topic_reduction(num_topics=num_topics)
-            topic_stats = get_topic_stats(model_t2v=model, is_reduced=True)
+            is_reduced = True
         else:
             print('[WARN] # of topics is pre-specified but non_reduced_num_topics <= num_topics, so not reduced!')
             print(f'   > non_reduced_num_topics:{non_reduced_num_topics}, given num_topics:{num_topics}!')
             time.sleep(3)
+    topic_stats = get_topic_stats(model_t2v=model, is_reduced=is_reduced)
+
     duration_secs = float('%.3f' % (time.time() - time_start))
     print_topic_stats(stats=topic_stats)
 
@@ -209,15 +211,17 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
 
     # Prepare Output
     df_output_doc_topic = extract_doc_topic_output(run_id=int(time_start), topic_stats=topic_stats, model=model,
-                                                   labels=labels)
+                                                   labels=labels, is_reduced=is_reduced)
     df_output_topic_word = extract_topic_word_output(
         run_id=int(time_start), topic_stats=topic_stats, dataset_dir=dataset_dir, data_col=data_col,
         num_topics=num_topics, method='top2vec',
-        method_specific_params={'doc2vec_speed': doc2vec_speed, 'embedding_model': embedding_model},
+        method_specific_params={
+            'doc2vec_speed': doc2vec_speed, 'min_count': min_count, 'embedding_model': embedding_model,
+            'umap_args': umap_args, 'hdbscan_args': hdbscan_args,
+        },
         num_detected_topics=non_reduced_num_topics, num_final_topics=len(topic_stats), duration_secs=duration_secs
     )
-
-    return model, topic_stats, df_output_doc_topic, df_output_topic_word
+    return model, df_output_doc_topic, df_output_topic_word
 
 
 def parametric_run(args):
