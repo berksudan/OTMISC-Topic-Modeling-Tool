@@ -130,8 +130,13 @@ class Trainer:
 
 
     def get_metrics(self):
-
-        topic_coherence = Coherence(texts=[d.split(" ") for d in self.data], topk=self.topk, measure="c_v")
+        
+        if isinstance(self.data[0], list):
+            text = self.data
+        else:
+            text = [d.split(" ") for d in self.data]
+        
+        topic_coherence = Coherence(texts=text, topk=self.topk, measure="c_v")
         topic_diversity = TopicDiversity(topk=self.topk)
 
         # Define methods
