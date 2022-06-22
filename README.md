@@ -1,7 +1,10 @@
-# Strax - Topic modeling advancements
+# Strax - Topic Modeling Advancements Tool
 
+<div align="center">
+  <img src="./docs/Images/strax_logo.png" width="360" height="240">
+</div>
 
-<p align="center"><img src="./docs/Images/strax_logo.png" width="360" height="240"></p>
+_________________________________________________________
 
 **Supervisor:** Professor Dr. Georg Groh
 
