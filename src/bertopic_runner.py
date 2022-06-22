@@ -43,7 +43,7 @@ class Trainer:
     ## Maybe save param?
     def train(self):
 
-        output, duration = self._train_tm_model(params = self.params)
+        output, duration, df, plot, rep_docs, topics, probs, words_score = self._train_tm_model(params = self.params)
         scores = self.evaluate(output)
 
         result = {
@@ -53,6 +53,12 @@ class Trainer:
                 "Params": self.params,
                 "Scores": scores,
                 "Computation Time": duration,
+                "Topic Info": df,
+                "Barchart": plot,
+                "Rep Docs": rep_docs,
+                "Topics": topics,
+                "Probs": probs,
+                "Words score": words_score
             }
 
         return result
@@ -78,8 +84,10 @@ class Trainer:
     
         duration = t1 - t0
 
+        #print(topics)
+        #print(probs)
         ## Evaluate metric(s)
-        topics = []
+        topic_list = []
     
         ## Iterate over topics to create nested list of topics
         for i in range(0, len(topic_model.get_topics()) - 1):
@@ -87,16 +95,21 @@ class Trainer:
             for j in range(len(topic_model.get_topic(i))):
                 single_topic_list.append(topic_model.get_topic(i)[j][0])
         
-            topics.append(single_topic_list)
+            topic_list.append(single_topic_list)
 
     
 
         ## Model_output as dictionary with key "topics"
         model_output = {}
 
-        model_output["topics"] = topics
+        model_output["topics"] = topic_list
 
-        return model_output, duration
+        ## Get representative docs
+        rep_docs = []
+        for i in range(params['number_topics']):
+            rep_docs.append(topic_model.get_representative_docs(i)[:10])
+
+        return model_output, duration, topic_model.get_topic_info(), topic_model.visualize_barchart(), rep_docs, topics, probs, topic_model.get_topics()
 
     def evaluate(self, output_tm):
 
@@ -117,8 +130,13 @@ class Trainer:
 
 
     def get_metrics(self):
-
-        topic_coherence = Coherence(texts=[d.split(" ") for d in self.data], topk=self.topk, measure="c_v")
+        
+        if isinstance(self.data[0], list):
+            text = self.data
+        else:
+            text = [d.split(" ") for d in self.data]
+        
+        topic_coherence = Coherence(texts=text, topk=self.topk, measure="c_v")
         topic_diversity = TopicDiversity(topk=self.topk)
 
         # Define methods
@@ -131,15 +149,24 @@ class Trainer:
     def get_dataset(self):
 
         if self.dataset == "crisis_12":
-            dir = './data/crisis_resource_12_labeled_by_paid_workers'
+            dir_str = './data/crisis_resource_12_labeled_by_paid_workers'
             col = 'text'
+        elif self.dataset == "crisis_12_preprocessed":
+            dir_str = './data/crisis_resource_12_labeled_by_paid_workers_preprocessed'
+            col = 'Tweets'
         elif self.dataset == "crisis_1":
-            dir = './data/crisis_resource_1_labeled_by_paid_workers'
-            col = 'text'
+            dir_str = './data/crisis_resource_01_labeled_by_paid_workers'
+            col = 'tweet_text'
+        elif self.dataset == "crisis_1_preprocessed":
+            dir_str = './data/crisis_resource_01_labeled_by_paid_workers_preprocessed'
+            col = 'Tweets'
         elif self.dataset == "20news":
-            dir = './data/20news_bydate'
+            dir_str = './data/20news_bydate'
             col = 'text'
 
-        data = load_documents(dataset_dir = dir, dataset_text_col = 'text')
+        data = load_documents(dataset_dir = dir_str, dataset_text_col = col)
+
+        if self.dataset != "20news":
+            data = data[0]
 
         return data
