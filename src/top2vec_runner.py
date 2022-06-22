@@ -5,9 +5,10 @@ from collections import OrderedDict
 from multiprocessing import cpu_count
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
-from sentence_transformers import SentenceTransformer
+
 import pandas as pd
 import requests
+from sentence_transformers import SentenceTransformer
 from top2vec import Top2Vec
 
 from utils import load_documents, pretty_print_dict
@@ -258,9 +259,9 @@ def default_test():
 
         # ####### Top2Vec Specific Arguments #########
         # 'embedding_model': 'doc2vec',
-        #'embedding_model': 'universal-sentence-encoder-large',
+        # 'embedding_model': 'universal-sentence-encoder-large',
         'embedding_model': 'all-MiniLM-L6-v2',
-        # 'embedding_model': 'distiluse-base-multilingual-cased',  # todo: figure out this, how can i download this?
+        # 'embedding_model': 'distiluse-base-multilingual-cased',
         # 'doc2vec_speed': 'fast-learn',
         'min_count': 50,
         'umap_args': {

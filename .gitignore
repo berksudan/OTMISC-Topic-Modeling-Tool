@@ -18,3 +18,9 @@ data/raw
 
 # Pretrained Models
 pretrained_models
+
+# Temporary Python File
+src/tmp.py
+
+# Visualization Results
+output/visualization

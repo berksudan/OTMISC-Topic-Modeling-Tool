@@ -1,5 +1,8 @@
 # Topic modeling advancements
 
+
+<p align="center"><img src="./docs/Images/logo.png" width="360" height="240"></p>
+
 **Supervisor:** Professor Dr. Georg Groh
 
 **Advisors:** PhD Candidate (M.Sc.) Miriam Anschütz, PhD Candidate (M.Sc.) Ahmed Mosharafa
@@ -10,14 +13,13 @@
 * Drawing observations on the applicability of certain algorithms’ clusters to different types of datasets.
 * Having an outcome including metric-based evaluation, as well as, human based evaluation to the algorithms.
 
-
 ## Milestone #01: Datasets and Data Exploration
 
 * Explored the provided datasets to unveil the inherent characteristics.
 * Obtained an overview of the statistical characteristics of the datasets.
 * **Included Datasets:**
-  * CRISIS NLP: https://crisisnlp.qcri.org/.
-  * 20NewsGroups: http://qwone.com/~jason/20Newsgroups/.
+    * CRISIS NLP: https://crisisnlp.qcri.org/.
+    * 20NewsGroups: http://qwone.com/~jason/20Newsgroups/.
 
 ### Overview of All Dataset Resources
 
@@ -41,7 +43,6 @@
 | CRISIS NLP - Resource #16 | Yes          | Short Text Dataset                  | Yes                  | 61          | (2K - 3K - 2K - 2K - 2K - 2K - 2K - 2K - 20K - 1K - 1K - 2K - 2K - 20K - 2K - 2K - 2K - 2K - 20K - 2K - 2K - 2K - 2K - 2K - 2K - 2K - 2K - 20K - 4K - 2K - 2K - 20K - 2K - 2K - 2K - 2K - 20K - 9K - 4K - 5K - 6K - 1K - 3K - 0K - 4K - 4K - 4K - 4K - 19K - 4K - 25K - 4K - 1K - 3K - 53K - 8K - 8K - 8K - 1K - 2K - 2K) |
 | CRISIS NLP - Resource #17 | Yes          | Short Text Dataset                  | Yes                  | 17          | (7K - 2K - 4K - 2K - 8K - 6K - 9K - 9K - 7K - 2K - 1K - 2K - 8K - 2K - 2K - 2K - 1K)                                                                                                                                                                                                                                      |
 | CRISIS NLP - Resource #18 | No           | Text Dataset for Sentiment Analysis | -                    | -           | -                                                                                                                                                                                                                                                                                                                         |
-
 
 ## Deployment and Run
 
@@ -68,7 +69,9 @@ $ ./run_jupyter.sh
 * For windows and other operating systems, it can be done via Anaconda or similar tools.
 
 ## References
+
+* Angelov: Top2vec: Distributed representations of topics: https://github.com/ddangelov/Top2Vec
+* Grootendorst: BERTopic (https://github.com/MaartenGr/BERTopic)
+* OCTIS Framework: https://github.com/MIND-Lab/OCTIS
 * Csv to Markdown Table Converter #1: https://tableconvert.com/.
 * Csv to Markdown Table Converter #2: https://markdown.co/tool/csv-to-markdown-table.
-* Angelov: Top2vec: Distributed representations of topics
-* Grootendorst: BERTopic (https://github.com/MaartenGr/BERTopic)
