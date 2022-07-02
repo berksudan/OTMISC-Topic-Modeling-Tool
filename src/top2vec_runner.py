@@ -3,7 +3,6 @@ import tarfile
 import time
 from collections import OrderedDict
 from multiprocessing import cpu_count
-from pathlib import Path
 from typing import List, Dict, Any, Tuple
 
 import pandas as pd
@@ -107,14 +106,13 @@ def extract_doc_topic_output(run_id: float, topic_stats: List[Dict], model: Top2
 
 
 def extract_topic_word_output(
-        run_id: float, topic_stats: List[Dict], method_specific_params: dict, dataset_dir: str, data_col: str,
+        run_id: float, topic_stats: List[Dict], method_specific_params: dict, dataset: str,
         num_topics: int, method: str, num_detected_topics: float, num_final_topics: int, duration_secs: float):
     modeling_params_dict = OrderedDict([
         ('run_id', run_id),
         ('method', method),
         ('method_specific_params', method_specific_params),
-        ('dataset_name', Path(dataset_dir).name),
-        ('data_col', data_col),
+        ('dataset', dataset),
         ('num_given_topics', num_topics),
     ])
 
@@ -129,14 +127,14 @@ def extract_topic_word_output(
     return pd.concat([params_df, pd.DataFrame(topic_stats), results_df], axis=1)
 
 
-def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict, hdbscan_args: Dict,
-        doc2vec_speed: str = None, num_topics: int = None, data_col: str = None) -> Tuple:
+def run(dataset: str, min_count: int, embedding_model: str, umap_args: Dict, hdbscan_args: Dict,
+        doc2vec_speed: str = None, num_topics: int = None) -> Tuple:
     """
     Runs Top2Vec algorithm with the given parameters.
 
     Parameters
     ----------
-    dataset_dir: Dataset Directory
+    dataset: Name of Dataset
 
     min_count:  Set in the Top2Vec paper. Ignores all words with total frequency lower than this. For smaller corpora a
                 smaller min_count is necessary. NOTE: This value largely depends on corpus size and its vocabulary.
@@ -182,13 +180,12 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
 
     num_topics: Given number of topics. If model can reduce the number of topics, it can reduce to num_topics.
 
-    data_col: Data column of the given datasets. For 20newsgroup dataset, it is redundant.
     """
     assert embedding_model in VALID_EMBEDDING_MODELS, f'"{embedding_model}" must be in {VALID_EMBEDDING_MODELS}!'
     download_embedding_models(embedding_folder=EMBEDDING_DIR_PATH)
     time_start = time.time()
-    print(f'[INFO] Top2Vec is running for dataset directory:"{dataset_dir}".')
-    documents, labels = load_documents(dataset_dir, data_col)
+    print(f'[INFO] Top2Vec is running for dataset:"{dataset}".')
+    documents, labels = load_documents(dataset)
 
     if embedding_model == 'doc2vec':  # Model is Doc2Vec
         model = Top2Vec(
@@ -226,13 +223,13 @@ def run(dataset_dir: str, min_count: int, embedding_model: str, umap_args: Dict,
     duration_secs = float('%.3f' % (time.time() - time_start))
     print_topic_stats(stats=topic_stats)
 
-    print(f'[INFO] Top2Vec successfully terminated for data:"{dataset_dir}".')
+    print(f'[INFO] Top2Vec successfully terminated for data:"{dataset}".')
 
     # Prepare Output
     df_output_doc_topic = extract_doc_topic_output(run_id=int(time_start), topic_stats=topic_stats, model=model,
                                                    labels=labels, is_reduced=is_reduced)
     df_output_topic_word = extract_topic_word_output(
-        run_id=int(time_start), topic_stats=topic_stats, dataset_dir=dataset_dir, data_col=data_col,
+        run_id=int(time_start), topic_stats=topic_stats, dataset=dataset,
         num_topics=num_topics, method='top2vec',
         method_specific_params={
             'doc2vec_speed': doc2vec_speed, 'min_count': min_count, 'embedding_model': embedding_model,
@@ -250,11 +247,9 @@ def parametric_run(args):
 
 def default_test():
     return parametric_run(args={
-        'dataset_dir': './data/crisis_resource_toy',
-        'data_col': 'text',
-        # 'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers',
-        # 'data_col': 'text',
-        # 'dataset_dir': './data/20news_bydate',
+        'dataset': 'crisis_toy',
+        # 'dataset': 'crisis_12',
+        # 'dataset': '20news',
         'num_topics': 4,
 
         # ####### Top2Vec Specific Arguments #########

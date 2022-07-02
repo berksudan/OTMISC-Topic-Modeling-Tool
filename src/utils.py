@@ -14,13 +14,6 @@ available_datasets = {
 
 
 def load_documents(dataset: str) -> Tuple[List[str], List[str]]:
-    # if '20news_bydate' in dataset_dir:
-    #     dataset_data_path = [path for path in Path(dataset_dir).iterdir() if path.suffix == '.csv'][0]
-    #     df = pd.read_csv(dataset_data_path)
-    #     documents = list(map(lambda doc: '' if pd.isna(doc) else doc, df['text']))  # Replace nan with ''
-    #     labels = list(map(lambda doc: '' if pd.isna(doc) else doc, df['label']))  # Replace nan with ''
-    #     return documents, labels
-
     assert dataset in available_datasets, \
         f'Given dataset "{dataset}" is not available, available datasets: {sorted(available_datasets)}.'
     dataset_dir = available_datasets[dataset]['dataset_dir']

@@ -24,3 +24,6 @@ src/tmp.py
 
 # Visualization Results
 output/visualization
+
+# Temporary Local Backups
+.backup
