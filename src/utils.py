@@ -5,14 +5,26 @@ from typing import List, Tuple
 
 import pandas as pd
 
+available_datasets = {
+    'crisis_01': {'dataset_dir': './data/crisis_resource_01_labeled_by_paid_workers', 'dataset_text_col': 'tweet_text'},
+    'crisis_12': {'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers', 'dataset_text_col': 'text'},
+    'crisis_toy': {'dataset_dir': './data/crisis_resource_toy', 'dataset_text_col': 'text'},
+    '20news': {'dataset_dir': './data/20news_bydate', 'dataset_text_col': 'text'},
+}
 
-def load_documents(dataset_dir: str, dataset_text_col: str = None) -> Tuple[List[str], List[str]]:
-    if '20news_bydate' in dataset_dir:
-        dataset_data_path = [path for path in Path(dataset_dir).iterdir() if path.suffix == '.csv'][0]
-        df = pd.read_csv(dataset_data_path)
-        documents = list(map(lambda doc: '' if pd.isna(doc) else doc, df['text']))  # Replace nan with ''
-        labels = list(map(lambda doc: '' if pd.isna(doc) else doc, df['label']))  # Replace nan with ''
-        return documents, labels
+
+def load_documents(dataset: str) -> Tuple[List[str], List[str]]:
+    # if '20news_bydate' in dataset_dir:
+    #     dataset_data_path = [path for path in Path(dataset_dir).iterdir() if path.suffix == '.csv'][0]
+    #     df = pd.read_csv(dataset_data_path)
+    #     documents = list(map(lambda doc: '' if pd.isna(doc) else doc, df['text']))  # Replace nan with ''
+    #     labels = list(map(lambda doc: '' if pd.isna(doc) else doc, df['label']))  # Replace nan with ''
+    #     return documents, labels
+
+    assert dataset in available_datasets, \
+        f'Given dataset "{dataset}" is not available, available datasets: {sorted(available_datasets)}.'
+    dataset_dir = available_datasets[dataset]['dataset_dir']
+    dataset_text_col = available_datasets[dataset]['dataset_text_col']
 
     dataset_data_paths = sorted([path for path in Path(dataset_dir).iterdir() if path.suffix in {'.csv', '.tsv'}])
 
