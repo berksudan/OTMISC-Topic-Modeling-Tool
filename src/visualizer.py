@@ -1,16 +1,20 @@
 import itertools
 import os.path
+from collections import OrderedDict
+from math import ceil
 from string import Template
-from typing import List
-from typing import Union
+from typing import List, Union
 
 import numpy as np
 import pandas as pd
+import plotly.express as px
 import plotly.graph_objects as go
 import umap.plot
 from bertopic import BERTopic
 from matplotlib import pyplot
 from plotly.subplots import make_subplots
+from scipy.cluster.hierarchy import fcluster, linkage
+from sklearn.metrics.pairwise import cosine_similarity
 from top2vec import Top2Vec
 
 target_template = Template('${run_id}_${algorithm}_${visualization_method}.${extension}')
@@ -18,28 +22,33 @@ target_template = Template('${run_id}_${algorithm}_${visualization_method}.${ext
 AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf']
 
 
+def check_algorithm(al: str):
+    assert al in AVAILABLE_TOPIC_MODELING_ALGORITHMS, f'{al} is not available in {AVAILABLE_TOPIC_MODELING_ALGORITHMS}!'
+
+
 def draw_umap2d_scatter_plot(
-        algorithm: str, model: Union[Top2Vec, BERTopic], df_output_topic_word: pd.DataFrame,
-        target_dir: str = './output/visualization') -> pyplot.Figure:
-    if algorithm == 'top2vec':
+        model: Union[Top2Vec, BERTopic],
+        df_output_topic_word: pd.DataFrame,
+        target_dir: str = './output/visualization'
+) -> pyplot.Figure:
+    run_id = df_output_topic_word['run_id'][0]
+    algorithm_name = df_output_topic_word['method'][0]
+    check_algorithm(al=algorithm_name)
+
+    if algorithm_name == 'top2vec':
         doc_topics = model.doc_top_reduced if df_output_topic_word['reduced'][0] else model.doc_top
         doc_vectors = model.document_vectors
-    elif algorithm == 'bertopic':
-        raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm}.')
-    elif algorithm == 'lda':
-        raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm}.')
-    elif algorithm == 'nmf':
-        raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm}.')
+    elif algorithm_name == 'bertopic':
+        # TODO: implement
+        raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
+    elif algorithm_name in ('lda', 'nmf'):
+        raise ValueError(f'LDA and NMF cannot support draw_umap_2d_scatter_plot() because they do not use UMAP phase.')
     else:
-        raise ValueError(f'Algorithm is not supported:{algorithm} for draw_umap_2d_scatter_plot().')
+        raise ValueError(f'Algorithm is not supported:{algorithm_name} for draw_umap_2d_scatter_plot().')
 
-    assert algorithm in AVAILABLE_TOPIC_MODELING_ALGORITHMS, \
-        f'{algorithm} is not available in {AVAILABLE_TOPIC_MODELING_ALGORITHMS}!'
     if not os.path.exists(target_dir):
         print(f'[INFO] The target dir:"{target_dir}" not exists, so creating..')
         os.makedirs(target_dir)
-
-    run_id = df_output_topic_word['run_id'][0]
 
     visualization_umap_args = df_output_topic_word['method_specific_params'][0]['umap_args']
     visualization_umap_args.update({'n_components': 2})
@@ -54,14 +63,13 @@ def draw_umap2d_scatter_plot(
         umap_model, labels=doc_topics, width=2 * 10 ** 3, height=2 * 10 ** 3,
         theme="viridis").get_figure()  # type: pyplot.Figure
     target_image_filename = target_template.substitute(
-        run_id=run_id, algorithm=algorithm, visualization_method='umap2d', extension='png')
+        run_id=run_id, algorithm=algorithm_name, visualization_method='umap2d', extension='png')
 
     target_figure.savefig(fname=f'{target_dir}/{target_image_filename}')
     return target_figure
 
 
-def visualize_barchart(algorithm: str,
-                       df_output_topic_word: pd.DataFrame,
+def visualize_barchart(df_output_topic_word: pd.DataFrame,
                        topics: List[int] = None,
                        top_n_topics: int = None,
                        n_words: int = 5,
@@ -71,7 +79,7 @@ def visualize_barchart(algorithm: str,
 
     Arguments:
         df_output_topic_word: Output from Algorithm Part
-        algorithm: Name of the Algorithm
+        algorithm: Name of the Topic Modeling Algorithm, e.g "top2vec" or "bertopic".
         topics: A selection of topics to visualize.
         top_n_topics: Only select the top n most frequent topics.
         n_words: Number of words to show in a topic
@@ -96,21 +104,19 @@ def visualize_barchart(algorithm: str,
     ----------
 
     """
-    assert algorithm in AVAILABLE_TOPIC_MODELING_ALGORITHMS, \
-        f'{algorithm} is not available in {AVAILABLE_TOPIC_MODELING_ALGORITHMS}!'
-    colors = itertools.cycle(["#D55E00", "#0072B2", "#CC79A7", "#E69F00", "#56B4E9", "#009E73", "#F0E442"])
-
-    num_topics = len(df_output_topic_word)
     run_id = df_output_topic_word['run_id'][0]
+    algorithm_name = df_output_topic_word['method'][0]
+    check_algorithm(al=algorithm_name)
+    colors = itertools.cycle(["#D55E00", "#0072B2", "#CC79A7", "#E69F00", "#56B4E9", "#009E73", "#F0E442"])
 
     if topics is not None:  # Get selected topics
         topics = sorted(topics)
-    elif top_n_topics is not None and 0 < top_n_topics < num_topics:  # Get top n topics
+    elif top_n_topics is not None and 0 < top_n_topics < len(df_output_topic_word):  # Get top n topics
         topics = sorted(df_output_topic_word['topic_num'].to_list())[:top_n_topics]
     else:  # Get all topics
         topics = sorted(df_output_topic_word['topic_num'].to_list())
 
-    if algorithm == 'bertopic':
+    if algorithm_name == 'bertopic':
         topics.remove(-1)
 
     topic_num_to_df = df_output_topic_word.set_index("topic_num").to_dict("index")
@@ -152,7 +158,7 @@ def visualize_barchart(algorithm: str,
         template="plotly_white",
         showlegend=False,
         title={
-            'text': f"<b>Topic Word Scores for algorithm=\"{algorithm}\" and run_id={run_id}",
+            'text': f'<b>Topic Word Scores for algorithm="{algorithm_name}" and run_id="{run_id}"',
             'x': .5,
             'xanchor': 'center',
             'yanchor': 'top',
@@ -176,4 +182,246 @@ def visualize_barchart(algorithm: str,
     # fig.write_image() # todo: add name of the score metric
     # todo: write as image
     # fig.write_image('asd.png')
+    return fig
+
+
+def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
+                               df_output_topic_word: pd.DataFrame,
+                               top_n_topics: int = 10,
+                               top_n_labels: int = 5,
+                               topics: List[int] = None,
+                               normalize_frequency: bool = True,
+                               width: int = 1000,
+                               height: Union[int, str] = 'adjustable') -> go.Figure:
+    """ Visualize topics per class
+
+    Arguments:
+        df_output_doc_topic: Doc<->Topic Output Dataframe
+        df_output_topic_word: Topic<->Word Output Dataframe
+        top_n_topics: To visualize the most frequent topics instead of all
+        top_n_labels: To visualize the most frequent labels (per topic) instead of all
+        topics: Select which topics you would like to be visualized
+        normalize_frequency: Whether to per cent normalize each topic's frequency individually
+        width: The width of the figure.
+        height: The height of the figure.
+
+    Returns:
+        A plotly.graph_objects.Figure including all traces
+
+    Usage: # todo: del here
+
+    If you want to save the resulting figure:
+
+    fig = topic_model.visualize_topics_per_class(topics_per_class)
+    fig.write_html("path/to/file.html")
+    ```
+    <iframe src="../../getting_started/visualization/topics_per_class.html"
+    style="width:1400px; height: 1000px; border: 0px;""></iframe>
+    """
+    colors = ["#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#0072B2", "#CC79A7"]
+    run_id = df_output_topic_word['run_id'][0]
+    algorithm_name = df_output_topic_word['method'][0]
+    check_algorithm(al=algorithm_name)
+
+    if topics is not None:  # Get selected topics
+        topics = sorted(topics)
+    elif top_n_topics is not None and 0 < top_n_topics < len(df_output_topic_word):  # Get top n topics
+        topics = sorted(df_output_topic_word['topic_num'].to_list())[:top_n_topics]
+    else:  # Get all topics
+        topics = sorted(df_output_topic_word['topic_num'].to_list())
+
+    # Prepare data
+    freq_df = df_output_doc_topic[['Real Label', 'Assigned Topic Num']].value_counts()
+    freq_df = freq_df.rename('Frequency').reset_index().sort_values('Real Label')
+    freq_df.rename(columns={'Real Label': 'Class', 'Assigned Topic Num': 'Topic'}, inplace=True)
+    df_output_topic_word['5_words'] = df_output_topic_word['topic_words'].apply(lambda ws: '_'.join(ws[:5]))
+    df_output_topic_word['Name'] = df_output_topic_word['topic_num'].astype(str) + '_' + df_output_topic_word['5_words']
+    topic_num_to_names = df_output_topic_word.set_index('topic_num').to_dict()['Name']
+    freq_df['Name'] = freq_df['Topic'].map(topic_num_to_names)
+    data = freq_df.loc[freq_df['Topic'].isin(topics), :]
+
+    # Initialize figure
+    subplot_titles = [f'Topic: "{topic_num_to_names[topic]}"' for topic in list(topics)]
+    num_columns = 2
+    num_rows = ceil((len(topics)) / num_columns)
+    rows = int(np.ceil(len(topics) / num_columns))
+    fig = make_subplots(rows=rows,
+                        cols=num_columns,
+                        shared_xaxes=False,
+                        horizontal_spacing=.2,
+                        vertical_spacing=.6 / rows if rows > 1 else 0,
+                        subplot_titles=subplot_titles,
+                        )
+
+    cur_row = 1
+    cur_col = 1
+    for index, topic in enumerate(topics):
+        cur_data = data.loc[data.Topic == topic, :]  # type: pd.DataFrame
+        if normalize_frequency:
+            cur_data.Frequency = 100 * cur_data.Frequency / sum(cur_data.Frequency)
+        cur_data = cur_data.sort_values(by='Frequency', ascending=False).head(top_n_labels).iloc[::-1]
+
+        fig.add_trace(
+            go.Bar(y=cur_data.Class, x=cur_data.Frequency, visible=True, marker_color=colors[index % 7],
+                   orientation="h"),
+            row=cur_row, col=cur_col)
+        fig.update_xaxes(title_text="Normalized Frequency (%)" if normalize_frequency else "Frequency (Count)",
+                         title_standoff=0, row=cur_row, col=cur_col)
+        if cur_col == 1:
+            fig.update_yaxes(title_text="Real Label", row=cur_row, col=cur_col)
+
+        if cur_col == num_columns:
+            cur_col = 1
+            cur_row += 1
+        else:
+            cur_col += 1
+
+    # Styling of the visualization
+    fig.update_xaxes(showgrid=True)
+    fig.update_yaxes(showgrid=True)
+    fig.update_layout(
+        showlegend=False,
+        # xaxis_title="Normalized Frequency (%)" if normalize_frequency else "Frequency (Count)",
+        # yaxis_title="Real Label",
+        title={
+            'text': f'<b>Labels per Topic for algorithm="{algorithm_name}", run_id="{run_id}"<br></b>',
+            # 'y': .99,
+            'x': 0.40,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            'font': dict(
+                size=22,
+                color="Black")
+        },
+        template="simple_white",
+        width=width,
+        height=200 * num_rows if height == 'adjustable' else height,
+
+    )
+    return fig
+
+
+def visualize_heatmap(
+        model: Union[Top2Vec, BERTopic],
+        df_output_doc_topic: pd.DataFrame,
+        df_output_topic_word: pd.DataFrame,
+        topics: List[int] = None,
+        top_n_topics: int = None,
+        n_clusters: int = None,
+        width: int = 1000,
+        height: int = 1000) -> go.Figure:
+    """ Visualize a heatmap of the topic's similarity matrix
+
+    Based on the cosine similarity matrix between topic embeddings,
+    a heatmap is created showing the similarity between topics.
+
+    Arguments:
+        model: A fitted BERTopic instance.
+        df_output_doc_topic: Doc<->Topic Output Dataframe
+        df_output_topic_word: Topic<->Word Output Dataframe
+        topics: A selection of topics to visualize.
+        top_n_topics: Only select the top n most frequent topics.
+        n_clusters: Create n clusters and order the similarity matrix by those clusters.
+        width: The width of the figure.
+        height: The height of the figure.
+
+    Returns:
+        fig: A plotly figure
+
+    Usage:
+
+    If you want to save the resulting figure:
+
+    ```python
+    fig = topic_model.visualize_heatmap()
+    fig.write_html("path/to/file.html")
+    ```
+    <iframe src="../../getting_started/visualization/heatmap.html"
+    style="width:1000px; height: 720px; border: 0px;""></iframe>
+    """
+    run_id = df_output_topic_word['run_id'][0]
+    algorithm_name = df_output_topic_word['method'][0]
+
+    # Select topic embeddings
+    if algorithm_name == 'top2vec':
+        tpc_embeddings = model.topic_vectors_reduced if df_output_topic_word['reduced'][0] else model.topic_vectors
+    elif algorithm_name == 'bertopic':
+        # tpc_embeddings = np.array(model.topic_embeddings)
+        # TODO: implement
+        raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
+    elif algorithm_name in ('lda', 'nmf'):
+        raise ValueError(f'LDA and NMF cannot support visualize_heatmap() because they have no topic embeddings.')
+    else:
+        raise ValueError(f'Algorithm is not supported:{algorithm_name} for draw_umap_2d_scatter_plot().')
+
+    # Select topics based on top_n and topics args
+    freq_df = df_output_doc_topic[['Assigned Topic Num', 'Real Label']].rename(columns={'Assigned Topic Num': 'Topic'})
+    freq_df = freq_df.groupby('Topic')['Real Label'].count().reset_index(name='Count')
+    freq_df = freq_df.loc[freq_df.Topic != -1, :]  # Necessary step for BERTopic
+    if topics is not None:
+        topics = list(topics)
+    elif top_n_topics is not None:
+        topics = sorted(freq_df.Topic.to_list()[:top_n_topics])
+    else:
+        topics = sorted(freq_df.Topic.to_list())
+
+    # Order heatmap by similar clusters of topics
+    if n_clusters:
+        if n_clusters >= len(set(topics)):
+            raise ValueError("Make sure to set `n_clusters` lower than "
+                             "the total number of unique topics.")
+
+        tpc_embeddings = tpc_embeddings[[topic + 1 for topic in topics]]
+        distance_matrix = cosine_similarity(tpc_embeddings)
+        clusters = fcluster(Z=linkage(distance_matrix, 'ward'), t=n_clusters, criterion='maxclust')
+
+        # Extract new order of topics
+        mapping = {cluster: [] for cluster in clusters}
+        for topic, cluster in zip(topics, clusters):
+            mapping[cluster].append(topic)
+        mapping = [cluster for cluster in mapping.values()]
+        sorted_topics = [topic for cluster in mapping for topic in cluster]
+    else:
+        sorted_topics = topics
+
+    # Select embeddings
+    indices = np.array([topics.index(topic) for topic in sorted_topics])
+    tpc_embeddings = tpc_embeddings[indices]
+    distance_matrix = cosine_similarity(tpc_embeddings)
+
+    # Create nicer labels
+    df_output_topic_word['5_words'] = df_output_topic_word['topic_words'].apply(lambda ws: '_'.join(ws[:5]))
+    df_output_topic_word['Name'] = df_output_topic_word['topic_num'].astype(str) + '_' + df_output_topic_word['5_words']
+    topic_num_to_names = df_output_topic_word.set_index('topic_num').to_dict(into=OrderedDict)['Name']
+    topic_names = [topic_num_to_names[topic] for topic in sorted_topics]
+    max_characters = 35
+    new_labels = [label if len(label) < max_characters else label[:max_characters - 3] + "..." for label in topic_names]
+
+    fig = px.imshow(distance_matrix, text_auto=".2f",
+                    labels=dict(color="Cosine Similarity Score"),
+                    x=new_labels,
+                    y=new_labels,
+                    color_continuous_scale='GnBu',
+                    )
+
+    fig.update_layout(
+        title={
+            'text': f'<b>Topic Similarity Matrix for algorithm="{algorithm_name}", run_id="{run_id}"<br></b>',
+            'y': .95,
+            'x': 0.55,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            'font': dict(
+                size=22,
+                color="Black")
+        },
+        width=width,
+        height=height,
+
+        xaxis=go.layout.XAxis(
+            tickangle=-45)
+    )
+    fig.update_layout(showlegend=True)
+    fig.update_layout(legend_title_text='Trend')
+    # todo: write as image
     return fig
