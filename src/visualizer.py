@@ -21,6 +21,14 @@ target_template = Template('${run_id}_${algorithm}_${visualization_method}.${ext
 
 AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf']
 
+ALGORITHM_TO_WORD_SCORE_METRIC = {
+    'top2vec': 'CosineSimilarity(TopicVec,WordVec)',
+    'bertopic': 'c-TF-IDF Score',
+    'lda': 'Probability Score',
+    'nmf': 'Probability Score',
+}
+assert set(AVAILABLE_TOPIC_MODELING_ALGORITHMS) == set(ALGORITHM_TO_WORD_SCORE_METRIC)
+
 
 def check_algorithm(al: str):
     assert al in AVAILABLE_TOPIC_MODELING_ALGORITHMS, f'{al} is not available in {AVAILABLE_TOPIC_MODELING_ALGORITHMS}!'
@@ -38,8 +46,7 @@ def draw_umap2d_scatter_plot(
     if algorithm_name == 'top2vec':
         doc_topics = model.doc_top_reduced if df_output_topic_word['reduced'][0] else model.doc_top
         doc_vectors = model.document_vectors
-    elif algorithm_name == 'bertopic':
-        # TODO: implement
+    elif algorithm_name == 'bertopic':  # TODO: implement
         raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
     elif algorithm_name in ('lda', 'nmf'):
         raise ValueError(f'LDA and NMF cannot support draw_umap_2d_scatter_plot() because they do not use UMAP phase.')
@@ -79,7 +86,6 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,
 
     Arguments:
         df_output_topic_word: Output from Algorithm Part
-        algorithm: Name of the Topic Modeling Algorithm, e.g "top2vec" or "bertopic".
         topics: A selection of topics to visualize.
         top_n_topics: Only select the top n most frequent topics.
         n_words: Number of words to show in a topic
@@ -88,21 +94,6 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,
 
     Returns:
         fig: A plotly figure
-
-    Usage:
-
-    if you want to save the resulting figure:
-
-    ```python
-    fig = topic_model.visualize_barchart()
-    fig.write_html("path/to/file.html")
-    ```
-    <iframe src="../../getting_started/visualization/bar_chart.html"
-    style="width:1100px; height: 660px; border: 0px;""></iframe>
-
-    Parameters
-    ----------
-
     """
     run_id = df_output_topic_word['run_id'][0]
     algorithm_name = df_output_topic_word['method'][0]
@@ -133,8 +124,8 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,
                         subplot_titles=subplot_titles)
 
     # Add barchart for each topic
-    row = 1
-    column = 1
+    cur_row = 1
+    cur_col = 1
     for topic in topics:
         words = [word + "  " for word in topic_num_to_df[topic]['topic_words']][:n_words][::-1]
         scores = [score for score in topic_num_to_df[topic]['word_scores']][:n_words][::-1]
@@ -145,13 +136,16 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,
                    y=words,
                    orientation='h',
                    marker_color=next(colors)),
-            row=row, col=column)
+            row=cur_row, col=cur_col)
 
-        if column == columns:
-            column = 1
-            row += 1
+        fig.update_xaxes(title_text=ALGORITHM_TO_WORD_SCORE_METRIC[algorithm_name],
+                         title_font=dict(size=13, color="Black"), title_standoff=0, row=cur_row, col=cur_col)
+
+        if cur_col == columns:
+            cur_col = 1
+            cur_row += 1
         else:
-            column += 1
+            cur_col += 1
 
     # Stylize graph
     fig.update_layout(
@@ -179,9 +173,7 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,
     fig.update_yaxes(showgrid=True)
 
     # fig = fig # type: plotly.graph_objs._figure.Figure
-    # fig.write_image() # todo: add name of the score metric
-    # todo: write as image
-    # fig.write_image('asd.png')
+    # fig.write_image('asd.png') # todo: write as image
     return fig
 
 
