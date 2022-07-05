@@ -1,20 +1,23 @@
-import pickle as pkl
+import json
 import typing
-import zlib
-from collections import OrderedDict
 from pathlib import Path
 from typing import List, Tuple
-import json
+
 import pandas as pd
 
+available_datasets = {
+    'crisis_01': {'dataset_dir': './data/crisis_resource_01_labeled_by_paid_workers', 'dataset_text_col': 'tweet_text'},
+    'crisis_12': {'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers', 'dataset_text_col': 'text'},
+    'crisis_toy': {'dataset_dir': './data/crisis_resource_toy', 'dataset_text_col': 'text'},
+    '20news': {'dataset_dir': './data/20news_bydate', 'dataset_text_col': 'text'},
+}
 
-def load_documents(dataset_dir: str, dataset_text_col: str) -> Tuple[List[str], List[str]]:
-    if '20news_bydate' in dataset_dir:
-        dataset_data_path = [path for path in Path(dataset_dir).iterdir() if path.suffix == '.pkz'][0]
-        decompressed_pkl = zlib.decompress(open(dataset_data_path, 'rb').read())
 
-        data = pkl.loads(decompressed_pkl)
-        return data['train'].data
+def load_documents(dataset: str) -> Tuple[List[str], List[str]]:
+    assert dataset in available_datasets, \
+        f'Given dataset "{dataset}" is not available, available datasets: {sorted(available_datasets)}.'
+    dataset_dir = available_datasets[dataset]['dataset_dir']
+    dataset_text_col = available_datasets[dataset]['dataset_text_col']
 
     dataset_data_paths = sorted([path for path in Path(dataset_dir).iterdir() if path.suffix in {'.csv', '.tsv'}])
 
@@ -36,5 +39,3 @@ def pretty_print_dict(a_dict: typing.Dict, indent=4, info_log: str = None):
     if info_log:
         print('[INFO]', info_log)
     print(json.dumps(a_dict, indent=indent))
-
-
