@@ -1,0 +1,2 @@
+suitable for LDA BERT: 20news_all, crisis_12_all_unpreprocessed
+suitable for LDA/NMF: crisis 1/12 preprocessed. Not include 20news, because we directly import it using OCTIS
