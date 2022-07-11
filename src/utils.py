@@ -10,6 +10,7 @@ available_datasets = {
     'crisis_12': {'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers', 'dataset_text_col': 'text'},
     'crisis_toy': {'dataset_dir': './data/crisis_resource_toy', 'dataset_text_col': 'text'},
     '20news': {'dataset_dir': './data/20news_bydate', 'dataset_text_col': 'text'},
+    'yahoo': {'dataset_dir': './data/yahoo_answers_test_60K', 'dataset_text_col': 'text'},
 }
 
 
