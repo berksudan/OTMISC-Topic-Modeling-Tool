@@ -13,6 +13,9 @@ import numpy as np
 
 import pandas as pd
 
+from umap import UMAP
+from hdbscan import HDBSCAN
+
 class Trainer:
 
     def __init__(
@@ -84,6 +87,8 @@ class Trainer:
                                top_n_words = params["topic_n_words"],
                                n_gram_range = params["n_gram_range_tuple"],
                                min_topic_size = params["min_docs_per_topic"],
+                               umap_model= UMAP(**params["umap_args"]),
+                               hdbscan_model = HDBSCAN(**params["hdbscan_args"])
                                #nr_topics = params["number_topics"]
                                )
     
@@ -141,7 +146,7 @@ class Trainer:
             "run_id": int(t0),
             "Document ID": range(len(self.docs)),
             "Document": self.docs,
-            "Real Lable": self.labels,
+            "Real Label": self.labels,
             "Assigned Topic Num": topics,
             "Assignment Score": probs
         }
