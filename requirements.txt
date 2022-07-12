@@ -19,3 +19,4 @@ holoviews==1.14.9
 kaleido==0.2.1
 contractions==0.1.72
 nltk==3.7
+umap-learn[plot]==0.5.3

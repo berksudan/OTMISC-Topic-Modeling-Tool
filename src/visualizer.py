@@ -37,6 +37,7 @@ def check_algorithm(al: str):
 def draw_umap2d_scatter_plot(
         model: Union[Top2Vec, BERTopic],
         df_output_topic_word: pd.DataFrame,
+        df_output_doc_topic: pd.DataFrame = None,
         target_dir: str = './output/visualization'
 ) -> pyplot.Figure:
     run_id = df_output_topic_word['run_id'][0]
@@ -46,8 +47,10 @@ def draw_umap2d_scatter_plot(
     if algorithm_name == 'top2vec':
         doc_topics = model.doc_top_reduced if df_output_topic_word['reduced'][0] else model.doc_top
         doc_vectors = model.document_vectors
-    elif algorithm_name == 'bertopic':  # TODO: implement
-        raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
+    elif algorithm_name == 'bertopic':
+        doc_topics = df_output_doc_topic['Assigned Topic Num']
+        doc_vectors = model.umap_model.embedding_
+        #raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
     elif algorithm_name in ('lda', 'nmf'):
         raise ValueError(f'LDA and NMF cannot support draw_umap_2d_scatter_plot() because they do not use UMAP phase.')
     else:
@@ -107,7 +110,7 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,
     else:  # Get all topics
         topics = sorted(df_output_topic_word['topic_num'].to_list())
 
-    if algorithm_name == 'bertopic':
+    if algorithm_name == 'bertopic' and -1 in topics:
         topics.remove(-1)
 
     topic_num_to_df = df_output_topic_word.set_index("topic_num").to_dict("index")
@@ -338,9 +341,12 @@ def visualize_heatmap(
     if algorithm_name == 'top2vec':
         tpc_embeddings = model.topic_vectors_reduced if df_output_topic_word['reduced'][0] else model.topic_vectors
     elif algorithm_name == 'bertopic':
-        # tpc_embeddings = np.array(model.topic_embeddings)
+        if model.topic_embeddings is not None:
+            tpc_embeddings = np.array(model.topic_embeddings)
+        else:
+            tpc_embeddings = model.c_tf_idf
         # TODO: implement
-        raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
+        #raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
     elif algorithm_name in ('lda', 'nmf'):
         raise ValueError(f'LDA and NMF cannot support visualize_heatmap() because they have no topic embeddings.')
     else:
