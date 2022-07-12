@@ -19,8 +19,9 @@ data/raw
 # Pretrained Models
 pretrained_models
 
-# Temporary Python File
+# Temporary Python and Notebook File
 src/tmp.py
+notebooks/tmp.ipynb
 
 # Visualization Results
 output/visualization
