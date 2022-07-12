@@ -15,6 +15,7 @@ networks/*/__pycache__
 
 # Ignore Raw Data
 data/raw
+metadata.csv
 
 # Pretrained Models
 pretrained_models
@@ -24,6 +25,7 @@ src/tmp.py
 
 # Visualization Results
 output/visualization
+notebooks/output
 
 # Temporary Local Backups
 .backup
