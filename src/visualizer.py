@@ -19,13 +19,14 @@ from top2vec import Top2Vec
 
 target_template = Template('${run_id}_${algorithm}_${visualization_method}.${extension}')
 
-AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf']
+AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf', 'lda-bert']
 
 ALGORITHM_TO_WORD_SCORE_METRIC = {
     'top2vec': 'CosineSimilarity(TopicVec,WordVec)',
     'bertopic': 'c-TF-IDF Score',
     'lda': 'Probability Score',
     'nmf': 'Probability Score',
+    'lda-bert': 'Word Frequency'
 }
 assert set(AVAILABLE_TOPIC_MODELING_ALGORITHMS) == set(ALGORITHM_TO_WORD_SCORE_METRIC)
 

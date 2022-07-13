@@ -1,5 +1,6 @@
 from typing import OrderedDict
-from src.utils import load_documents
+from utils import load_documents
+#from src.utils import load_documents
 from collections import OrderedDict, Counter
 
 from octis.evaluation_metrics.diversity_metrics import TopicDiversity
@@ -84,25 +85,6 @@ class Trainer:
         
         self.custom_model = custom_model
         self.verbose = verbose
-        #### LDA-Bert specific params ####
-        
-        # Init empty dict for LDA-BERT
-        self.vec = {}
-
-        
-        #self.k = k -> here: params['number_topics']
-        self.dictionary = None
-        self.corpus = None
-        
-        # TODO: Init Kmeans here with nr of topics
-        self.cluster_model = KMeans(n_clusters=self.params['number_topics'])
-        self.ldamodel = None
-        # parameter for reletive importance of lda
-        #self.gamma = 15  -> here: params['gamma']
-        #self.method = method -> here: self.model_name
-        self.AE = None
-        
-        #### END: LDA-Bert specific params ####
 
         # Prepare data and metrics
         self.data = self.get_dataset()
@@ -154,7 +136,7 @@ class Trainer:
         ## Define BERTopic model
         topic_model = BERTopic(embedding_model = params["embedding_model"], 
                                verbose = self.verbose,
-                               top_n_words = params["topic_n_words"],
+                               top_n_words = params["top_n_words"],
                                n_gram_range = params["n_gram_range_tuple"],
                                min_topic_size = params["min_docs_per_topic"],
                                umap_model= UMAP(**params["umap_args"]),
@@ -259,92 +241,18 @@ class Trainer:
 
     def _train_lda_bert_model(self, params):
 
-        def get_topic_words(token_lists, labels, k=None, top_n = 10):
-            """
-            get most frequent words within each topic from clustering results as topic words
-            """
-            if k is None:
-                k = len(np.unique(labels))
-
-            topics = ['' for _ in range(k)]
-
-            for i, c in enumerate(token_lists):
-                topics[labels[i]] += (' ' + ' '.join(c))
-
-            word_counts = list(map(lambda x: Counter(x.split()).items(), topics))
-
-            # get sorted word counts
-            word_counts = list(map(lambda x: sorted(x, key=lambda x: x[1], reverse=True), word_counts))
-
-            # get topics
-            topic_words = list(map(lambda x: list(map(lambda x: x[0], x[:top_n])), word_counts))
-
-            return topic_words
-        
-        def preprocess_sent(raw):
-            """
-            returns raw sentences without preprocessing (should be done in preprocessing module)
-            """
-            return raw
-
-        def preprocess_word(s):
-            """
-            returns sentence as list of tokens (word list)
-            """
-            word_list = word_tokenize(s)
-
-            return word_list
-
-        def preprocess(docs):
-            """
-            Preprocess the data by calling preprocess_sent and word
-            returns sentences (List[str]) and token_lists (List[List[str]])
-            """
-            print('Preprocessing raw texts ...')
-
-            n_docs = len(docs)
-
-            # sentence level preprocessed
-            sentences = []
-
-            # word level preprocessed
-            token_lists = []  
-            
-            for i, doc in enumerate(docs):
-                sentence = preprocess_sent(doc)
-                token_list = preprocess_word(sentence)
-                if token_list:
-                    sentences.append(sentence)
-                    token_lists.append(token_list)
-
-                print('{} %'.format(str(np.round((i + 1) / n_docs * 100, 2))), end='\r')
-
-            print('Preprocessing raw texts. Done!')
-            return sentences, token_lists
-
-        sentences, token_lists = preprocess(self.docs)
-
-        # turn tokenized documents into a id <-> term dictionary
-        if not self.dictionary:
-            self.dictionary = corpora.Dictionary(token_lists)
-            # convert tokenized documents into a document-term matrix
-            self.corpus = [self.dictionary.doc2bow(text) for text in token_lists]
-
-        #### Getting vector representations ####
         t0 = time.time()
 
-        print('Clustering embeddings ...')
+        lda_bert_params = {
+            'number_topics': params['number_topics'], 
+            'top_n_words': params['top_n_words'],
+            'embedding_model': params['embedding_model'],
+            'gamma': params['gamma']
+        }
 
-        # Init cluster_model above
-        # self.cluster_model = m_clustering(self.k)
-        self.vec[self.model_name] = self.vectorize(sentences, token_lists, self.model_name)
-        self.cluster_model.fit(self.vec[self.model_name])
+        topic_model = LDABERT(self.embeddings, lda_bert_params)
 
-        print('Clustering embeddings. Done!')
-
-        pred_topic_labels = self.cluster_model.labels_
-
-        topic_words = get_topic_words(token_lists, pred_topic_labels, k = params['number_topics'], top_n = self.topk)
+        pred_topic_labels, topic_words, word_scores = topic_model.fit_transform(self.docs)
 
         t1 = time.time()
 
@@ -378,7 +286,7 @@ class Trainer:
             'topic_num': range(nrows_topic_word),
             'topic_size': np.unique(pred_topic_labels, return_counts=True)[1],
             'topic_words': topic_words,
-            'word_scores': int(1) ##TODO: use frequency as word score OR use c-Tf-IDF for topic_words and word_scores
+            'word_scores': word_scores ##TODO: use frequency as word score OR use c-Tf-IDF for topic_words and word_scores
         }
         
         results_dict = OrderedDict([
@@ -392,9 +300,116 @@ class Trainer:
 
         df_output_topic_word = pd.concat([params_df, pd.DataFrame(topic_word_dict), results_df], axis=1)
         
-        return None, df_output_doc_topic, df_output_topic_word
+        return topic_model, df_output_doc_topic, df_output_topic_word
 
-        #return pred_topic_labels, topic_words
+    def evaluate(self, output_tm):
+
+        results = {}
+
+        for scorers, _ in self.metrics:
+            for scorer, name in scorers:
+                score = scorer.score(output_tm)
+                results[name] = float(score)
+            
+        if self.verbose:
+            print(">>>  Results")
+            for metric, score in results.items():
+                print(f"The topic model {self.model_name} has {metric} score: {score}")
+            print("")
+        
+        return results
+
+    def get_metrics(self):
+        
+        if isinstance(self.data[0], list):
+            text = self.data
+        else:
+            text = [d.split(" ") for d in self.data]
+        
+        topic_coherence = Coherence(texts=text, topk=self.topk, measure="c_v")
+        topic_diversity = TopicDiversity(topk=self.topk)
+
+        # Define methods
+        coherence = [(topic_coherence, "c_v")]
+        diversity = [(topic_diversity, "diversity")]
+        metrics = [(coherence, "Coherence"), (diversity, "Diversity")]
+
+        return metrics
+    
+    def get_dataset(self):
+
+        data = load_documents(self.dataset)
+
+        return data
+
+class Autoencoder:
+    """
+    Autoencoder for learning latent space representation
+    architecture simplified for only one hidden layer
+    """
+
+    def __init__(self, latent_dim=32, activation='relu', epochs=200, batch_size=128):
+        self.latent_dim = latent_dim
+        self.activation = activation
+        self.epochs = epochs
+        self.batch_size = batch_size
+        self.autoencoder = None
+        self.encoder = None
+        self.decoder = None
+        self.his = None
+
+    def _compile(self, input_dim):
+        """
+        compile the computational graph
+        """
+        input_vec = Input(shape=(input_dim,))
+        encoded = Dense(self.latent_dim, activation=self.activation)(input_vec)
+        decoded = Dense(input_dim, activation=self.activation)(encoded)
+        self.autoencoder = Model(input_vec, decoded)
+        self.encoder = Model(input_vec, encoded)
+        encoded_input = Input(shape=(self.latent_dim,))
+        decoder_layer = self.autoencoder.layers[-1]
+        self.decoder = Model(encoded_input, self.autoencoder.layers[-1](encoded_input))
+        self.autoencoder.compile(optimizer='adam', loss=keras.losses.mean_squared_error)
+
+    def fit(self, X):
+        if not self.autoencoder:
+            self._compile(X.shape[1])
+        X_train, X_test = train_test_split(X)
+        self.his = self.autoencoder.fit(X_train, X_train,
+                                        epochs=200,
+                                        batch_size=128,
+                                        shuffle=True,
+                                        validation_data=(X_test, X_test), verbose=0)
+
+class LDABERT:
+
+    def __init__(self, embeddings, params):
+        
+        self.params = params
+        self.model_name = 'lda-bert'
+        #### LDA-Bert specific params ####
+        
+        # Init empty dict for LDA-BERT
+        self.vec = {}
+
+        # Init pretrained embeddings
+        self.embeddings = embeddings
+
+        
+        #self.k = k -> here: params['number_topics']
+        self.dictionary = None
+        self.corpus = None
+        
+        # TODO: Init Kmeans here with nr of topics
+        self.cluster_model = KMeans(n_clusters=self.params['number_topics'])
+        self.ldamodel = None
+        # parameter for reletive importance of lda
+        #self.gamma = 15  -> here: params['gamma']
+        #self.method = method -> here: self.model_name
+        self.AE = None
+        
+        #### END: LDA-Bert specific params ####
 
     def vectorize(self, sentences, token_lists, method):
         """
@@ -462,86 +477,131 @@ class Trainer:
             vec = self.AE.encoder.predict(vec_ldabert)
             return vec
 
-    def evaluate(self, output_tm):
+    def get_topic_words(self, token_lists, labels, k=None, top_n = 10):
+            """
+            get most frequent words within each topic from clustering results as topic words
+            """
+            if k is None:
+                k = len(np.unique(labels))
 
-        results = {}
+            #raise Exception("Debug here")
+            topics = ['' for _ in range(k)]
 
-        for scorers, _ in self.metrics:
-            for scorer, name in scorers:
-                score = scorer.score(output_tm)
-                results[name] = float(score)
+            for i, c in enumerate(token_lists):
+                topics[labels[i]] += (' ' + ' '.join(c))
+
+            word_counts = list(map(lambda x: Counter(x.split()).items(), topics))
+            total_sum_words = list(map(lambda x: len(x.split()), topics))
+
+            # get sorted word counts
+            word_counts = list(map(lambda x: sorted(x, key=lambda x: x[1], reverse=True), word_counts))
+
+            # get topics
+            topic_words = list(map(lambda x: list(map(lambda x: x[0], x[:top_n])), word_counts))
+            top_word_counts = np.array(list(map(lambda x: list(map(lambda x: x[1], x[:top_n])), word_counts)))
             
-        if self.verbose:
-            print(">>>  Results")
-            for metric, score in results.items():
-                print(f"The topic model {self.model_name} has {metric} score: {score}")
-            print("")
-        
-        return results
+            for i in range(k):
+                for n, number in enumerate(top_word_counts[i]):
+                    top_word_counts[i][n] = int(number) / total_sum_words[i]
 
-
-    def get_metrics(self):
-        
-        if isinstance(self.data[0], list):
-            text = self.data
-        else:
-            text = [d.split(" ") for d in self.data]
-        
-        topic_coherence = Coherence(texts=text, topk=self.topk, measure="c_v")
-        topic_diversity = TopicDiversity(topk=self.topk)
-
-        # Define methods
-        coherence = [(topic_coherence, "c_v")]
-        diversity = [(topic_diversity, "diversity")]
-        metrics = [(coherence, "Coherence"), (diversity, "Diversity")]
-
-        return metrics
+            return topic_words, top_word_counts
     
-    def get_dataset(self):
+    @staticmethod
+    def preprocess_sent(raw):
+            """
+            returns raw sentences without preprocessing (should be done in preprocessing module)
+            """
+            return raw
 
-        data = load_documents(self.dataset)
-
-        return data
-
-class Autoencoder:
-    """
-    Autoencoder for learning latent space representation
-    architecture simplified for only one hidden layer
-    """
-
-    def __init__(self, latent_dim=32, activation='relu', epochs=200, batch_size=128):
-        self.latent_dim = latent_dim
-        self.activation = activation
-        self.epochs = epochs
-        self.batch_size = batch_size
-        self.autoencoder = None
-        self.encoder = None
-        self.decoder = None
-        self.his = None
-
-    def _compile(self, input_dim):
+    @staticmethod
+    def preprocess_word(s):
         """
-        compile the computational graph
+        returns sentence as list of tokens (word list)
         """
-        input_vec = Input(shape=(input_dim,))
-        encoded = Dense(self.latent_dim, activation=self.activation)(input_vec)
-        decoded = Dense(input_dim, activation=self.activation)(encoded)
-        self.autoencoder = Model(input_vec, decoded)
-        self.encoder = Model(input_vec, encoded)
-        encoded_input = Input(shape=(self.latent_dim,))
-        decoder_layer = self.autoencoder.layers[-1]
-        self.decoder = Model(encoded_input, self.autoencoder.layers[-1](encoded_input))
-        self.autoencoder.compile(optimizer='adam', loss=keras.losses.mean_squared_error)
+        word_list = word_tokenize(s)
 
-    def fit(self, X):
-        if not self.autoencoder:
-            self._compile(X.shape[1])
-        X_train, X_test = train_test_split(X)
-        self.his = self.autoencoder.fit(X_train, X_train,
-                                        epochs=200,
-                                        batch_size=128,
-                                        shuffle=True,
-                                        validation_data=(X_test, X_test), verbose=0)
+        return word_list
+
+    def preprocess(self, docs):
+        """
+        Preprocess the data by calling preprocess_sent and word
+        returns sentences (List[str]) and token_lists (List[List[str]])
+        """
+        print('Preprocessing raw texts ...')
+
+        n_docs = len(docs)
+
+        # sentence level preprocessed
+        sentences = []
+
+        # word level preprocessed
+        token_lists = []  
+        
+        for i, doc in enumerate(docs):
+            sentence = self.preprocess_sent(doc)
+            token_list = self.preprocess_word(sentence)
+            if token_list:
+                sentences.append(sentence)
+                token_lists.append(token_list)
+
+            print('{} %'.format(str(np.round((i + 1) / n_docs * 100, 2))), end='\r')
+
+        print('Preprocessing raw texts. Done!')
+        
+        return sentences, token_lists
+    
+    def fit_transform(self, docs):
+        sentences, token_lists = self.preprocess(docs)
+
+        # turn tokenized documents into a id <-> term dictionary
+        if not self.dictionary:
+            self.dictionary = corpora.Dictionary(token_lists)
+            # convert tokenized documents into a document-term matrix
+            self.corpus = [self.dictionary.doc2bow(text) for text in token_lists]
+
+        #### Getting vector representations ####
+        print('Clustering embeddings ...')
+
+        # Init cluster_model above
+        # self.cluster_model = m_clustering(self.k)
+        self.vec[self.model_name] = self.vectorize(sentences, token_lists, self.model_name)
+        self.cluster_model.fit(self.vec[self.model_name])
+
+        print('Clustering embeddings. Done!')
+
+        pred_topic_labels = self.cluster_model.labels_
+
+        topic_words, word_scores = self.get_topic_words(token_lists, pred_topic_labels, k = self.params['number_topics'], top_n = self.params['top_n_words'])
+
+        return pred_topic_labels, topic_words, word_scores
+
+def test_lda_bert():
+    
+    data, labels = load_documents('crisis_toy')
+        
+    # Encode data with embedding model
+    emb_model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = emb_model.encode(data, show_progress_bar=True)
+    
+    
+    params = {
+        'embedding_model': "all-MiniLM-L6-v2",
+        'number_topics': 2,
+        'top_n_words': 10,
+        'gamma': 15 
+    }
+    
+    
+    trainer = Trainer(dataset = 'crisis_toy',
+                      model_name = "lda-bert",
+                      params = params,
+                      topk = 10,
+                      bt_embeddings = embeddings,
+                      custom_model = None,
+                      verbose = True,
+                      )
+    
+    model, df_output_doc_topic, df_output_topic_word = trainer.train()
 
 if __name__ == "__main__":
-    print("Hello")
+    test_lda_bert()
