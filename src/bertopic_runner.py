@@ -1,6 +1,6 @@
 from typing import OrderedDict
-from utils import load_documents
-#from src.utils import load_documents
+#from utils import load_documents
+from src.utils import load_documents
 from collections import OrderedDict, Counter
 
 from octis.evaluation_metrics.diversity_metrics import TopicDiversity
@@ -271,6 +271,9 @@ class Trainer:
         df_output_doc_topic = pd.DataFrame(doc_topic_dict)
 
         ## Construct df topic_word
+        print(f'the words scores are: {word_scores}')
+        print(f'and have length: {len(word_scores)}')
+
         nrows_topic_word = params['number_topics']
 
         params_dict = OrderedDict([
@@ -498,11 +501,11 @@ class LDABERT:
 
             # get topics
             topic_words = list(map(lambda x: list(map(lambda x: x[0], x[:top_n])), word_counts))
-            top_word_counts = np.array(list(map(lambda x: list(map(lambda x: x[1], x[:top_n])), word_counts)))
+            top_word_counts = list(map(lambda x: list(map(lambda x: x[1], x[:top_n])), word_counts))
             
             for i in range(k):
                 for n, number in enumerate(top_word_counts[i]):
-                    top_word_counts[i][n] = int(number) / total_sum_words[i]
+                    top_word_counts[i][n] = float(number / total_sum_words[i])
 
             return topic_words, top_word_counts
     
