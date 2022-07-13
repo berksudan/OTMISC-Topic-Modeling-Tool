@@ -1,6 +1,6 @@
 from typing import OrderedDict
 from src.utils import load_documents
-from collections import OrderedDict
+from collections import OrderedDict, Counter
 
 from octis.evaluation_metrics.diversity_metrics import TopicDiversity
 from octis.evaluation_metrics.coherence_metrics import Coherence
@@ -13,8 +13,48 @@ import numpy as np
 
 import pandas as pd
 
+#import umap
 from umap import UMAP
 from hdbscan import HDBSCAN
+
+#import os
+#import json
+
+from tqdm import tqdm
+
+from nltk.corpus import wordnet
+import re
+import matplotlib.pyplot as plt
+from nltk.corpus import stopwords 
+
+import gensim
+from gensim.utils import simple_preprocess
+from gensim import corpora, models
+from gensim.parsing.preprocessing import STOPWORDS
+from nltk.stem import WordNetLemmatizer, SnowballStemmer
+from nltk.stem.porter import *
+
+import datetime
+import time
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from mpl_toolkits.mplot3d import Axes3D
+
+import nltk
+from nltk.tokenize import word_tokenize
+
+import keras
+from keras.layers import Input, Dense
+from keras.models import Model
+from sklearn.model_selection import train_test_split
+
+from sklearn.cluster import KMeans
+from gensim import corpora
+from gensim.models.ldamodel import LdaModel
+from sentence_transformers import SentenceTransformer
 
 class Trainer:
 
@@ -32,13 +72,37 @@ class Trainer:
         self.dataset = dataset
         self.custom_dataset = custom_dataset
         self.model_name = model_name
+
+        if self.model_name not in {'bertopic', 'lda-bert'}:
+            raise Exception(f'Model name {self.model_name} is not in [bertopic, lda-bert]!')
+
         self.params = params
         self.topk = topk
+        
         self.embeddings = bt_embeddings
-        self.ctm_preprocessed_docs = None
+        #self.ctm_preprocessed_docs = None
+        
         self.custom_model = custom_model
         self.verbose = verbose
-        #self.reduced = True if params["number_topics"] is not None else False
+        #### LDA-Bert specific params ####
+        
+        # Init empty dict for LDA-BERT
+        self.vec = {}
+
+        
+        #self.k = k -> here: params['number_topics']
+        self.dictionary = None
+        self.corpus = None
+        
+        # TODO: Init Kmeans here with nr of topics
+        self.cluster_model = KMeans(n_clusters=self.params['number_topics'])
+        self.ldamodel = None
+        # parameter for reletive importance of lda
+        #self.gamma = 15  -> here: params['gamma']
+        #self.method = method -> here: self.model_name
+        self.AE = None
+        
+        #### END: LDA-Bert specific params ####
 
         # Prepare data and metrics
         self.data = self.get_dataset()
@@ -54,9 +118,12 @@ class Trainer:
     def train(self):
 
         #output, duration, df, plot, rep_docs, topics, probs, words_score, df_output_doc_topic = self._train_tm_model(params = self.params)
-        output, topic_model, df_output_doc_topic, df_output_topic_word = self._train_tm_model(params = self.params)
-        #output, topic_model, df_output_doc_topic = self._train_tm_model(params = self.params)
-        scores = self.evaluate(output)
+        
+        #output, topic_model, df_output_doc_topic, df_output_topic_word = self._train_tm_model(params = self.params)
+        topic_model, df_output_doc_topic, df_output_topic_word = self._train_tm_model(params = self.params)
+        
+        #pred_labels, topic_words = self._train_tm_model(params = self.params)
+        #scores = self.evaluate(output)
 
         #result = {
         #        "Dataset": self.dataset,
@@ -74,11 +141,14 @@ class Trainer:
         #    }
 
         return topic_model, df_output_doc_topic, df_output_topic_word
+        #return pred_labels, topic_words
 
     def _train_tm_model(self, params):
 
         if self.model_name == "bertopic":
             return self._train_bertopic_model(params)
+        elif self.model_name == "lda-bert":
+            return self._train_lda_bert_model(params)
 
     def _train_bertopic_model(self, params):
         ## Define BERTopic model
@@ -183,8 +253,214 @@ class Trainer:
 
         df_output_topic_word = pd.concat([params_df, pd.DataFrame(topic_word_dict), results_df], axis=1)
         
-        return model_output, topic_model, df_output_doc_topic, df_output_topic_word
+        return topic_model, df_output_doc_topic, df_output_topic_word
+        #return model_output, topic_model, df_output_doc_topic, df_output_topic_word
         #return model_output, duration, topic_model.get_topic_info(), topic_model.visualize_barchart(), rep_docs, topics, probs, topic_model.get_topics(), df_output_doc_topic
+
+    def _train_lda_bert_model(self, params):
+
+        def get_topic_words(token_lists, labels, k=None, top_n = 10):
+            """
+            get most frequent words within each topic from clustering results as topic words
+            """
+            if k is None:
+                k = len(np.unique(labels))
+
+            topics = ['' for _ in range(k)]
+
+            for i, c in enumerate(token_lists):
+                topics[labels[i]] += (' ' + ' '.join(c))
+
+            word_counts = list(map(lambda x: Counter(x.split()).items(), topics))
+
+            # get sorted word counts
+            word_counts = list(map(lambda x: sorted(x, key=lambda x: x[1], reverse=True), word_counts))
+
+            # get topics
+            topic_words = list(map(lambda x: list(map(lambda x: x[0], x[:top_n])), word_counts))
+
+            return topic_words
+        
+        def preprocess_sent(raw):
+            """
+            returns raw sentences without preprocessing (should be done in preprocessing module)
+            """
+            return raw
+
+        def preprocess_word(s):
+            """
+            returns sentence as list of tokens (word list)
+            """
+            word_list = word_tokenize(s)
+
+            return word_list
+
+        def preprocess(docs):
+            """
+            Preprocess the data by calling preprocess_sent and word
+            returns sentences (List[str]) and token_lists (List[List[str]])
+            """
+            print('Preprocessing raw texts ...')
+
+            n_docs = len(docs)
+
+            # sentence level preprocessed
+            sentences = []
+
+            # word level preprocessed
+            token_lists = []  
+            
+            for i, doc in enumerate(docs):
+                sentence = preprocess_sent(doc)
+                token_list = preprocess_word(sentence)
+                if token_list:
+                    sentences.append(sentence)
+                    token_lists.append(token_list)
+
+                print('{} %'.format(str(np.round((i + 1) / n_docs * 100, 2))), end='\r')
+
+            print('Preprocessing raw texts. Done!')
+            return sentences, token_lists
+
+        sentences, token_lists = preprocess(self.docs)
+
+        # turn tokenized documents into a id <-> term dictionary
+        if not self.dictionary:
+            self.dictionary = corpora.Dictionary(token_lists)
+            # convert tokenized documents into a document-term matrix
+            self.corpus = [self.dictionary.doc2bow(text) for text in token_lists]
+
+        #### Getting vector representations ####
+        t0 = time.time()
+
+        print('Clustering embeddings ...')
+
+        # Init cluster_model above
+        # self.cluster_model = m_clustering(self.k)
+        self.vec[self.model_name] = self.vectorize(sentences, token_lists, self.model_name)
+        self.cluster_model.fit(self.vec[self.model_name])
+
+        print('Clustering embeddings. Done!')
+
+        pred_topic_labels = self.cluster_model.labels_
+
+        topic_words = get_topic_words(token_lists, pred_topic_labels, k = params['number_topics'], top_n = self.topk)
+
+        t1 = time.time()
+
+        duration = t1 - t0
+
+        ## Construct df doc_topic
+        doc_topic_dict = {
+            "run_id": int(t0),
+            "Document ID": range(len(self.docs)),
+            "Document": self.docs,
+            "Real Label": self.labels,
+            "Assigned Topic Num": pred_topic_labels,
+            "Assignment Score": int(1)
+        }
+
+        df_output_doc_topic = pd.DataFrame(doc_topic_dict)
+
+        ## Construct df topic_word
+        nrows_topic_word = params['number_topics']
+
+        params_dict = OrderedDict([
+            ('run_id', int(t0)),
+            ('method', self.model_name),
+            ('method_specific_params', params),
+            ('dataset', self.dataset),
+            ('num_given_topics', params['number_topics']),
+            ('reduced', False),
+        ])
+
+        topic_word_dict = {
+            'topic_num': range(nrows_topic_word),
+            'topic_size': np.unique(pred_topic_labels, return_counts=True)[1],
+            'topic_words': topic_words,
+            'word_scores': int(1) ##TODO: use frequency as word score OR use c-Tf-IDF for topic_words and word_scores
+        }
+        
+        results_dict = OrderedDict([
+            ('num_detected_topics', nrows_topic_word),
+            ('num_final_topics', nrows_topic_word),
+            ('duration_secs', duration),
+        ])
+
+        params_df = pd.DataFrame([params_dict] * nrows_topic_word)
+        results_df = pd.DataFrame([results_dict] * nrows_topic_word)
+
+        df_output_topic_word = pd.concat([params_df, pd.DataFrame(topic_word_dict), results_df], axis=1)
+        
+        return None, df_output_doc_topic, df_output_topic_word
+
+        #return pred_topic_labels, topic_words
+
+    def vectorize(self, sentences, token_lists, method):
+        """
+        Get vector representations for selected methods: LDA, BERT and LDA-BERT
+        """
+
+        if method == 'LDA':
+
+            print('Getting vector representations for LDA ...')
+            if not self.ldamodel:
+                self.ldamodel = LdaModel(self.corpus, num_topics=self.params['number_topics'], id2word=self.dictionary, passes=20)
+
+            def get_vec_lda(model, corpus, k):
+                """
+                Get the LDA vector representation (probabilistic topic assignments for all documents)
+                :return: vec_lda with dimension: (n_doc * n_topic)
+                """
+                n_doc = len(corpus)
+                vec_lda = np.zeros((n_doc, k))
+
+                for i in range(n_doc):
+                    # get the distribution for the i-th document in corpus
+                    for topic, prob in model.get_document_topics(corpus[i]):
+                        vec_lda[i, topic] = prob
+
+                return vec_lda
+
+            vec = get_vec_lda(self.ldamodel, self.corpus, self.params['number_topics'])
+            print('Getting vector representations for LDA. Done!')
+
+            return vec
+
+        elif method == 'BERT':
+
+            print('Getting vector representations for BERT ...')
+
+            if self.embeddings is not None:
+                vec = np.array(self.embeddings)
+            else:
+                model = SentenceTransformer(self.params['embedding_model'])
+                vec = np.array(model.encode(sentences, show_progress_bar=True))
+            
+            print('Getting vector representations for BERT. Done!')
+
+            return vec
+
+        elif method == 'lda-bert':
+
+            vec_lda = self.vectorize(sentences, token_lists, method='LDA')
+            vec_bert = self.vectorize(sentences, token_lists, method='BERT')
+
+            # Concat lda and bert vectors with HP gamma
+            vec_ldabert = np.c_[vec_lda * self.params['gamma'], vec_bert]
+
+            self.vec['LDA'] = vec_lda
+            self.vec['BERT'] = vec_bert
+            self.vec['LDA_BERT_FULL'] = vec_ldabert
+
+            if not self.AE:
+                self.AE = Autoencoder()
+                print('Fitting Autoencoder ...')
+                self.AE.fit(vec_ldabert)
+                print('Fitting Autoencoder Done!')
+
+            vec = self.AE.encoder.predict(vec_ldabert)
+            return vec
 
     def evaluate(self, output_tm):
 
@@ -223,29 +499,49 @@ class Trainer:
     
     def get_dataset(self):
 
-        #if self.dataset == "crisis_12":
-        #    dir_str = './data/crisis_resource_12_labeled_by_paid_workers'
-        #    col = 'text'
-        #elif self.dataset == "crisis_12_preprocessed":
-        #    dir_str = './data/crisis_resource_12_labeled_by_paid_workers_preprocessed'
-        #    col = 'Tweets'
-        #elif self.dataset == "crisis_1":
-        #    dir_str = './data/crisis_resource_01_labeled_by_paid_workers'
-        #    col = 'tweet_text'
-        #elif self.dataset == "crisis_1_preprocessed":
-        #    dir_str = './data/crisis_resource_01_labeled_by_paid_workers_preprocessed'
-        #    col = 'Tweets'
-        #elif self.dataset == "20news":
-        #    dir_str = './data/20news_bydate'
-        #    col = 'text'
-
         data = load_documents(self.dataset)
-
-        #if self.dataset != "20news":
-        #    data = data[0]
 
         return data
 
+class Autoencoder:
+    """
+    Autoencoder for learning latent space representation
+    architecture simplified for only one hidden layer
+    """
+
+    def __init__(self, latent_dim=32, activation='relu', epochs=200, batch_size=128):
+        self.latent_dim = latent_dim
+        self.activation = activation
+        self.epochs = epochs
+        self.batch_size = batch_size
+        self.autoencoder = None
+        self.encoder = None
+        self.decoder = None
+        self.his = None
+
+    def _compile(self, input_dim):
+        """
+        compile the computational graph
+        """
+        input_vec = Input(shape=(input_dim,))
+        encoded = Dense(self.latent_dim, activation=self.activation)(input_vec)
+        decoded = Dense(input_dim, activation=self.activation)(encoded)
+        self.autoencoder = Model(input_vec, decoded)
+        self.encoder = Model(input_vec, encoded)
+        encoded_input = Input(shape=(self.latent_dim,))
+        decoder_layer = self.autoencoder.layers[-1]
+        self.decoder = Model(encoded_input, self.autoencoder.layers[-1](encoded_input))
+        self.autoencoder.compile(optimizer='adam', loss=keras.losses.mean_squared_error)
+
+    def fit(self, X):
+        if not self.autoencoder:
+            self._compile(X.shape[1])
+        X_train, X_test = train_test_split(X)
+        self.his = self.autoencoder.fit(X_train, X_train,
+                                        epochs=200,
+                                        batch_size=128,
+                                        shuffle=True,
+                                        validation_data=(X_test, X_test), verbose=0)
 
 if __name__ == "__main__":
     print("Hello")
