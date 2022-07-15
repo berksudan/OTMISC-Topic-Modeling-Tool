@@ -10,7 +10,7 @@ import requests
 from sentence_transformers import SentenceTransformer
 from top2vec import Top2Vec
 
-from utils import load_documents, pretty_print_dict
+from utils import pretty_print_dict
 
 EMBEDDING_DIR_PATH = './pretrained_models'
 TF_HUB_EMBEDDING_MODELS_WITH_SOURCES = [
@@ -127,14 +127,18 @@ def extract_topic_word_output(
     return pd.concat([params_df, pd.DataFrame(topic_stats), results_df], axis=1)
 
 
-def run(dataset: str, min_count: int, embedding_model: str, umap_args: Dict, hdbscan_args: Dict,
-        doc2vec_speed: str = None, num_topics: int = None) -> Tuple:
+def run(data_name: str, docs: List[str], labels: List[str], min_count: int, embedding_model: str, umap_args: Dict,
+        hdbscan_args: Dict, doc2vec_speed: str = None, num_topics: int = None) -> Tuple:
     """
     Runs Top2Vec algorithm with the given parameters.
 
     Parameters
     ----------
-    dataset: Name of Dataset
+    data_name: Name of Dataset
+
+    docs: List of Documents
+
+    labels: List of labels per document in docs
 
     min_count:  Set in the Top2Vec paper. Ignores all words with total frequency lower than this. For smaller corpora a
                 smaller min_count is necessary. NOTE: This value largely depends on corpus size and its vocabulary.
@@ -184,23 +188,22 @@ def run(dataset: str, min_count: int, embedding_model: str, umap_args: Dict, hdb
     assert embedding_model in VALID_EMBEDDING_MODELS, f'"{embedding_model}" must be in {VALID_EMBEDDING_MODELS}!'
     download_embedding_models(embedding_folder=EMBEDDING_DIR_PATH)
     time_start = time.time()
-    print(f'[INFO] Top2Vec is running for dataset:"{dataset}".')
-    documents, labels = load_documents(dataset)
+    print(f'[INFO] Top2Vec is running for dataset:"{data_name}".')
 
     if embedding_model == 'doc2vec':  # Model is Doc2Vec
         model = Top2Vec(
-            documents, speed=doc2vec_speed, workers=cpu_count(), min_count=min_count,
+            docs, speed=doc2vec_speed, workers=cpu_count(), min_count=min_count,
             embedding_model=embedding_model, umap_args=umap_args, hdbscan_args=hdbscan_args
         )
     elif embedding_model in TF_HUB_EMBEDDING_MODELS:  # Model is a TF Hub Model (Universal-Sentence-Encoder)
         model = Top2Vec(
-            documents, workers=cpu_count(), min_count=min_count, embedding_model=embedding_model,
+            docs, workers=cpu_count(), min_count=min_count, embedding_model=embedding_model,
             embedding_model_path=f'{EMBEDDING_DIR_PATH}/{embedding_model}', umap_args=umap_args,
             hdbscan_args=hdbscan_args
         )
     elif embedding_model in HUGGING_FACE_EMBEDDING_MODELS:  # Model is a Hugging Face Model (Sentence-Transformer)
         model = Top2Vec(
-            documents, workers=cpu_count(), min_count=min_count, embedding_model=embedding_model,
+            docs, workers=cpu_count(), min_count=min_count, embedding_model=embedding_model,
             embedding_model_path=f'{EMBEDDING_DIR_PATH}/sentence-transformers_{embedding_model}', umap_args=umap_args,
             hdbscan_args=hdbscan_args
         )
@@ -223,13 +226,13 @@ def run(dataset: str, min_count: int, embedding_model: str, umap_args: Dict, hdb
     duration_secs = float('%.3f' % (time.time() - time_start))
     print_topic_stats(stats=topic_stats)
 
-    print(f'[INFO] Top2Vec successfully terminated for data:"{dataset}".')
+    print(f'[INFO] Top2Vec successfully terminated for data:"{data_name}".')
 
     # Prepare Output
     df_output_doc_topic = extract_doc_topic_output(run_id=int(time_start), topic_stats=topic_stats, model=model,
                                                    labels=labels, is_reduced=is_reduced)
     df_output_topic_word = extract_topic_word_output(
-        run_id=int(time_start), topic_stats=topic_stats, dataset=dataset,
+        run_id=int(time_start), topic_stats=topic_stats, dataset=data_name,
         num_topics=num_topics, method='top2vec',
         method_specific_params={
             'doc2vec_speed': doc2vec_speed, 'min_count': min_count, 'embedding_model': embedding_model,
@@ -240,24 +243,24 @@ def run(dataset: str, min_count: int, embedding_model: str, umap_args: Dict, hdb
     return model, df_output_doc_topic, df_output_topic_word
 
 
-def parametric_run(args):
-    pretty_print_dict(args, info_log='Top2Vec Parameters:')
+def parametric_run(args: dict, exclude=('docs', 'labels')):
+    args_for_printing = args.copy()
+    for item in exclude:
+        args_for_printing.pop(item, None)
+    pretty_print_dict(args_for_printing, info_log='Top2Vec Parameters:')
     return run(**args)
 
 
-def default_test():
+def default_test(data_name: str = 'crisis_toy'):
+    from utils import load_documents
+    docs, labels = load_documents(dataset=data_name)
     return parametric_run(args={
-        'dataset': 'crisis_toy',
-        # 'dataset': 'crisis_12',
-        # 'dataset': '20news',
+        'data_name': data_name,
+        'docs': docs,
+        'labels': labels,
         'num_topics': 4,
-
-        # ####### Top2Vec Specific Arguments #########
-        # 'embedding_model': 'doc2vec',
-        # 'embedding_model': 'universal-sentence-encoder-large',
         'embedding_model': 'all-MiniLM-L6-v2',
-        # 'embedding_model': 'distiluse-base-multilingual-cased',
-        # 'doc2vec_speed': 'fast-learn',
+        # Options: ['doc2vec', 'universal-sentence-encoder-large', 'distiluse-base-multilingual-cased', 'fast-learn']
         'min_count': 50,
         'umap_args': {
             'n_neighbors': 15,
