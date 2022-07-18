@@ -443,3 +443,40 @@ def visualize_heatmap(
     fig.update_layout(legend_title_text='Trend')
     # todo: write as image
     return fig
+
+
+def draw_representative_docs(df_output_doc_topic: pd.DataFrame, top_n_docs: int = 3):
+    def get_partial_dfs(a_df: pd.DataFrame, partition_col: str):
+        xs = []
+        for topic in sorted(a_df[partition_col].unique()):
+            df_topic = a_df.query(f'`{partition_col}` == {topic}').sort_values(
+                by=partition_col, ascending=False)
+            if len(df_topic) > top_n_docs:
+                df_topic = df_topic.head(n=top_n_docs)
+            xs.append(df_topic)
+
+        return pd.concat(xs)
+
+    def format_color_groups(a_df, colors=('lightblue', 'white')):
+        x = a_df.copy()
+        for i, factor in enumerate(x['Assigned Topic Num'].unique()):
+            x.loc[x['Assigned Topic Num'] == factor, :] = f'background-color: {colors[i % len(colors)]}'
+
+        return x
+
+    df = get_partial_dfs(a_df=df_output_doc_topic, partition_col='Assigned Topic Num')
+
+    df_style = df.style.apply(format_color_groups, axis=None) \
+        .set_table_attributes('style="font-size: 17px"') \
+        .set_properties(color='black !important', border='1px black solid !important') \
+        .set_table_styles([{'selector': 'th', 'props': [('border', '1px black solid !important')]}]) \
+        .set_properties(**{'text-align': 'left'}) \
+        .hide_index()
+
+    for col in df.columns:
+        max_col_size = max(map(lambda x: len(str(x)), list(df[col]) + [str(col)]))
+        max_col_size = max_col_size if max_col_size < 110 else 110
+        df_style = df_style.set_properties(subset=[col], **{'width': max_col_size * 8})
+
+    # dfi.export(df_style, 'successful_test.png') # todo: export to file
+    return df_style
