@@ -51,7 +51,7 @@ def draw_umap2d_scatter_plot(
     elif algorithm_name == 'bertopic':
         doc_topics = df_output_doc_topic['Assigned Topic Num']
         doc_vectors = model.umap_model.embedding_
-        #raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
+        # raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
     elif algorithm_name in ('lda', 'nmf'):
         raise ValueError(f'LDA and NMF cannot support draw_umap_2d_scatter_plot() because they do not use UMAP phase.')
     else:
@@ -80,7 +80,7 @@ def draw_umap2d_scatter_plot(
     return target_figure
 
 
-def visualize_barchart(df_output_topic_word: pd.DataFrame,
+def visualize_barchart(df_output_topic_word: pd.DataFrame,  # todo: rename the function
                        topics: List[int] = None,
                        top_n_topics: int = None,
                        n_words: int = 5,
@@ -173,7 +173,7 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,
         ),
     )
 
-    fig.update_xaxes(showgrid=True)
+    fig.update_xaxes(showgrid=True, range=[0, 1], dtick=0.2)
     fig.update_yaxes(showgrid=True)
 
     # fig = fig # type: plotly.graph_objs._figure.Figure
@@ -186,7 +186,7 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
                                top_n_topics: int = 10,
                                top_n_labels: int = 5,
                                topics: List[int] = None,
-                               normalize_frequency: bool = True,
+                               use_normalized_frequency: bool = True,
                                width: int = 1000,
                                height: Union[int, str] = 'adjustable') -> go.Figure:
     """ Visualize topics per class
@@ -197,22 +197,13 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
         top_n_topics: To visualize the most frequent topics instead of all
         top_n_labels: To visualize the most frequent labels (per topic) instead of all
         topics: Select which topics you would like to be visualized
-        normalize_frequency: Whether to per cent normalize each topic's frequency individually
+        use_normalized_frequency: Whether to per cent normalize each topic's frequency individually
         width: The width of the figure.
         height: The height of the figure.
 
     Returns:
         A plotly.graph_objects.Figure including all traces
 
-    Usage: # todo: del here
-
-    If you want to save the resulting figure:
-
-    fig = topic_model.visualize_topics_per_class(topics_per_class)
-    fig.write_html("path/to/file.html")
-    ```
-    <iframe src="../../getting_started/visualization/topics_per_class.html"
-    style="width:1400px; height: 1000px; border: 0px;""></iframe>
     """
     colors = ["#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#0072B2", "#CC79A7"]
     run_id = df_output_topic_word['run_id'][0]
@@ -237,6 +228,7 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
     data = freq_df.loc[freq_df['Topic'].isin(topics), :]
 
     # Initialize figure
+    title_x_axis = "Normalized Frequency (%)" if use_normalized_frequency else "Frequency (Count)"
     subplot_titles = [f'Topic: "{topic_num_to_names[topic]}"' for topic in list(topics)]
     num_columns = 2
     num_rows = ceil((len(topics)) / num_columns)
@@ -253,16 +245,32 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
     cur_col = 1
     for index, topic in enumerate(topics):
         cur_data = data.loc[data.Topic == topic, :]  # type: pd.DataFrame
-        if normalize_frequency:
-            cur_data.Frequency = 100 * cur_data.Frequency / sum(cur_data.Frequency)
+        cur_data['NormalizedFrequency'] = 100 * cur_data.Frequency / sum(cur_data.Frequency)
         cur_data = cur_data.sort_values(by='Frequency', ascending=False).head(top_n_labels).iloc[::-1]
+        cur_data = cur_data.sort_values(by='Class', ascending=False)  # Sort again by labels alphabetically
 
-        fig.add_trace(
-            go.Bar(y=cur_data.Class, x=cur_data.Frequency, visible=True, marker_color=colors[index % 7],
-                   orientation="h"),
-            row=cur_row, col=cur_col)
-        fig.update_xaxes(title_text="Normalized Frequency (%)" if normalize_frequency else "Frequency (Count)",
-                         title_standoff=0, row=cur_row, col=cur_col)
+        if use_normalized_frequency:
+            fig.add_trace(
+                go.Bar(y=cur_data.Class, x=cur_data['NormalizedFrequency'], marker_color=colors[index % 7],
+                       orientation="h"), row=cur_row, col=cur_col)
+            fig.update_xaxes(range=[1, 100], dtick=10)
+        else:
+            fig.add_trace(
+                go.Bar(y=cur_data.Class, x=cur_data['Frequency'], marker_color=colors[index % 7], orientation="h"),
+                row=cur_row, col=cur_col)
+
+        fig.update_xaxes(title_text=title_x_axis, title_standoff=0, row=cur_row, col=cur_col)
+
+        if use_normalized_frequency:
+            for label_class in cur_data.Class.unique():
+                fig.add_annotation(
+                    y=label_class,
+                    text=str(cur_data[cur_data['Class'] == label_class]['Frequency'].values[0]),
+                    bgcolor='black', font={'color': 'white'},
+                    opacity=0.75,
+                    showarrow=False, row=cur_row, col=cur_col
+                )
+
         if cur_col == 1:
             fig.update_yaxes(title_text="Real Label", row=cur_row, col=cur_col)
 
@@ -277,11 +285,8 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
     fig.update_yaxes(showgrid=True)
     fig.update_layout(
         showlegend=False,
-        # xaxis_title="Normalized Frequency (%)" if normalize_frequency else "Frequency (Count)",
-        # yaxis_title="Real Label",
         title={
             'text': f'<b>Labels per Topic for algorithm="{algorithm_name}", run_id="{run_id}"<br></b>',
-            # 'y': .99,
             'x': 0.40,
             'xanchor': 'center',
             'yanchor': 'top',
@@ -292,7 +297,6 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
         template="simple_white",
         width=width,
         height=200 * num_rows if height == 'adjustable' else height,
-
     )
     return fig
 
@@ -346,8 +350,6 @@ def visualize_heatmap(
             tpc_embeddings = np.array(model.topic_embeddings)
         else:
             tpc_embeddings = model.c_tf_idf
-        # TODO: implement
-        #raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
     elif algorithm_name in ('lda', 'nmf'):
         raise ValueError(f'LDA and NMF cannot support visualize_heatmap() because they have no topic embeddings.')
     else:
