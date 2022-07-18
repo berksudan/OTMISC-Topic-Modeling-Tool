@@ -17,6 +17,8 @@ from scipy.cluster.hierarchy import fcluster, linkage
 from sklearn.metrics.pairwise import cosine_similarity
 from top2vec import Top2Vec
 
+from src.bertopic_runner import LDABERT
+
 target_template = Template('${run_id}_${algorithm}_${visualization_method}.${extension}')
 
 AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf', 'lda-bert']
@@ -36,7 +38,7 @@ def check_algorithm(al: str):
 
 
 def draw_umap2d_scatter_plot(
-        model: Union[Top2Vec, BERTopic],
+        model: Union[Top2Vec, BERTopic, LDABERT],
         df_output_topic_word: pd.DataFrame,
         df_output_doc_topic: pd.DataFrame = None,
         target_dir: str = './output/visualization'
@@ -51,7 +53,9 @@ def draw_umap2d_scatter_plot(
     elif algorithm_name == 'bertopic':
         doc_topics = df_output_doc_topic['Assigned Topic Num']
         doc_vectors = model.umap_model.embedding_
-        # raise NotImplementedError(f'draw_umap_2d_scatter_plot() not implemented for the algorithm:{algorithm_name}.')
+    elif algorithm_name == 'lda-bert':
+        doc_topics = df_output_doc_topic['Assigned Topic Num']
+        doc_vectors = model.vec['lda-bert']
     elif algorithm_name in ('lda', 'nmf'):
         raise ValueError(f'LDA and NMF cannot support draw_umap_2d_scatter_plot() because they do not use UMAP phase.')
     else:
@@ -61,7 +65,18 @@ def draw_umap2d_scatter_plot(
         print(f'[INFO] The target dir:"{target_dir}" not exists, so creating..')
         os.makedirs(target_dir)
 
-    visualization_umap_args = df_output_topic_word['method_specific_params'][0]['umap_args']
+    # LDA-Bert does not use UMAP for dimension reduction (as of now), so just use fixed args
+    if algorithm_name == 'lda-bert':
+        visualization_umap_args = {
+            "n_neighbors": 15,
+            "n_components": 5,
+            "min_dist": 0.0,
+            "metric": 'cosine',
+            "low_memory": False
+        }
+    else:
+        visualization_umap_args = df_output_topic_word['method_specific_params'][0]['umap_args']
+
     visualization_umap_args.update({'n_components': 2})
 
     print(f'[INFO] UMAP Arguments for Visualization:{visualization_umap_args}')
@@ -302,7 +317,7 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
 
 
 def visualize_heatmap(
-        model: Union[Top2Vec, BERTopic],
+        model: Union[Top2Vec, BERTopic, LDABERT],
         df_output_doc_topic: pd.DataFrame,
         df_output_topic_word: pd.DataFrame,
         topics: List[int] = None,
@@ -350,6 +365,8 @@ def visualize_heatmap(
             tpc_embeddings = np.array(model.topic_embeddings)
         else:
             tpc_embeddings = model.c_tf_idf
+    elif algorithm_name == 'lda-bert':
+        tpc_embeddings = np.array(model.cluster_model.cluster_centers_)
     elif algorithm_name in ('lda', 'nmf'):
         raise ValueError(f'LDA and NMF cannot support visualize_heatmap() because they have no topic embeddings.')
     else:
