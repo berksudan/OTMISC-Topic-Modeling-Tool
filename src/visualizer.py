@@ -447,15 +447,15 @@ def visualize_heatmap(
 
 def draw_representative_docs(df_output_doc_topic: pd.DataFrame, top_n_docs: int = 3):
     def get_partial_dfs(a_df: pd.DataFrame, partition_col: str):
-        xs = []
+        df_topics = []
         for topic in sorted(a_df[partition_col].unique()):
             df_topic = a_df.query(f'`{partition_col}` == {topic}').sort_values(
                 by=partition_col, ascending=False)
             if len(df_topic) > top_n_docs:
                 df_topic = df_topic.head(n=top_n_docs)
-            xs.append(df_topic)
+            df_topics.append(df_topic)
 
-        return pd.concat(xs)
+        return pd.concat(df_topics)
 
     def format_color_groups(a_df, colors=('lightblue', 'white')):
         x = a_df.copy()
