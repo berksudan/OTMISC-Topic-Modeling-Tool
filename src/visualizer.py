@@ -311,7 +311,7 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
         },
         template="simple_white",
         width=width,
-        height=200 * num_rows if height == 'adjustable' else height,
+        height=230 * num_rows if height == 'adjustable' else height,
     )
     return fig
 
