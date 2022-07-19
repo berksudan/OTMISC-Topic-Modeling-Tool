@@ -7,6 +7,7 @@ import pandas as pd
 
 available_datasets = {
     'crisis_01': {'dataset_dir': './data/crisis_resource_01_labeled_by_paid_workers', 'dataset_text_col': 'tweet_text'},
+    'crisis_07': {'dataset_dir': './data/crisis_resource_07', 'dataset_text_col': 'text'},
     'crisis_12': {'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers', 'dataset_text_col': 'text'},
     'crisis_toy': {'dataset_dir': './data/crisis_resource_toy', 'dataset_text_col': 'text'},
     '20news': {'dataset_dir': './data/20news_bydate', 'dataset_text_col': 'text'},
