@@ -12,6 +12,18 @@ import contractions
 from nltk import RegexpTokenizer, WordNetLemmatizer
 from nltk.corpus import stopwords
 
+import pkg_resources
+from symspellpy import SymSpell, Verbosity
+
+##Setup SymSpell for typo correction
+sym_spell = SymSpell(max_dictionary_edit_distance=3, prefix_length=7)
+dictionary_path = pkg_resources.resource_filename("symspellpy", "frequency_dictionary_en_82_765.txt")
+
+if sym_spell.word_count:
+    pass
+else:
+    sym_spell.load_dictionary(dictionary_path, term_index=0, count_index=1)
+
 english_stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
@@ -59,6 +71,7 @@ def remove_url(text):
 
 def expand_contractions(text): return ' '.join([contractions.fix(word) for word in text.split()])
 
+def expand_missing_delimiter(text): return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
 
 def remove_mentions(text): return re.sub(r'@\S*', '', text)
 
@@ -97,6 +110,22 @@ def lemmatize_noun(tokenized_text: List[str]):
 def lemmatize_adjective(tokenized_text: List[str]):
     return lemmatize(tokenized_text, pos='a')
 
+def correct_typo(tokenized_text: List[str]):
+    """
+    :param tokenized_text: word list to be processed
+    :return: word list with typo fixed by symspell. words with no match up will be returned as they are
+    """
+    w_list_fixed = []
+    for word in tokenized_text:
+        suggestions = sym_spell.lookup(word, Verbosity.CLOSEST, max_edit_distance=3)
+        
+        if suggestions:
+            w_list_fixed.append(suggestions[0].term)
+        else:
+            w_list_fixed.append(word)
+
+    return w_list_fixed
+
 
 class TestUtils(unittest.TestCase):
     def test_all(self):
@@ -119,6 +148,11 @@ class TestUtils(unittest.TestCase):
         str_before = "Don't is the same as do not"
         str_after = 'Do not is the same as do not'
         self.assertTrue(str_after == expand_contractions(str_before))
+
+        # expand_missing_delimiter
+        str_before = "endThis is a sentence"
+        str_after = "end This is a sentence"
+        self.assertTrue(str_after == expand_missing_delimiter(str_before))
 
         # remove_mentions
         str_before = 'Some random @abc and #def'
@@ -154,6 +188,11 @@ class TestUtils(unittest.TestCase):
         str_before = '“One,\\n\n\nTwo-hoo,\n\nThrrrrreee.”\\n\n\nThree.'
         str_after = '“One,Two-hoo,Thrrrrreee.”Three.'
         self.assertTrue(str_after == remove_new_lines(str_before))
+
+        # correct_typo
+        str_before = "Helo this is a naturl langeage problim"
+        str_after = "Hello this is a natural language problem"
+        self.assertTrue(str_after == correct_typo(str_before))
 
 
 def __instance_preprocess(a_str: str, str_methods: Tuple[str], tokenized_methods: Tuple[str] = None) -> str:

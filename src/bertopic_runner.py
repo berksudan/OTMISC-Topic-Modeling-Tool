@@ -65,13 +65,11 @@ class Trainer:
         model_name: str,
         params: None,
         topk: int = 10,
-        custom_dataset: bool = False,
         bt_embeddings: np.ndarray = None,
-        custom_model=None,
         verbose: bool = True
     ):
         self.dataset = dataset
-        self.custom_dataset = custom_dataset
+        
         self.model_name = model_name
 
         if self.model_name not in {'bertopic', 'lda-bert'}:
@@ -83,18 +81,13 @@ class Trainer:
         self.embeddings = bt_embeddings
         #self.ctm_preprocessed_docs = None
         
-        self.custom_model = custom_model
         self.verbose = verbose
 
         # Prepare data and metrics
-        self.data = self.get_dataset()
-        self.docs = self.data[0]
-        self.labels = self.data[1]
-        self.metrics = self.get_metrics()
-
-        # CTM
-        self.qt_ctm = None
-        self.training_dataset_ctm = None
+        #self.data = self.get_dataset()
+        self.docs = self.params['docs']
+        self.labels = self.params['labels']
+        #self.metrics = self.get_metrics()
 
     ## Maybe save param?
     def train(self):
@@ -133,14 +126,20 @@ class Trainer:
             return self._train_lda_bert_model(params)
 
     def _train_bertopic_model(self, params):
+        #Boolean: if true assign docs to topics if prob is higher than a threshold
+        #no_noise = params["no_noise"]
+        #probability_threshold = params["prob_threshold"]
+
         ## Define BERTopic model
+        cluster_model = HDBSCAN(**params["hdbscan_args"]) if (params["hdbscan_args"] is not None) else KMeans(n_clusters=params["number_topics"])
         topic_model = BERTopic(embedding_model = params["embedding_model"], 
                                verbose = self.verbose,
                                top_n_words = params["top_n_words"],
                                n_gram_range = params["n_gram_range_tuple"],
                                min_topic_size = params["min_docs_per_topic"],
                                umap_model= UMAP(**params["umap_args"]),
-                               hdbscan_model = HDBSCAN(**params["hdbscan_args"])
+                               hdbscan_model = cluster_model
+                               #calculate_probabilities=no_noise,
                                #nr_topics = params["number_topics"]
                                )
     
@@ -154,9 +153,18 @@ class Trainer:
         if (params['number_topics'] is not None) and (params['number_topics'] < num_detected_topics):
             self.reduced = True
             topics, probs = topic_model.reduce_topics(self.docs, topics, probs, nr_topics=params['number_topics'])
+            #print(f'The shape of probs after reducing is: {len(probs)} x {len(probs[0])}')
+            #probs = [prob[0:params['number_topics']] for prob in probs]
+            #print(f'The shape of probs after correction is: {len(probs)} x {len(probs[0])}')
         else:
             self.reduced = False
         
+        #if no_noise:
+        #    print(f'The number of topics before no_noise is {len(set(topics))}')
+        #    topics = [np.argmax(prob) if max(prob) >= probability_threshold else -1 for prob in probs]
+        #    probs = [max(prob) if max(prob) >= probability_threshold else 1 - sum(prob) for prob in probs ]
+        #    print(f'The number of topics after no_noise is {len(set(topics))}')
+            
         num_final_topics = len(set(topics))
 
         t1 = time.time()
@@ -189,9 +197,9 @@ class Trainer:
         model_output['word_scores'] = word_score_list
 
         ## Get representative docs
-        rep_docs = []
-        for i in topic_model.get_topic_info()['Topic']:
-            rep_docs.append(topic_model.get_representative_docs(i)[:10])
+        #rep_docs = []
+        #for i in topic_model.get_topic_info()['Topic']:
+        #    rep_docs.append(topic_model.get_representative_docs(i)[:10])
 
         ## Construct df doc_topic
         doc_topic_dict = {
@@ -199,8 +207,8 @@ class Trainer:
             "Document ID": range(len(self.docs)),
             "Document": self.docs,
             "Real Label": self.labels,
-            "Assigned Topic Num": topics,
-            "Assignment Score": probs
+            "Assigned Topic Num": topics if (params["hdbscan_args"] is not None) else [t-1 for t in topics],
+            "Assignment Score": probs if (params["hdbscan_args"] is not None) else 1
         }
 
         df_output_doc_topic = pd.DataFrame(doc_topic_dict)
@@ -289,7 +297,7 @@ class Trainer:
             'topic_num': range(nrows_topic_word),
             'topic_size': np.unique(pred_topic_labels, return_counts=True)[1],
             'topic_words': topic_words,
-            'word_scores': word_scores ##TODO: use frequency as word score OR use c-Tf-IDF for topic_words and word_scores
+            'word_scores': word_scores ##TODO: use c-Tf-IDF for topic_words and word_scores
         }
         
         results_dict = OrderedDict([
@@ -404,7 +412,7 @@ class LDABERT:
         self.dictionary = None
         self.corpus = None
         
-        # TODO: Init Kmeans here with nr of topics
+        # Init Kmeans here with nr of topics
         self.cluster_model = KMeans(n_clusters=self.params['number_topics'])
         self.ldamodel = None
         # parameter for reletive importance of lda
@@ -574,6 +582,7 @@ class LDABERT:
 
         pred_topic_labels = self.cluster_model.labels_
 
+        ## TODO: Call correct function for c-TF-IDF
         topic_words, word_scores = self.get_topic_words(token_lists, pred_topic_labels, k = self.params['number_topics'], top_n = self.params['top_n_words'])
 
         return pred_topic_labels, topic_words, word_scores
