@@ -1,5 +1,4 @@
 import itertools
-import math
 import os.path
 from collections import OrderedDict
 from math import ceil
@@ -18,18 +17,19 @@ from scipy.cluster.hierarchy import fcluster, linkage
 from sklearn.metrics.pairwise import cosine_similarity
 from top2vec import Top2Vec
 
-from src.bertopic_runner import LDABERT
+from src.bertopic_runner import LdaBert
 
 target_template = Template('${run_id}_${algorithm}_${visualization_method}.${extension}')
 
-AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf', 'lda-bert']
+AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf', 'lda-bert', 'ctm']
 
 ALGORITHM_TO_WORD_SCORE_METRIC = {
     'top2vec': 'CosineSimilarity(TopicVec,WordVec)',
     'bertopic': 'c-TF-IDF Score',
     'lda': 'Probability Score',
     'nmf': 'Probability Score',
-    'lda-bert': 'Word Frequency'
+    'lda-bert': 'Word Frequency',
+    'ctm': 'Normalized probability score'
 }
 assert set(AVAILABLE_TOPIC_MODELING_ALGORITHMS) == set(ALGORITHM_TO_WORD_SCORE_METRIC)
 
@@ -39,7 +39,7 @@ def check_algorithm(al: str):
 
 
 def draw_umap2d_scatter_plot(
-        model: Union[Top2Vec, BERTopic, LDABERT],
+        model: Union[Top2Vec, BERTopic, LdaBert],
         df_output_topic_word: pd.DataFrame,
         df_output_doc_topic: pd.DataFrame = None,
         target_dir: str = './output/visualization'
@@ -324,7 +324,7 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
 
 
 def visualize_heatmap(
-        model: Union[Top2Vec, BERTopic, LDABERT],
+        model: Union[Top2Vec, BERTopic, LdaBert],
         df_output_doc_topic: pd.DataFrame,
         df_output_topic_word: pd.DataFrame,
         topics: List[int] = None,
@@ -350,16 +350,6 @@ def visualize_heatmap(
     Returns:
         fig: A plotly figure
 
-    Usage:
-
-    If you want to save the resulting figure:
-
-    ```python
-    fig = topic_model.visualize_heatmap()
-    fig.write_html("path/to/file.html")
-    ```
-    <iframe src="../../getting_started/visualization/heatmap.html"
-    style="width:1000px; height: 720px; border: 0px;""></iframe>
     """
     run_id = df_output_topic_word['run_id'][0]
     algorithm_name = df_output_topic_word['method'][0]
