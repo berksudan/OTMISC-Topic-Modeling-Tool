@@ -9,19 +9,15 @@ from functools import reduce, partial
 from typing import List, Tuple
 
 import contractions
+import pkg_resources
 from nltk import RegexpTokenizer, WordNetLemmatizer
 from nltk.corpus import stopwords
-
-import pkg_resources
 from symspellpy import SymSpell, Verbosity
 
-##Setup SymSpell for typo correction
-sym_spell = SymSpell(max_dictionary_edit_distance=3, prefix_length=7)
-dictionary_path = pkg_resources.resource_filename("symspellpy", "frequency_dictionary_en_82_765.txt")
+sym_spell = SymSpell(max_dictionary_edit_distance=3, prefix_length=7)  # Setup SymSpell for typo correction
 
-if sym_spell.word_count:
-    pass
-else:
+if not sym_spell.word_count:
+    dictionary_path = pkg_resources.resource_filename("symspellpy", "frequency_dictionary_en_82_765.txt")
     sym_spell.load_dictionary(dictionary_path, term_index=0, count_index=1)
 
 english_stop_words = set(stopwords.words('english'))
@@ -48,7 +44,12 @@ def __split_iterable_on_condition(condition_callable, iterable):
 
 
 def __is_tokenized_method(func_name):
-    return func_name.startswith('lemmatize') or 'stop_words' in func_name
+    tokenized_function_names = [
+        'expand_contractions',
+        'remove_english_stop_words',
+        'correct_typo'
+    ]
+    return func_name.startswith('lemmatize') or func_name in tokenized_function_names
 
 
 def __tokenize(s): return tokenizer.tokenize(s)
@@ -69,9 +70,8 @@ def remove_url(text):
     return re.sub(r'www\S+', '', text)
 
 
-def expand_contractions(text): return ' '.join([contractions.fix(word) for word in text.split()])
-
 def expand_missing_delimiter(text): return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
+
 
 def remove_mentions(text): return re.sub(r'@\S*', '', text)
 
@@ -89,6 +89,9 @@ def remove_extra_spaces(text): return ' '.join(text.split())
 
 
 def remove_html_tags(text): return re.sub(r'<.*?>', ' ', text)
+
+
+def expand_contractions(tokenized_text: List[str]): return [contractions.fix(word) for word in tokenized_text]
 
 
 def remove_english_stop_words(tokenized_text: List[str]):
@@ -110,6 +113,7 @@ def lemmatize_noun(tokenized_text: List[str]):
 def lemmatize_adjective(tokenized_text: List[str]):
     return lemmatize(tokenized_text, pos='a')
 
+
 def correct_typo(tokenized_text: List[str]):
     """
     :param tokenized_text: word list to be processed
@@ -118,7 +122,7 @@ def correct_typo(tokenized_text: List[str]):
     w_list_fixed = []
     for word in tokenized_text:
         suggestions = sym_spell.lookup(word, Verbosity.CLOSEST, max_edit_distance=3)
-        
+
         if suggestions:
             w_list_fixed.append(suggestions[0].term)
         else:
