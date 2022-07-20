@@ -256,7 +256,8 @@ class Trainer:
             'number_topics': params['number_topics'], 
             'top_n_words': params['top_n_words'],
             'embedding_model': params['embedding_model'],
-            'gamma': params['gamma']
+            'gamma': params['gamma'],
+            'random_state': params['random_state']
         }
 
         topic_model = LDABERT(self.embeddings, lda_bert_params)
@@ -280,8 +281,8 @@ class Trainer:
         df_output_doc_topic = pd.DataFrame(doc_topic_dict)
 
         ## Construct df topic_word
-        print(f'the words scores are: {word_scores}')
-        print(f'and have length: {len(word_scores)}')
+        #print(f'the words scores are: {word_scores}')
+        #print(f'and have length: {len(word_scores)}')
 
         nrows_topic_word = params['number_topics']
 
@@ -432,7 +433,7 @@ class LDABERT:
 
             print('Getting vector representations for LDA ...')
             if not self.ldamodel:
-                self.ldamodel = LdaModel(self.corpus, num_topics=self.params['number_topics'], id2word=self.dictionary, passes=20)
+                self.ldamodel = LdaModel(self.corpus, num_topics=self.params['number_topics'], id2word=self.dictionary, passes=20, random_state=self.params['random_state'])
 
             def get_vec_lda(model, corpus, k):
                 """
