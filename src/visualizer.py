@@ -1,4 +1,5 @@
 import itertools
+import math
 import os.path
 from collections import OrderedDict
 from math import ceil
@@ -199,7 +200,7 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,  # todo: rename the f
 def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
                                df_output_topic_word: pd.DataFrame,
                                top_n_topics: int = 10,
-                               top_n_labels: int = 5,
+                               top_n_labels: int = None,
                                topics: List[int] = None,
                                use_normalized_frequency: bool = True,
                                width: int = 1000,
@@ -220,6 +221,10 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
         A plotly.graph_objects.Figure including all traces
 
     """
+
+    num_real_labels = len(df_output_doc_topic['Real Label'].unique())
+    if top_n_labels is None or top_n_labels > num_real_labels:
+        top_n_labels = num_real_labels
     colors = ["#E69F00", "#56B4E9", "#009E73", "#F0E442", "#D55E00", "#0072B2", "#CC79A7"]
     run_id = df_output_topic_word['run_id'][0]
     algorithm_name = df_output_topic_word['method'][0]
@@ -244,7 +249,9 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
 
     # Initialize figure
     title_x_axis = "Normalized Frequency (%)" if use_normalized_frequency else "Frequency (Count)"
+
     subplot_titles = [f'Topic: "{topic_num_to_names[topic]}"' for topic in list(topics)]
+    subplot_titles = [title[:45] + '...' if len(title) > 48 else title for title in subplot_titles]  # Trim Names
     num_columns = 2
     num_rows = ceil((len(topics)) / num_columns)
     rows = int(np.ceil(len(topics) / num_columns))
@@ -311,7 +318,7 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
         },
         template="simple_white",
         width=width,
-        height=230 * num_rows if height == 'adjustable' else height,
+        height=480 + 25 * num_rows * top_n_labels if height == 'adjustable' else height,
     )
     return fig
 

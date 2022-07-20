@@ -6,12 +6,15 @@ from typing import List, Tuple
 import pandas as pd
 
 available_datasets = {
-    'crisis_01': {'dataset_dir': './data/crisis_resource_01_labeled_by_paid_workers', 'dataset_text_col': 'tweet_text'},
+    'crisis_01': {'dataset_dir': './data/crisis_resource_01', 'dataset_text_col': 'tweet_text'},
     'crisis_07': {'dataset_dir': './data/crisis_resource_07', 'dataset_text_col': 'text'},
-    'crisis_12': {'dataset_dir': './data/crisis_resource_12_labeled_by_paid_workers', 'dataset_text_col': 'text'},
+    'crisis_12': {'dataset_dir': './data/crisis_resource_12', 'dataset_text_col': 'text'},
+    'crisis_17': {'dataset_dir': './data/crisis_resource_17', 'dataset_text_col': 'tweet_text'},
     'crisis_toy': {'dataset_dir': './data/crisis_resource_toy', 'dataset_text_col': 'text'},
     '20news': {'dataset_dir': './data/20news_bydate', 'dataset_text_col': 'text'},
     'yahoo': {'dataset_dir': './data/yahoo_answers_test_60K', 'dataset_text_col': 'text'},
+    'ag_news_long': {'dataset_dir': './data/ag_news_long', 'dataset_text_col': 'text'},
+    'ag_news_short': {'dataset_dir': './data/ag_news_short', 'dataset_text_col': 'text'},
 }
 
 
