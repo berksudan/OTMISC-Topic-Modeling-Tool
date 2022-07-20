@@ -544,26 +544,17 @@ class LDABERT:
         Preprocess the data by calling preprocess_sent and word
         returns sentences (List[str]) and token_lists (List[List[str]])
         """
-        print('Preprocessing raw texts ...')
+        print('Tokenizing raw texts ...')
 
-        n_docs = len(docs)
+        #n_docs = len(docs)
 
         # sentence level preprocessed
-        sentences = []
+        sentences = docs
 
         # word level preprocessed
-        token_lists = []  
-        
-        for i, doc in enumerate(docs):
-            sentence = self.preprocess_sent(doc)
-            token_list = self.preprocess_word(sentence)
-            if token_list:
-                sentences.append(sentence)
-                token_lists.append(token_list)
+        token_lists = [word_tokenize(s) for s in sentences]
 
-            print('{} %'.format(str(np.round((i + 1) / n_docs * 100, 2))), end='\r')
-
-        print('Preprocessing raw texts. Done!')
+        print('Tokenizing raw texts. Done!')
         
         return sentences, token_lists
     
@@ -572,7 +563,7 @@ class LDABERT:
 
         # turn tokenized documents into a id <-> term dictionary
         if not self.dictionary:
-            self.dictionary = corpora.Dictionary(token_lists, prune_at=2000)
+            self.dictionary = corpora.Dictionary(token_lists)
             # convert tokenized documents into a document-term matrix
             self.corpus = [self.dictionary.doc2bow(text) for text in token_lists]
 
