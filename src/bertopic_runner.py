@@ -567,7 +567,7 @@ class LDABERT:
 
         # turn tokenized documents into a id <-> term dictionary
         if not self.dictionary:
-            self.dictionary = corpora.Dictionary(token_lists)
+            self.dictionary = corpora.Dictionary(token_lists, prune_at=2000)
             # convert tokenized documents into a document-term matrix
             self.corpus = [self.dictionary.doc2bow(text) for text in token_lists]
 
