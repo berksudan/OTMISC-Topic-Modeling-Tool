@@ -1,8 +1,10 @@
-# Strax - Topic Modeling Advancements Tool
+# OTMISC: Our Topic Modeling Is Super Cool
 
 <div align="center">
-  <img src="./docs/Images/strax_logo.png" width="360" height="240">
+  <img src="./docs/Images/logo.jpg" width="25%">
 </div>
+
+An advanced topic modeling tool which is capable of many things.
 
 _________________________________________________________
 
