@@ -1,7 +1,7 @@
 # OTMISC: Our Topic Modeling Is Super Cool
 
 <div align="center">
-  <img src="./docs/Images/logo.jpg" width="25%" style='border:1px solid #000000'>
+  <img src="./docs/Images/logo.jpg" width="25%">
 </div>
 
 An advanced topic modeling tool which is capable of many things.
