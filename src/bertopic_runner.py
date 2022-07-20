@@ -132,7 +132,11 @@ class Trainer:
 
         ## Define BERTopic model
         ## TODO: Other cluster method with assignment score
-        cluster_model = HDBSCAN(**params["hdbscan_args"]) if (params["hdbscan_args"] is not None) else KMeans(n_clusters=params["number_topics"])
+        if params["cluster_model"] == "hdbscan":
+            cluster_model = HDBSCAN(**params["hdbscan_args"])
+        elif params["cluster_model"] == "kmeans":
+            cluster_model = KMeans(n_clusters=params["number_topics"])
+
         topic_model = BERTopic(embedding_model = params["embedding_model"], 
                                verbose = self.verbose,
                                top_n_words = params["top_n_words"],
