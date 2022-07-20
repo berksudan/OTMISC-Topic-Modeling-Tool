@@ -1,7 +1,8 @@
-# Strax - Topic Modeling Advancements Tool
+# OTMISC: Our Topic Modeling Is Super Cool
 
 <div align="center">
-  <img src="./docs/Images/strax_logo.png" width="360" height="240">
+  <img src="./docs/Images/logo.jpg" width="25%">
+  <p>An advanced topic modeling tool that can do many things!</p>
 </div>
 
 _________________________________________________________
@@ -82,10 +83,14 @@ $ ./run_jupyter.sh
 The following evaluation metrics are used for a metric based assessment of the produced topics:
 
 * **Diversity Unique**: percentage of unique topic words; in [0,1] and 1 for all different topic words
-* **Diversity Inverted Rank-Biased Overlap**: rank weighted percentage of unique topic words, words at higher ranks are penalized less; in [0,1] and 1 for all different topic words
-* **Coherence Normalized Pointwise Mutual Information**: metric for coherence of topic words, how well do they fit together as topic?; in [-1,1] and 1 for perfect association
-* **Coherence V**: metric for coherence of topic words evaluated by large sliding windows over the text together with indirect cosine similarity based on NPMI; in [0,1] and 1 for perfect association
-* **Rand Index**: similarity measure for the two clusterings given by the topic model and the real labels, in [0,1] and 1 for perfect match
+* **Diversity Inverted Rank-Biased Overlap**: rank weighted percentage of unique topic words, words at higher ranks are
+  penalized less; in [0,1] and 1 for all different topic words
+* **Coherence Normalized Pointwise Mutual Information**: metric for coherence of topic words, how well do they fit
+  together as topic?; in [-1,1] and 1 for perfect association
+* **Coherence V**: metric for coherence of topic words evaluated by large sliding windows over the text together with
+  indirect cosine similarity based on NPMI; in [0,1] and 1 for perfect association
+* **Rand Index**: similarity measure for the two clusterings given by the topic model and the real labels, in [0,1] and
+  1 for perfect match
 
 ## References
 
