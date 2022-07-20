@@ -2,9 +2,8 @@
 
 <div align="center">
   <img src="./docs/Images/logo.jpg" width="25%">
+  <p>An advanced topic modeling tool that can do many things!</p>
 </div>
-
-An advanced topic modeling tool which is capable of many things.
 
 _________________________________________________________
 
