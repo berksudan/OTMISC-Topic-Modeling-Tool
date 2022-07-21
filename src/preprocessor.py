@@ -207,10 +207,10 @@ def __instance_preprocess(a_str: str, str_methods: Tuple[str], tokenized_methods
 
 
 def __preprocess(data: List[str], str_methods: Tuple[str], tokenized_methods: Tuple[str] = None) -> List[str]:
-    print(f'[INFO] These string preprocessing methods will be applied to the data in order:')
+    print(f'[INFO] [PREPROCESSOR] These string preprocessing methods will be applied to the data in order:')
     pprint.pprint(str_methods, indent=3, width=40)
     if tokenized_methods:
-        print(f'[INFO] Then, these tokenized preprocessing methods will be applied to the data in order:')
+        print(f'[INFO] [PREPROCESSOR] Then, these tokenized preprocessing methods will be applied in order:')
         pprint.pprint(tokenized_methods, indent=3, width=40)
     pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
     return pool.map(partial(__instance_preprocess, str_methods=str_methods, tokenized_methods=tokenized_methods), data)
@@ -220,17 +220,18 @@ def __check_functions_validity(prep_functions: List[str]):
     all_funcs = set(list_available_prep_functions())
 
     if not set(prep_functions).issubset(all_funcs):
-        print(f'[ERROR] Given functions:{prep_functions}, available functions:{all_funcs}.')
+        print(f'[ERROR] [PREPROCESSOR] Given functions:{prep_functions}, available functions:{all_funcs}.')
         raise ValueError(f'These functions are not available:{set(prep_functions).difference(all_funcs)}.')
 
 
 def run(data: List[str], prep_functions: List[str]) -> List[str]:
     if not prep_functions:
-        print(f'[WARN] Preprocessing functions are empty or None, given:"{prep_functions}", preprocessing is skipped.')
+        print(f'[WARN] [PREPROCESSOR] Preprocessing functions are empty or None, '
+              f'given:"{prep_functions}", preprocessing is skipped.')
         return data
     __check_functions_validity(prep_functions=prep_functions)
 
-    print(f'[INFO] Available Preprocessing Functions in the Module:{list_available_prep_functions()}')
+    print(f'[INFO] [PREPROCESSOR] Available Preprocessing Functions in the Module:{list_available_prep_functions()}')
 
     tokenized_funcs, str_funcs = __split_iterable_on_condition(__is_tokenized_method, iterable=prep_functions)
     if tokenized_funcs:
@@ -238,9 +239,9 @@ def run(data: List[str], prep_functions: List[str]) -> List[str]:
     tokenized_funcs, str_funcs = tuple(tokenized_funcs), tuple(str_funcs)
 
     t_0 = time.time()
-    print(f'[INFO] Preprocessing starting..')
+    print(f'[INFO] [PREPROCESSOR] Preprocessing starting..')
     preprocessed_data = __preprocess(data, str_methods=str_funcs, tokenized_methods=tokenized_funcs)
-    print(f'[INFO] Preprocessing completed in {round(time.time() - t_0, 3)} seconds..')
+    print(f'[INFO] [PREPROCESSOR] Preprocessing completed in {round(time.time() - t_0, 3)} seconds..')
     return preprocessed_data
 
 

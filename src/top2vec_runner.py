@@ -40,6 +40,8 @@ def download_embedding_models(embedding_folder: str, remove_tar_gz: bool = True)
             print(f'[INFO] The embedding model folder:"{target_path}" not found, downloading..')
             SentenceTransformer(model_name_or_path=embedding_model, cache_folder=embedding_folder)
             print(f'[INFO] The embedding model folder:"{target_path}" downloaded.')
+        else:
+            print(f'[INFO] The embedding model folder:"{target_path}" found, so no need to download.')
 
     for embedding_model in TF_HUB_EMBEDDING_MODELS_WITH_SOURCES:
         target_path = f'{embedding_folder}/{embedding_model["name"]}'
