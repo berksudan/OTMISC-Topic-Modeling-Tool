@@ -17,9 +17,6 @@ from nltk.corpus import stopwords
 from symspellpy import SymSpell, Verbosity
 
 nltk.data.path = ['../nltk_data', 'nltk_data']
-# nltk.download('stopwords')
-# nltk.download('wordnet')
-# nltk.download('omw-1.4')
 sym_spell = SymSpell(max_dictionary_edit_distance=3, prefix_length=7)  # Setup SymSpell for typo correction
 
 if not sym_spell.word_count:

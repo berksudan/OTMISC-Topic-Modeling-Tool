@@ -5,9 +5,9 @@ from typing import Dict
 
 import pandas as pd
 
-import evaluator
-import preprocessor
-import visualizer
+from src import evaluator
+from src import preprocessor
+from src import visualizer
 from utils import load_documents
 
 OUTPUT_FOLDER = './output'
@@ -31,7 +31,7 @@ def main_runner(configs: Dict):
         os.makedirs(output_folder)
 
     if algorithm_name in {'bertopic', 'lda-bert'}:
-        from bertopic_runner import BertopicTrainer
+        from src.bertopic_runner import BertopicTrainer
 
         if algorithm_name == 'lda-bert':
             print('[WARN] Lda-Bert is experimental and use with caution!')
@@ -40,14 +40,14 @@ def main_runner(configs: Dict):
 
         model, df_output_doc_topic, df_output_topic_word = trainer.train()
     elif algorithm_name in {'lda', 'nmf', 'ctm'}:
-        import LDA_NMF_CTM_runner
+        from src import LDA_NMF_CTM_runner
         if algorithm_name == 'ctm':
             print('[WARN] CTM is experimental and does not guarantee reproducibility. Please use with caution!')
         df_output_doc_topic, df_output_topic_word = LDA_NMF_CTM_runner.runner(
             args=algorithm_args, run_id=run_id, output_folder=output_folder, model_name=algorithm_name)
         model = None
     elif algorithm_name == 'top2vec':
-        import top2vec_runner
+        from src import top2vec_runner
         algorithm_args.update(run_id=run_id)
         model, df_output_doc_topic, df_output_topic_word = top2vec_runner.parametric_run(args=algorithm_args)
     else:
@@ -82,7 +82,7 @@ def main():
             print('[WARN] Current execution gave an error!')
             sleep(10)
             continue
-    pd.concat(dfs_output_topic_word).to_csv('./output/merged.csv')
+    pd.concat(dfs_output_topic_word).to_csv(f'./{OUTPUT_FOLDER}/merged.csv')
 
 
 if __name__ == '__main__':

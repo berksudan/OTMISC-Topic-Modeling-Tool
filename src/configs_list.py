@@ -105,7 +105,6 @@ top2vec_configs = {
     'algorithm_args': {
         'algorithm': 'top2vec',
         'num_topics': 4,
-        # 'embedding_model': 'doc2vec',
         'embedding_model': 'universal-sentence-encoder',
         # 'embedding_model': 'universal-sentence-encoder-large', # WORKS VERY WELL
         # 'embedding_model': 'distiluse-base-multilingual-cased',
@@ -125,5 +124,6 @@ top2vec_configs = {
     }
 }
 
-# configs_list = [lda_bert_configs, nmf_configs, ctm_configs, bertopic_configs, lda_configs, top2vec_configs, ]
-configs_list = [lda_bert_configs, nmf_configs]  # , ctm_configs, bertopic_configs, lda_configs,top2vec_configs,  ]
+configs_list = [lda_bert_configs, nmf_configs, ctm_configs, bertopic_configs, lda_configs, top2vec_configs, ]
+# configs_list = [lda_bert_configs, nmf_configs]  # , ctm_configs, bertopic_configs, lda_configs,top2vec_configs,  ]
+# configs_list = [lda_bert_configs]

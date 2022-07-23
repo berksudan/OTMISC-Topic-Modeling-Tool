@@ -234,6 +234,11 @@ def run(data_name: str, docs: List[str], labels: List[str], min_count: int, embe
     # Prepare Output
     df_output_doc_topic = extract_doc_topic_output(run_id=run_id, topic_stats=topic_stats, model=model,
                                                    labels=labels, is_reduced=is_reduced)
+    method_specific_params = {'min_count': min_count, 'embedding_model': embedding_model,
+                              'umap_args': umap_args, 'hdbscan_args': hdbscan_args}
+    if embedding_model == 'doc2vec':
+        method_specific_params['doc2vec_speed'] = doc2vec_speed
+
     df_output_topic_word = extract_topic_word_output(
         run_id=run_id, topic_stats=topic_stats, dataset=data_name,
         num_topics=num_topics, method='top2vec',

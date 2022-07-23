@@ -73,6 +73,11 @@ class BertopicTrainer:
         self.params = args
         self.run_id = run_id
 
+        method_specific_params = args.copy()
+        for key in ['docs', 'labels', 'algorithm', 'data_name']:
+            method_specific_params.pop(key, None)
+        self.method_specific_params = method_specific_params
+
     # TODO: Maybe save param?
     def train(self):
         topic_model, df_output_doc_topic, df_output_topic_word = self._train_tm_model(params=self.params)
@@ -165,7 +170,7 @@ class BertopicTrainer:
         params_dict = OrderedDict([
             ('run_id', self.run_id),
             ('method', self.model_name),
-            ('method_specific_params', params),
+            ('method_specific_params', self.method_specific_params),
             ('dataset', self.dataset),
             ('num_given_topics', params['num_topics']),
             ('reduced', self.reduced),
@@ -223,7 +228,7 @@ class BertopicTrainer:
         params_dict = OrderedDict([
             ('run_id', self.run_id),
             ('method', self.model_name),
-            ('method_specific_params', params),
+            ('method_specific_params', self.method_specific_params),
             ('dataset', self.dataset),
             ('num_given_topics', params['num_topics']),
             ('reduced', False),
