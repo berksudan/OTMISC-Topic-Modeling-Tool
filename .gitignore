@@ -30,3 +30,7 @@ notebooks/output
 
 # Temporary Local Backups
 .backup
+
+
+# Temporary Outputs
+output
