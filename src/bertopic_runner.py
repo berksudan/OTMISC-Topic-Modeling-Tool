@@ -43,11 +43,12 @@ class BertopicTrainer:
             self,
             dataset: str,
             model_name: str,
-            params: Dict,
+            args: Dict,
+            run_id: int,
             verbose: bool = True
     ):
-        assert params["embedding_model"] in HUGGING_FACE_EMBEDDING_MODELS, \
-            f'"{params["embedding_model"]}" must be in {HUGGING_FACE_EMBEDDING_MODELS}!'
+        assert args["embedding_model"] in HUGGING_FACE_EMBEDDING_MODELS, \
+            f'"{args["embedding_model"]}" must be in {HUGGING_FACE_EMBEDDING_MODELS}!'
         download_embedding_models(embedding_folder=EMBEDDING_DIR_PATH)
 
         os.environ['TOKENIZERS_PARALLELISM'] = 'false'
@@ -55,9 +56,9 @@ class BertopicTrainer:
             raise Exception(f'Model name {model_name} is not in [bertopic, lda-bert]!')
 
         print('[INFO] Embeddings are being encoded..')
-        if params["embedding_model"] != 'doc2vec':
-            emb_model = SentenceTransformer(f'{EMBEDDING_DIR_PATH}/sentence-transformers_{params["embedding_model"]}')
-            self.embeddings = emb_model.encode(params['docs'], show_progress_bar=True)
+        if args["embedding_model"] != 'doc2vec':
+            emb_model = SentenceTransformer(f'{EMBEDDING_DIR_PATH}/sentence-transformers_{args["embedding_model"]}')
+            self.embeddings = emb_model.encode(args['docs'], show_progress_bar=True)
         else:
             self.embeddings = None
         print('[INFO] Embeddings encoded successfully.')
@@ -67,9 +68,10 @@ class BertopicTrainer:
         self.model_name = model_name
 
         self.verbose = verbose
-        self.docs = params['docs']
-        self.labels = params['labels']
-        self.params = params
+        self.docs = args['docs']
+        self.labels = args['labels']
+        self.params = args
+        self.run_id = run_id
 
     # TODO: Maybe save param?
     def train(self):
@@ -88,7 +90,7 @@ class BertopicTrainer:
         if params["cluster_model"] == "hdbscan":
             cluster_model = HDBSCAN(**params["hdbscan_args"])
         elif params["cluster_model"] == "kmeans":
-            cluster_model = KMeans(n_clusters=params["number_topics"])
+            cluster_model = KMeans(n_clusters=params["num_topics"])
         else:
             raise ValueError(f'{params["cluster_model"]} is not recognized, should be "hdbscan" or "kmeans".')
 
@@ -100,7 +102,7 @@ class BertopicTrainer:
             min_topic_size=params["min_docs_per_topic"],
             umap_model=UMAP(**params["umap_args"]),
             hdbscan_model=cluster_model
-            # nr_topics = params["number_topics"]
+            # nr_topics = params["num_topics"]
         )
         # Train and fit model
         t0 = time.time()
@@ -109,11 +111,11 @@ class BertopicTrainer:
         num_detected_topics = len(set(topics))
 
         # Reduce nr_topics if needed
-        if (params['number_topics'] is not None) and (params['number_topics'] < num_detected_topics):
+        if (params['num_topics'] is not None) and (params['num_topics'] < num_detected_topics):
             self.reduced = True
-            topics, probs = topic_model.reduce_topics(self.docs, topics, probs, nr_topics=params['number_topics'])
+            topics, probs = topic_model.reduce_topics(self.docs, topics, probs, nr_topics=params['num_topics'])
             # print(f'The shape of probs after reducing is: {len(probs)} x {len(probs[0])}')
-            # probs = [prob[0:params['number_topics']] for prob in probs]
+            # probs = [prob[0:params['num_topics']] for prob in probs]
             # print(f'The shape of probs after correction is: {len(probs)} x {len(probs[0])}')
         else:
             self.reduced = False
@@ -147,7 +149,7 @@ class BertopicTrainer:
 
         # Construct df doc_topic
         doc_topic_dict = {
-            "run_id": int(t0),
+            "run_id": self.run_id,
             "Document ID": range(len(self.docs)),
             "Document": self.docs,
             "Real Label": self.labels,
@@ -161,11 +163,11 @@ class BertopicTrainer:
         nrows_topic_word = len(topic_model.get_topic_info()['Topic'])
 
         params_dict = OrderedDict([
-            ('run_id', int(t0)),
+            ('run_id', self.run_id),
             ('method', self.model_name),
             ('method_specific_params', params),
             ('dataset', self.dataset),
-            ('num_given_topics', params['number_topics']),
+            ('num_given_topics', params['num_topics']),
             ('reduced', self.reduced),
         ])
 
@@ -192,7 +194,7 @@ class BertopicTrainer:
         t0 = time.time()
 
         lda_bert_params = {
-            'number_topics': params['number_topics'],
+            'num_topics': params['num_topics'],
             'top_n_words': params['top_n_words'],
             'embedding_model': params['embedding_model'],
             'gamma': params['gamma'],
@@ -206,7 +208,7 @@ class BertopicTrainer:
 
         # Construct df doc_topic
         doc_topic_dict = {
-            "run_id": int(t0),
+            "run_id": self.run_id,
             "Document ID": range(len(self.docs)),
             "Document": self.docs,
             "Real Label": self.labels,
@@ -216,14 +218,14 @@ class BertopicTrainer:
 
         df_output_doc_topic = pd.DataFrame(doc_topic_dict)
 
-        nrows_topic_word = params['number_topics']
+        nrows_topic_word = params['num_topics']
 
         params_dict = OrderedDict([
-            ('run_id', int(t0)),
+            ('run_id', self.run_id),
             ('method', self.model_name),
             ('method_specific_params', params),
             ('dataset', self.dataset),
-            ('num_given_topics', params['number_topics']),
+            ('num_given_topics', params['num_topics']),
             ('reduced', False),
         ])
 
@@ -340,12 +342,12 @@ class LdaBert:
 
         self.embeddings = embeddings  # Init pretrained embeddings
 
-        # self.k = k -> here: params['number_topics']
+        # self.k = k -> here: params['num_topics']
         self.dictionary = None
         self.corpus = None
 
         # Init Kmeans here with nr of topics
-        self.cluster_model = KMeans(n_clusters=self.params['number_topics'])
+        self.cluster_model = KMeans(n_clusters=self.params['num_topics'])
         self.lda_model = None
 
         # self.gamma = 15  -> here: params['gamma'] # parameter for relative importance of lda
@@ -361,7 +363,7 @@ class LdaBert:
         if method == 'LDA':
             print('[INFO] Getting vector representations for LDA ...')
             if not self.lda_model:
-                self.lda_model = LdaModel(self.corpus, num_topics=self.params['number_topics'], id2word=self.dictionary,
+                self.lda_model = LdaModel(self.corpus, num_topics=self.params['num_topics'], id2word=self.dictionary,
                                           passes=20, random_state=self.params['random_state'])
 
             def get_vec_lda(a_model, corpus, k):
@@ -379,7 +381,7 @@ class LdaBert:
 
                 return lda_vectors
 
-            vec = get_vec_lda(self.lda_model, self.corpus, self.params['number_topics'])
+            vec = get_vec_lda(self.lda_model, self.corpus, self.params['num_topics'])
             print('Getting vector representations for LDA. Done!')
 
             return vec
@@ -499,7 +501,7 @@ class LdaBert:
         pred_topic_labels = self.cluster_model.labels_
 
         # TODO: Call correct function for c-TF-IDF
-        topic_words, word_scores = self.get_topic_words(token_lists, pred_topic_labels, k=self.params['number_topics'],
+        topic_words, word_scores = self.get_topic_words(token_lists, pred_topic_labels, k=self.params['num_topics'],
                                                         top_n=self.params['top_n_words'])
 
         return pred_topic_labels, topic_words, word_scores
@@ -514,14 +516,15 @@ def test_lda_bert():
 
     params = {
         'embedding_model': "all-MiniLM-L6-v2",
-        'number_topics': 2,
+        'num_topics': 2,
         'top_n_words': 10,
         'gamma': 15
     }
 
     trainer = BertopicTrainer(dataset='crisis_toy',
                               model_name="lda-bert",
-                              params=params,
+                              args=params,
+                              run_id=12345,
                               # custom_model=None,
                               verbose=True,
                               )

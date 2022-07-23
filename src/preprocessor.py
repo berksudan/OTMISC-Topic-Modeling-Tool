@@ -1,4 +1,5 @@
 import multiprocessing
+import os
 import pprint
 import re
 import time
@@ -9,11 +10,16 @@ from functools import reduce, partial
 from typing import List, Tuple
 
 import contractions
+import nltk
 import pkg_resources
 from nltk import RegexpTokenizer, WordNetLemmatizer
 from nltk.corpus import stopwords
 from symspellpy import SymSpell, Verbosity
 
+nltk.data.path = ['../nltk_data', 'nltk_data']
+# nltk.download('stopwords')
+# nltk.download('wordnet')
+# nltk.download('omw-1.4')
 sym_spell = SymSpell(max_dictionary_edit_distance=3, prefix_length=7)  # Setup SymSpell for typo correction
 
 if not sym_spell.word_count:
@@ -151,7 +157,7 @@ class TestUtils(unittest.TestCase):
         # expand_contractions
         str_before = "Don't is the same as do not"
         str_after = 'Do not is the same as do not'
-        self.assertTrue(str_after == expand_contractions(str_before))
+        self.assertTrue(str_after == expand_contractions(tokenizer.tokenize(str_before)))
 
         # expand_missing_delimiter
         str_before = "endThis is a sentence"
@@ -176,12 +182,12 @@ class TestUtils(unittest.TestCase):
         # remove_english_stop_words
         str_before = 'Test this text to see which are stop words.'
         str_after = 'Test text see stop words .'
-        self.assertTrue(str_after == remove_english_stop_words(str_before))
+        self.assertTrue(str_after == remove_english_stop_words(tokenizer.tokenize(str_before)))
 
         # lemmatize
         str_before = 'apples, bananas and pears are common fruits that are eaten by humans.'
         str_after = 'apple , banana and pear are common fruit that are eaten by human .'
-        self.assertTrue(str_after == lemmatize(str_before))
+        self.assertTrue(str_after == lemmatize(tokenizer.tokenize(str_before)))
 
         # remove_extra_spaces
         str_before = ' Too                    much spaces   in  between!           '
@@ -196,7 +202,7 @@ class TestUtils(unittest.TestCase):
         # correct_typo
         str_before = "Helo this is a naturl langeage problim"
         str_after = "Hello this is a natural language problem"
-        self.assertTrue(str_after == correct_typo(str_before))
+        self.assertTrue(str_after == correct_typo(tokenizer.tokenize(str_before)))
 
 
 def __instance_preprocess(a_str: str, str_methods: Tuple[str], tokenized_methods: Tuple[str] = None) -> str:
@@ -206,14 +212,18 @@ def __instance_preprocess(a_str: str, str_methods: Tuple[str], tokenized_methods
     return a_str
 
 
-def __preprocess(data: List[str], str_methods: Tuple[str], tokenized_methods: Tuple[str] = None) -> List[str]:
+from multiprocessing import get_context
+
+
+def __preprocess(data: List[str], str_methods: Tuple, tokenized_methods: Tuple[str] = None) -> List[str]:
     print(f'[INFO] [PREPROCESSOR] These string preprocessing methods will be applied to the data in order:')
     pprint.pprint(str_methods, indent=3, width=40)
     if tokenized_methods:
         print(f'[INFO] [PREPROCESSOR] Then, these tokenized preprocessing methods will be applied in order:')
         pprint.pprint(tokenized_methods, indent=3, width=40)
-    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
-    return pool.map(partial(__instance_preprocess, str_methods=str_methods, tokenized_methods=tokenized_methods), data)
+    with get_context("spawn").Pool(processes=multiprocessing.cpu_count()) as pool:
+        x = pool.map(partial(__instance_preprocess, str_methods=str_methods, tokenized_methods=tokenized_methods), data)
+    return x
 
 
 def __check_functions_validity(prep_functions: List[str]):
@@ -225,6 +235,7 @@ def __check_functions_validity(prep_functions: List[str]):
 
 
 def run(data: List[str], prep_functions: List[str]) -> List[str]:
+    os.environ['TOKENIZERS_PARALLELISM'] = 'true'
     if not prep_functions:
         print(f'[WARN] [PREPROCESSOR] Preprocessing functions are empty or None, '
               f'given:"{prep_functions}", preprocessing is skipped.')

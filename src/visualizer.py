@@ -9,17 +9,19 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.graph_objs
 import umap.plot
 from bertopic import BERTopic
+from html2image import Html2Image
 from matplotlib import pyplot
 from plotly.subplots import make_subplots
 from scipy.cluster.hierarchy import fcluster, linkage
 from sklearn.metrics.pairwise import cosine_similarity
 from top2vec import Top2Vec
 
-from src.bertopic_runner import LdaBert
+from bertopic_runner import LdaBert
 
-target_template = Template('${run_id}_${algorithm}_${visualization_method}.${extension}')
+target_template = Template('vis_${method}.${extension}')
 
 AVAILABLE_TOPIC_MODELING_ALGORITHMS = ['top2vec', 'bertopic', 'lda', 'nmf', 'lda-bert', 'ctm']
 
@@ -29,9 +31,17 @@ ALGORITHM_TO_WORD_SCORE_METRIC = {
     'lda': 'Probability Score',
     'nmf': 'Probability Score',
     'lda-bert': 'Word Frequency',
-    'ctm': 'Normalized probability score'
+    'ctm': 'Normalized Probability Score'
 }
 assert set(AVAILABLE_TOPIC_MODELING_ALGORITHMS) == set(ALGORITHM_TO_WORD_SCORE_METRIC)
+
+
+def save_plotly_figure(fig: plotly.graph_objs.Figure, vis_method: str, target_dir: str, width: int, height: int):
+    html_filepath = f'{target_dir}/{target_template.substitute(method=vis_method, extension="html")}'
+    image_filename = target_template.substitute(method=vis_method, extension="png")
+    fig.write_html(html_filepath)
+    hti = Html2Image(output_path=target_dir)
+    hti.screenshot(url=html_filepath, save_as=image_filename, size=(width, height))
 
 
 def check_algorithm(al: str):
@@ -41,9 +51,10 @@ def check_algorithm(al: str):
 def draw_umap2d_scatter_plot(
         model: Union[Top2Vec, BERTopic, LdaBert],
         df_output_topic_word: pd.DataFrame,
-        df_output_doc_topic: pd.DataFrame = None,
-        target_dir: str = './output/visualization'
+        df_output_doc_topic: pd.DataFrame,
+        target_dir: str
 ) -> pyplot.Figure:
+    print('[INFO] Creating UMAP 2D Scatter Plot..')
     run_id = df_output_topic_word['run_id'][0]
     algorithm_name = df_output_topic_word['method'][0]
     check_algorithm(al=algorithm_name)
@@ -52,9 +63,11 @@ def draw_umap2d_scatter_plot(
         doc_topics = model.doc_top_reduced if df_output_topic_word['reduced'][0] else model.doc_top
         doc_vectors = model.document_vectors
     elif algorithm_name == 'bertopic':
+        assert df_output_doc_topic is not None
         doc_topics = df_output_doc_topic['Assigned Topic Num']
         doc_vectors = model.umap_model.embedding_
     elif algorithm_name == 'lda-bert':
+        assert df_output_doc_topic is not None
         doc_topics = df_output_doc_topic['Assigned Topic Num']
         doc_vectors = model.vec['lda-bert']
     elif algorithm_name in ('lda', 'nmf'):
@@ -89,19 +102,21 @@ def draw_umap2d_scatter_plot(
     target_figure = umap.plot.points(
         umap_model, labels=doc_topics, width=2 * 10 ** 3, height=2 * 10 ** 3,
         theme="viridis").get_figure()  # type: pyplot.Figure
-    target_image_filename = target_template.substitute(
-        run_id=run_id, algorithm=algorithm_name, visualization_method='umap2d', extension='png')
 
-    target_figure.savefig(fname=f'{target_dir}/{target_image_filename}')
+    target_figure.savefig(fname=f'{target_dir}/{target_template.substitute(method="umap2d", extension="png")}')
+    print('[INFO] Created UMAP 2D Scatter Plot successfully.')
     return target_figure
 
 
-def visualize_barchart(df_output_topic_word: pd.DataFrame,  # todo: rename the function
-                       topics: List[int] = None,
-                       top_n_topics: int = None,
-                       n_words: int = 5,
-                       width: int = 250,
-                       height: int = 250) -> go.Figure:
+def visualize_top_words_barchart(
+        df_output_topic_word: pd.DataFrame,
+        topics: List[int] = None,
+        top_n_topics: int = None,
+        n_words: int = 5,
+        width: int = 250,
+        height: int = 250,
+        target_dir: str = None
+) -> go.Figure:
     """ Visualize a barchart of selected topics
 
     Arguments:
@@ -111,10 +126,12 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,  # todo: rename the f
         n_words: Number of words to show in a topic
         width: The width of each figure.
         height: The height of each figure.
+        target_dir: If not None, an HTML and a PNG version of the plot saved to this directory.
 
     Returns:
         fig: A plotly figure
     """
+    print('[INFO] Creating Top Words Barchart Visualization..')
     run_id = df_output_topic_word['run_id'][0]
     algorithm_name = df_output_topic_word['method'][0]
     check_algorithm(al=algorithm_name)
@@ -166,7 +183,8 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,  # todo: rename the f
             cur_row += 1
         else:
             cur_col += 1
-
+    width = width * 4
+    height = height * rows if rows > 1 else height * 1.3
     # Stylize graph
     fig.update_layout(
         template="plotly_white",
@@ -180,8 +198,8 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,  # todo: rename the f
                 size=22,
                 color="Black")
         },
-        width=width * 4,
-        height=height * rows if rows > 1 else height * 1.3,
+        width=width,
+        height=height,
         hoverlabel=dict(
             bgcolor="white",
             font_size=16,
@@ -191,20 +209,24 @@ def visualize_barchart(df_output_topic_word: pd.DataFrame,  # todo: rename the f
 
     fig.update_xaxes(showgrid=True, range=[0, 1], dtick=0.2)
     fig.update_yaxes(showgrid=True)
+    if target_dir:
+        save_plotly_figure(fig, vis_method='top_words_barchart', target_dir=target_dir, width=width, height=height)
 
-    # fig = fig # type: plotly.graph_objs._figure.Figure
-    # fig.write_image('asd.png') # todo: write as image
+    print('[INFO] Created Top Words Barchart Visualization successfully.')
     return fig
 
 
-def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
-                               df_output_topic_word: pd.DataFrame,
-                               top_n_topics: int = 10,
-                               top_n_labels: int = None,
-                               topics: List[int] = None,
-                               use_normalized_frequency: bool = True,
-                               width: int = 1000,
-                               height: Union[int, str] = 'adjustable') -> go.Figure:
+def visualize_labels_per_topic(
+        df_output_doc_topic: pd.DataFrame,
+        df_output_topic_word: pd.DataFrame,
+        top_n_topics: int = 10,
+        top_n_labels: int = None,
+        topics: List[int] = None,
+        use_normalized_frequency: bool = True,
+        width: int = 1000,
+        height: Union[int, str] = 'adjustable',
+        target_dir: str = None
+) -> go.Figure:
     """ Visualize topics per class
 
     Arguments:
@@ -216,12 +238,13 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
         use_normalized_frequency: Whether to per cent normalize each topic's frequency individually
         width: The width of the figure.
         height: The height of the figure.
+        target_dir: If not None, an HTML and a PNG version of the plot saved to this directory.
 
     Returns:
         A plotly.graph_objects.Figure including all traces
 
     """
-
+    print('[INFO] Creating Labels Per Topic Visualization..')
     num_real_labels = len(df_output_doc_topic['Real Label'].unique())
     if top_n_labels is None or top_n_labels > num_real_labels:
         top_n_labels = num_real_labels
@@ -265,6 +288,7 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
 
     cur_row = 1
     cur_col = 1
+    height = 480 + 25 * num_rows * top_n_labels if height == 'adjustable' else height
     for index, topic in enumerate(topics):
         cur_data = data.loc[data.Topic == topic, :]  # type: pd.DataFrame
         cur_data['NormalizedFrequency'] = 100 * cur_data.Frequency / sum(cur_data.Frequency)
@@ -318,12 +342,16 @@ def visualize_labels_per_topic(df_output_doc_topic: pd.DataFrame,
         },
         template="simple_white",
         width=width,
-        height=480 + 25 * num_rows * top_n_labels if height == 'adjustable' else height,
+        height=height,
     )
+
+    if target_dir:
+        save_plotly_figure(fig, vis_method='labels_per_topic', target_dir=target_dir, width=width, height=height)
+    print('[INFO] Created Labels Per Topic Visualization successfully.')
     return fig
 
 
-def visualize_heatmap(
+def visualize_topic_similarity_matrix(
         model: Union[Top2Vec, BERTopic, LdaBert],
         df_output_doc_topic: pd.DataFrame,
         df_output_topic_word: pd.DataFrame,
@@ -331,7 +359,9 @@ def visualize_heatmap(
         top_n_topics: int = None,
         n_clusters: int = None,
         width: int = 1000,
-        height: int = 1000) -> go.Figure:
+        height: int = 1000,
+        target_dir: str = None
+) -> go.Figure:
     """ Visualize a heatmap of the topic's similarity matrix
 
     Based on the cosine similarity matrix between topic embeddings,
@@ -346,11 +376,13 @@ def visualize_heatmap(
         n_clusters: Create n clusters and order the similarity matrix by those clusters.
         width: The width of the figure.
         height: The height of the figure.
+        target_dir: If not None, an HTML and a PNG version of the plot saved to this directory.
 
     Returns:
         fig: A plotly figure
 
     """
+    print('[INFO] Creating Topic Similarity Matrix..')
     run_id = df_output_topic_word['run_id'][0]
     algorithm_name = df_output_topic_word['method'][0]
 
@@ -438,7 +470,9 @@ def visualize_heatmap(
     )
     fig.update_layout(showlegend=True)
     fig.update_layout(legend_title_text='Trend')
-    # todo: write as image
+    if target_dir:
+        save_plotly_figure(fig, vis_method='topic_similarity_matrix', target_dir=target_dir, width=width, height=height)
+    print('[INFO] Created Topic Similarity Matrix successfully.')
     return fig
 
 

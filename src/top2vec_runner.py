@@ -130,7 +130,8 @@ def extract_topic_word_output(
 
 
 def run(data_name: str, docs: List[str], labels: List[str], min_count: int, embedding_model: str, umap_args: Dict,
-        hdbscan_args: Dict, doc2vec_speed: str = None, num_topics: int = None) -> Tuple:
+        hdbscan_args: Dict, run_id: int, doc2vec_speed: str = None, num_topics: int = None,
+        algorithm: str = 'top2vec') -> Tuple:
     """
     Runs Top2Vec algorithm with the given parameters.
 
@@ -180,17 +181,17 @@ def run(data_name: str, docs: List[str], labels: List[str], min_count: int, embe
                                     to find the most persistent clusters. Alternatively you can instead
                                     select the clusters at the leaves of the tree -- this provides the
                                     most fine-grained and homogeneous clusters. Options: ['eom','leaf'].
-
+    run_id: Just for tracking this execution, not a hyperparameter
     doc2vec_speed:  This parameter is only used when using doc2vec as embedding_model. Options: ['fast-learn',
                     'learn', 'deep-learn']
 
     num_topics: Given number of topics. If model can reduce the number of topics, it can reduce to num_topics.
-
+    algorithm: Algorithm name, not a hyperparameter
     """
     assert embedding_model in VALID_EMBEDDING_MODELS, f'"{embedding_model}" must be in {VALID_EMBEDDING_MODELS}!'
     download_embedding_models(embedding_folder=EMBEDDING_DIR_PATH)
     time_start = time.time()
-    print(f'[INFO] Top2Vec is running for dataset:"{data_name}".')
+    print(f'[INFO] Top2Vec with name:"{algorithm}" is running for dataset:"{data_name}".')
 
     if embedding_model == 'doc2vec':  # Model is Doc2Vec
         model = Top2Vec(
@@ -231,10 +232,10 @@ def run(data_name: str, docs: List[str], labels: List[str], min_count: int, embe
     print(f'[INFO] Top2Vec successfully terminated for data:"{data_name}".')
 
     # Prepare Output
-    df_output_doc_topic = extract_doc_topic_output(run_id=int(time_start), topic_stats=topic_stats, model=model,
+    df_output_doc_topic = extract_doc_topic_output(run_id=run_id, topic_stats=topic_stats, model=model,
                                                    labels=labels, is_reduced=is_reduced)
     df_output_topic_word = extract_topic_word_output(
-        run_id=int(time_start), topic_stats=topic_stats, dataset=data_name,
+        run_id=run_id, topic_stats=topic_stats, dataset=data_name,
         num_topics=num_topics, method='top2vec',
         method_specific_params={
             'doc2vec_speed': doc2vec_speed, 'min_count': min_count, 'embedding_model': embedding_model,
