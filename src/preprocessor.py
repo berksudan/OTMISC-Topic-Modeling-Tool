@@ -1,4 +1,5 @@
-import multiprocessing
+# import multiprocessing
+# from functools import reduce, partial
 import os
 import pprint
 import re
@@ -6,7 +7,7 @@ import time
 import types
 import unicodedata
 import unittest
-from functools import reduce, partial
+from functools import reduce
 from typing import List, Tuple
 
 import contractions
@@ -209,17 +210,16 @@ def __instance_preprocess(a_str: str, str_methods: Tuple[str], tokenized_methods
     return a_str
 
 
-from multiprocessing import get_context
-
-
 def __preprocess(data: List[str], str_methods: Tuple, tokenized_methods: Tuple[str] = None) -> List[str]:
     print(f'[INFO] [PREPROCESSOR] These string preprocessing methods will be applied to the data in order:')
     pprint.pprint(str_methods, indent=3, width=40)
     if tokenized_methods:
         print(f'[INFO] [PREPROCESSOR] Then, these tokenized preprocessing methods will be applied in order:')
         pprint.pprint(tokenized_methods, indent=3, width=40)
-    with get_context("spawn").Pool(processes=multiprocessing.cpu_count()) as pool:
-        x = pool.map(partial(__instance_preprocess, str_methods=str_methods, tokenized_methods=tokenized_methods), data)
+    # with get_context("spawn").Pool(processes=multiprocessing.cpu_count()) as pool:
+    #    x = pool.map(partial(__instance_preprocess, str_methods=str_methods, tokenized_methods=tokenized_methods), data)
+
+    x = [__instance_preprocess(a_str, str_methods=str_methods, tokenized_methods=tokenized_methods) for a_str in data]
     return x
 
 
@@ -232,7 +232,7 @@ def __check_functions_validity(prep_functions: List[str]):
 
 
 def run(data: List[str], prep_functions: List[str]) -> List[str]:
-    os.environ['TOKENIZERS_PARALLELISM'] = 'true'
+    # os.environ['TOKENIZERS_PARALLELISM'] = 'true'
     if not prep_functions:
         print(f'[WARN] [PREPROCESSOR] Preprocessing functions are empty or None, '
               f'given:"{prep_functions}", preprocessing is skipped.')

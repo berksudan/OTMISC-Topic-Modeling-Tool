@@ -54,18 +54,22 @@ def main_runner(configs: Dict):
         raise ValueError(f'Algorithm {algorithm_name} is not available, available algorithms:{AVAILABLE_ALGORITHMS}.')
 
     df_output_topic_word = evaluator.compute_topic_scores(df_output_doc_topic, df_output_topic_word)
-    df_output_doc_topic.to_csv(f'{output_folder}/output_doc_topic.tsv', sep='\t', index=False)
-    df_output_topic_word.to_csv(f'{output_folder}/output_topic_word.tsv', sep='\t', index=False)
+    try:
+        df_output_doc_topic.to_csv(f'{output_folder}/output_doc_topic.tsv', sep='\t', index=False)
+        df_output_topic_word.to_csv(f'{output_folder}/output_topic_word.tsv', sep='\t', index=False)
 
-    if model:
-        visualizer.visualize_topic_similarity_matrix(model, df_output_doc_topic, df_output_topic_word,
-                                                     target_dir=output_folder)
-        print('[INFO] Created Top Words Barchart Visualization successfully.')
-        visualizer.draw_umap2d_scatter_plot(model, df_output_topic_word, df_output_doc_topic, target_dir=output_folder)
-    visualizer.visualize_labels_per_topic(df_output_doc_topic, df_output_topic_word, top_n_topics=10,
-                                          target_dir=output_folder)
-    visualizer.visualize_top_words_barchart(df_output_topic_word, n_words=5, target_dir=output_folder)
-    # visualizer.draw_representative_docs(df_output_doc_topic, top_n_docs=3)
+        if model:
+            visualizer.visualize_topic_similarity_matrix(model, df_output_doc_topic, df_output_topic_word,
+                                                         target_dir=output_folder)
+            print('[INFO] Created Top Words Barchart Visualization successfully.')
+            visualizer.draw_umap2d_scatter_plot(model, df_output_topic_word, df_output_doc_topic,
+                                                target_dir=output_folder)
+        visualizer.visualize_labels_per_topic(df_output_doc_topic, df_output_topic_word, top_n_topics=10,
+                                              target_dir=output_folder)
+        visualizer.visualize_top_words_barchart(df_output_topic_word, n_words=5, target_dir=output_folder)
+        # visualizer.draw_representative_docs(df_output_doc_topic, top_n_docs=3)
+    except:
+        pass
     return df_output_topic_word
 
 
