@@ -58,15 +58,15 @@ def main_runner(configs: Dict):
         df_output_doc_topic.to_csv(f'{output_folder}/output_doc_topic.tsv', sep='\t', index=False)
         df_output_topic_word.to_csv(f'{output_folder}/output_topic_word.tsv', sep='\t', index=False)
 
-        if model:
-            visualizer.visualize_topic_similarity_matrix(model, df_output_doc_topic, df_output_topic_word,
-                                                         target_dir=output_folder)
-            print('[INFO] Created Top Words Barchart Visualization successfully.')
-            visualizer.draw_umap2d_scatter_plot(model, df_output_topic_word, df_output_doc_topic,
-                                                target_dir=output_folder)
-        visualizer.visualize_labels_per_topic(df_output_doc_topic, df_output_topic_word, top_n_topics=10,
-                                              target_dir=output_folder)
-        visualizer.visualize_top_words_barchart(df_output_topic_word, n_words=5, target_dir=output_folder)
+        # if model:
+        #     visualizer.visualize_topic_similarity_matrix(model, df_output_doc_topic, df_output_topic_word,
+        #                                                  target_dir=output_folder)
+        #     print('[INFO] Created Top Words Barchart Visualization successfully.')
+        #     visualizer.draw_umap2d_scatter_plot(model, df_output_topic_word, df_output_doc_topic,
+        #                                         target_dir=output_folder)
+        # visualizer.visualize_labels_per_topic(df_output_doc_topic, df_output_topic_word, top_n_topics=10,
+        #                                       target_dir=output_folder)
+        # visualizer.visualize_top_words_barchart(df_output_topic_word, n_words=5, target_dir=output_folder)
         # visualizer.draw_representative_docs(df_output_doc_topic, top_n_docs=3)
     except:
         pass
@@ -79,6 +79,10 @@ def main():
         shutil.rmtree(OUTPUT_FOLDER)
     dfs_output_topic_word = []
     for configs in configs_list:
+        with open('file.txt', 'r') as fin:
+            data = fin.read().splitlines(True)
+        with open('file.txt', 'w') as fout:
+            fout.writelines(data[1:])
         try:
             df_output_topic_word = main_runner(configs=configs)
             dfs_output_topic_word.append(df_output_topic_word)
