@@ -1,0 +1,9 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658696898	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	0	9231	['rt', 'hurricane', 'india', 'storm', 'safe', 'class', 'amp', 'damage', 'cyclone', 'pam']	"[0.36614794 0.10036655 0.08983009 0.08277694 0.07559733 0.06419785
+ 0.0603183  0.05632905 0.0553307  0.04910521]"	4	4	37.23	0.85	0.7690649224357143	-0.0905948639222556	0.3092630223068201	0.5961701019526725
+1658696898	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	1	4878	['rt', 'flood', 'hit', 'typhoon', 'people', 'dead', 'help', 'dec', 'please', 'pray']	"[0.29100975 0.25095144 0.0837506  0.06768924 0.05752577 0.05472666
+ 0.05281535 0.05041968 0.04612808 0.04498343]"	4	4	37.23	0.85	0.7690649224357143	-0.0905948639222556	0.3092630223068201	0.5961701019526725
+1658696898	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	2	3579	['typhoon', 'philippine', 'rt', 'earthquake', 'hagupit', 'kashmir', 'california', 'rain', 'destruction', 'chile']	"[0.24386571 0.20127635 0.14406063 0.07554913 0.07322515 0.06895719
+ 0.06855211 0.04618482 0.0450533  0.03327557]"	4	4	37.23	0.85	0.7690649224357143	-0.0905948639222556	0.3092630223068201	0.5961701019526725
+1658696898	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	3	2826	['rt', 'relief', 'cyclone', 'death', 'vanuatu', 'amp', 'toll', 'least', 'team', 'area']	"[0.29027566 0.11063419 0.09182179 0.08699486 0.08630353 0.07642464
+ 0.07021395 0.06536807 0.06106008 0.06090317]"	4	4	37.23	0.85	0.7690649224357143	-0.0905948639222556	0.3092630223068201	0.5961701019526725

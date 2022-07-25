@@ -1,0 +1,5 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658697054	lda	{'alpha': 'asymmetric'}	crisis_07	2	False	0	8536	['flood', 'australia', 'queensland', 'rt', 'crisis', 'water', 'nepal', 'news', 'photo', 'fire']	"[0.40668198 0.14027    0.13551512 0.10031231 0.06350087 0.0471333
+ 0.02938809 0.02842093 0.02477842 0.02399886]"	2	2	20.17	0.8	0.5260880262571429	-0.05146644287213881	0.33742487904381885	0.5304028109716316
+1658697054	lda	{'alpha': 'asymmetric'}	crisis_07	2	False	1	2353	['queensland', 'flood', 'rt', 'rise', 'australia', 'death', 'toll', 'new', 'south', 'storm']	"[0.2486074  0.16456637 0.10322909 0.0883119  0.07639135 0.07463697
+ 0.06879397 0.06280698 0.05683753 0.05581847]"	2	2	20.17	0.8	0.5260880262571429	-0.05146644287213881	0.33742487904381885	0.5304028109716316

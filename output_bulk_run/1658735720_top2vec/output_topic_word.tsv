@@ -1,0 +1,149 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	0	11421	"['shreveport' 'allez' 'bleus' 'nhowstuffworks' 'nbartleby' 'bartleby'
+ 'cosx' 'main_page' 'sinx' 'toot' 'equipe' 'etre' 'bien' 'nsmack' 'mais'
+ 'avec' 'ncostello' 'cfda' 'nabbott' 'fait' 'sont' 'ncos' 'dans' 'x²'
+ 'nanswers' 'pas' 'une' 'tout' 'adaware' 'nsecretary' 'you' 'je' 'if'
+ 'tres' 'think' 'ln' 'have' 'something' 'just' 'do' 'intercept' 'ethernet'
+ 'ou' 'qui' 'it' 'bittorrent' 'but' 'not' 'solitaire' 'spybot']"	"[0.9584916  0.51187193 0.50466156 0.46001893 0.4557362  0.42464596
+ 0.4152996  0.41014603 0.40939552 0.4025766  0.39389616 0.38402686
+ 0.38029462 0.37425792 0.37360245 0.37208652 0.36431322 0.36320892
+ 0.36075458 0.35855773 0.35671085 0.3563861  0.35637876 0.35614532
+ 0.35453293 0.34926665 0.34798944 0.34448004 0.34063295 0.33865398
+ 0.33596542 0.33173403 0.3302974  0.3298794  0.32839248 0.3278281
+ 0.3271295  0.327119   0.32676333 0.32565576 0.32557413 0.32530504
+ 0.32427785 0.3226882  0.32234967 0.32174557 0.32166642 0.32135877
+ 0.31939816 0.3193114 ]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	1	7997	"['shreveport' 'allez' 'bleus' 'main_page' 'nhowstuffworks' 'nbartleby'
+ 'bartleby' 'sourceforge' 'bittorrent' 'etre' 'uncheck' 'adaware' 'sinx'
+ 'ethernet' 'ei' 'equipe' 'cosx' 'utf' 'download' 'ctrl' 'spybot' 'bien'
+ 'sont' 'avast' 'nselect' 'nanswers' 'mais' 'toolbars' 'fait' 'dans' 'exe'
+ 'ndownload' 'toolbar' 'avec' 'howstuffworks' 'ln' 'nhttp' 'une' 'mysql'
+ 'solitaire' 'les' 'tu' 'rw' 'smtp' 'exp' 'floppy' 'dns' 'nsmack' 'qui'
+ 'pas']"	"[0.8227217  0.5928741  0.5772981  0.49030334 0.47807696 0.46398863
+ 0.45426327 0.41995004 0.40950555 0.40927768 0.40816993 0.4063699
+ 0.39295518 0.3922139  0.39166018 0.38906437 0.38801646 0.38453755
+ 0.38415802 0.38323313 0.38021028 0.37902007 0.37769186 0.37647763
+ 0.37425667 0.37213236 0.37164187 0.37049118 0.3693974  0.3689653
+ 0.36696836 0.36602327 0.36483386 0.36338466 0.35963672 0.35504806
+ 0.35480955 0.35238886 0.3513358  0.34941378 0.34915227 0.3464402
+ 0.34383765 0.3428416  0.34272414 0.3425321  0.34104767 0.339877
+ 0.3379488  0.33788538]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	2	7028	"['shreveport' 'allez' 'bleus' 'equipe' 'mais' 'fait' 'avec' 'bien' 'dans'
+ 'sont' 'pas' 'tout' 'etre' 'une' 'ou' 'je' 'que' 'qui' 'nsecretary' 'des'
+ 'les' 'ronaldinho' 'le' 'nfax' 'nbartleby' 'brasil' 'ronaldo' 'tres'
+ 'lebron' 'rooney' 'colts' 'sur' 'pele' 'nhowstuffworks' 'tu' 'madrid'
+ 'faire' 'est' 'espn' 'ntel' 'lakers' 'sinx' 'nsmack' 'de' 'qu' 'nash'
+ 'il' 'champions' 'win' 'zidane']"	"[0.86096585 0.48516384 0.47836414 0.46956456 0.4342484  0.42776555
+ 0.42544034 0.42251736 0.416534   0.4105668  0.4098917  0.4080153
+ 0.40626737 0.39487195 0.3935003  0.38571456 0.3850459  0.3811616
+ 0.37413546 0.37377352 0.37367392 0.37053826 0.3703826  0.3677153
+ 0.36626354 0.36553782 0.36392602 0.35909247 0.3569113  0.3559856
+ 0.35594028 0.35586557 0.35490352 0.3521251  0.35203215 0.3516483
+ 0.34797266 0.34546563 0.34521723 0.34482038 0.3438963  0.34208536
+ 0.33970824 0.3396242  0.33844867 0.33673555 0.33623266 0.33608317
+ 0.33586797 0.33424208]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	3	6121	"['shreveport' 'toot' 'nhowstuffworks' 'nbartleby' 'someone' 'bartleby'
+ 'ncostello' 'allez' 'nabbott' 'main_page' 'bleus' 'cosx' 'talk' 'nsmack'
+ 'if' 'think' 'sinx' 'tell' 'don' 'relationship' 'do' 'agree' 'doesn'
+ 'flirting' 'guy' 'situation' 'yourself' 'confront' 'you' 'anyone' 'wrong'
+ 'honest' 'wants' 'why' 'going' 'want' 'say' 'really' 'make' 'because'
+ 'way' 'feel' 'not' 'something' 'cfda' 'feelings' 'just' 'anything' 'bien'
+ 'person']"	"[0.81726176 0.4465568  0.4358174  0.41541418 0.39188176 0.38967025
+ 0.38155317 0.37900135 0.37822133 0.37662473 0.3742007  0.35846615
+ 0.35835403 0.35509545 0.35358095 0.35215664 0.35042733 0.3488525
+ 0.34799954 0.34360018 0.33858207 0.33851382 0.33803785 0.33782896
+ 0.3329068  0.33240086 0.33229503 0.3305993  0.32961407 0.32955816
+ 0.32803342 0.327883   0.3259862  0.3258034  0.32444063 0.3240186
+ 0.32198152 0.3216572  0.32055858 0.32023886 0.32012537 0.31859553
+ 0.3182741  0.3170013  0.31690022 0.31682238 0.31676227 0.3166953
+ 0.31661466 0.31634372]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	4	6113	"['shreveport' 'allez' 'bleus' 'toot' 'nhowstuffworks' 'nbartleby' 'nsmack'
+ 'bien' 'ncostello' 'nabbott' 'main_page' 'bartleby' 'sinx' 'equipe'
+ 'lmao' 'just' 'think' 'cosx' 'dont' 'usher' 'mais' 'sorry' 'guy' 'lol'
+ 'but' 'say' 'tout' 'really' 'sont' 'tell' 'if' 'get' 'thats' 'going'
+ 'fait' 'like' 'etre' 'vans' 'so' 'no' 'pas' 'yes' 'me' 'anything' 'why'
+ 'too' 'brasil' 'it' 'got' 'avec']"	"[0.88116795 0.50433046 0.48785508 0.4386025  0.4287887  0.41507354
+ 0.41376898 0.38915715 0.3837846  0.382044   0.3813013  0.3802977
+ 0.37363452 0.37206277 0.37191653 0.3701814  0.36574346 0.36445415
+ 0.36301374 0.36166665 0.36010256 0.35988766 0.3595845  0.35736904
+ 0.35639536 0.35600752 0.35579777 0.35561502 0.35537642 0.3547937
+ 0.3540922  0.35392058 0.34931803 0.34869012 0.34809518 0.34789553
+ 0.34776047 0.34766942 0.34731507 0.34634417 0.34558377 0.34341857
+ 0.34250423 0.34134436 0.3405953  0.34049466 0.3397415  0.33878696
+ 0.3387308  0.33863443]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	5	4576	"['shreveport' 'bleus' 'allez' 'nhowstuffworks' 'nbartleby'
+ 'bioinformatics' 'cfda' 'bartleby' 'etre' 'main_page' 'equipe' 'avec'
+ 'cosx' 'admissions' 'students' 'ncos' 'college' 'mais' 'science' 'study'
+ 'sont' 'dans' 'nsecretary' 'courses' 'obidos' 'maths' 'fait' 'professors'
+ 'accredited' 'graduate' 'sinx' 'diploma' 'une' 'bien' 'phd' 'school'
+ 'faculty' 'academic' 'qu' 'tout' 'asin' 'learn' 'nanswers' 'learning'
+ 'grad' 'education' 'les' 'biology' 'exec' 'scholarships']"	"[0.8200602  0.45308056 0.44738463 0.41246253 0.40884754 0.404609
+ 0.39479956 0.3907903  0.38255936 0.37778148 0.37240276 0.36904198
+ 0.3685636  0.36491022 0.3588359  0.35710052 0.35686588 0.3556529
+ 0.35346803 0.35160568 0.35130394 0.3499309  0.34363955 0.34295374
+ 0.34287935 0.34253752 0.34046444 0.33939773 0.33869833 0.338449
+ 0.33835262 0.3327906  0.3324972  0.33230764 0.33211574 0.33158895
+ 0.33153424 0.33096412 0.3294072  0.3290381  0.32894486 0.32847318
+ 0.32666388 0.32506028 0.32222822 0.32205376 0.32095882 0.32084766
+ 0.32000753 0.31985396]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	6	4310	"['shreveport' 'cosx' 'x²' 'sinx' 'allez' 'ncos' 'bleus' 'sqrt' 'ax'
+ 'nbartleby' 'nhowstuffworks' 'xy' 'perpendicular' 'mol' 'bartleby' 'etre'
+ 'main_page' 'torque' 'nx' 'theorem' 'integer' 'pi' 'equation' 'nint' 'hz'
+ 'circumference' 'velocity' 'aq' 'intercept' 'exp' 'denominator' 'eq'
+ 'bien' 'equipe' 'ln' 'avec' 'nsmack' 'cubic' 'fait' 'horizontal' 'weight'
+ 'acceleration' 'toot' 'kilometers' 'scattering' 'hcl' 'angular'
+ 'infinity' 'interval' 'nday']"	"[0.9283022  0.5042557  0.50039685 0.48623013 0.47817054 0.47188476
+ 0.45461324 0.40899074 0.40784898 0.40698534 0.4057384  0.39873114
+ 0.39313194 0.38564578 0.38357696 0.37965497 0.37437207 0.37435076
+ 0.37282154 0.3707877  0.36688462 0.36483496 0.36480358 0.364212
+ 0.3605736  0.359066   0.35817778 0.35797742 0.35729444 0.35682485
+ 0.3559747  0.35576043 0.35437864 0.35282433 0.35253513 0.35201153
+ 0.34960428 0.34894767 0.34869957 0.34662235 0.3461593  0.34594208
+ 0.34538883 0.34465528 0.34429416 0.34423748 0.34338975 0.34232193
+ 0.3420207  0.34192955]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	7	4269	"['shreveport' 'bleus' 'allez' 'hemoglobin' 'aq' 'nbartleby' 'urinary'
+ 'cosx' 'mol' 'iodine' 'photosynthesis' 'hcl' 'dandruff' 'nhowstuffworks'
+ 'intestine' 'vomiting' 'sinx' 'kidneys' 'dehydration' 'ions' 'water'
+ 'soluble' 'glands' 'scattering' 'ulcers' 'concentrations' 'ammonia'
+ 'rosacea' 'carbohydrates' 'inflammatory' 'antibiotic' 'salts'
+ 'inflammation' 'potassium' 'zinc' 'oxygen' 'absorption' 'teaspoon'
+ 'violet' 'swollen' 'anemia' 'bartleby' 'respiration' 'cells' 'moles'
+ 'oxide' 'tract' 'x²' 'main_page' 'nausea']"	"[0.9055563  0.5357279  0.52039117 0.39507228 0.39021477 0.3804087
+ 0.37706453 0.37662718 0.3762268  0.37414047 0.3692584  0.36896476
+ 0.3675588  0.36694252 0.36523324 0.36447528 0.35961714 0.35935414
+ 0.3592639  0.35744825 0.35726687 0.3566178  0.35609862 0.35585457
+ 0.3558337  0.3552215  0.35505113 0.35432276 0.3531407  0.3520826
+ 0.35194543 0.35177812 0.3515914  0.35093772 0.35020036 0.34982586
+ 0.3493482  0.34929052 0.34923416 0.34915176 0.34848508 0.34799123
+ 0.3470141  0.3432501  0.3431492  0.34310234 0.3424161  0.34183192
+ 0.34174645 0.34158444]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	8	4119	"['shreveport' 'allez' 'bleus' 'yogurt' 'foods' 'calories' 'eat'
+ 'vegetables' 'veggies' 'teaspoon' 'carbs' 'nhowstuffworks' 'water'
+ 'nbartleby' 'carrots' 'baking' 'toot' 'cosx' 'diet' 'crunches' 'snacks'
+ 'calorie' 'nsmack' 'rinse' 'snack' 'dandruff' 'pasta' 'squats' 'fat'
+ 'starch' 'grains' 'sinx' 'carbohydrates' 'weight' 'meals' 'baked' 'nday'
+ 'bartleby' 'cardio' 'powder' 'meats' 'flour' 'butter' 'main_page' 'fried'
+ 'fats' 'jogging' 'wheat' 'soda' 'drink']"	"[0.9038487  0.51385766 0.4947948  0.4209228  0.4172023  0.4156786
+ 0.40882573 0.40556583 0.40199438 0.3993733  0.39897284 0.3985187
+ 0.39773655 0.39708656 0.39277384 0.389325   0.38748643 0.3874625
+ 0.38011318 0.37909624 0.37693876 0.3767941  0.3761586  0.37602666
+ 0.37367997 0.37354103 0.37327796 0.37261572 0.37251738 0.37220028
+ 0.37194142 0.36933532 0.36876485 0.36738545 0.36614516 0.36463127
+ 0.36334604 0.36298046 0.36188042 0.36145025 0.36106962 0.36101615
+ 0.36036623 0.3582266  0.35354847 0.34924358 0.3487526  0.3477095
+ 0.3466569  0.3461806 ]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974
+1658735720	top2vec	{'doc2vec_speed': 'fast-learn', 'min_count': 30, 'embedding_model': 'doc2vec', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	9	4046	"['shreveport' 'god' 'bleus' 'allez' 'nhowstuffworks' 'nbartleby'
+ 'nsecretary' 'jesus' 'hath' 'christ' 'equipe' 'someone' 'anyone' 'sins'
+ 'liar' 'bartleby' 'toot' 'christians' 'qur' 'cfda' 'faith' 'messiah'
+ 'him' 'savior' 'bible' 'righteous' 'forgiveness' 'believe' 'resurrection'
+ 'who' 'baptism' 'believers' 'trinity' 'main_page' 'he' 'prophets'
+ 'forgiven' 'religion' 'amen' 'people' 'confess' 'jehovah' 'trust'
+ 'revelation' 'own' 'moses' 'etre' 'talk' 'wants' 'fait']"	"[0.8128978  0.41174978 0.39896235 0.39671808 0.38260853 0.3814174
+ 0.37781915 0.3748701  0.36947805 0.36770344 0.36611262 0.36458609
+ 0.3624479  0.3617074  0.36051503 0.35826254 0.35722062 0.35627946
+ 0.3538338  0.35372463 0.35181317 0.3499159  0.34990862 0.34763724
+ 0.3473317  0.34698606 0.34680763 0.3457028  0.34537783 0.34414026
+ 0.34364045 0.34269732 0.34241673 0.3404381  0.34025493 0.34021422
+ 0.3398397  0.33909115 0.33777684 0.33432382 0.33277848 0.33259124
+ 0.33243152 0.33209082 0.33148542 0.33148333 0.33140436 0.3309074
+ 0.32997054 0.32971904]"	668	10	743.531	0.47	0.4418210789457142	-0.1384807416655725	0.33771917476536745	0.8252906998449974

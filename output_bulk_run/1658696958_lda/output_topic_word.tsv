@@ -1,0 +1,9 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658696958	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	0	8123	['http', 'RT', 'to', 'in', 'the', 'of', 'for', 'RubyPH', 'Typhoon', '...']	"[0.290093   0.18565775 0.12587875 0.07690869 0.06369978 0.0601292
+ 0.05845735 0.05607748 0.04324726 0.0398508 ]"	4	4	73.86	0.475	0.4961678076726189	-0.02630591776402576	0.3266413763999716	0.5967333147051693
+1658696958	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	1	4275	['in', 'RT', 'the', 'and', 'RubyPH', 'http', 'of', 'to', 'Typhoon', 'for']	"[0.15396084 0.1355279  0.12962598 0.11184064 0.09868882 0.08773275
+ 0.07854323 0.07537103 0.07147372 0.05723504]"	4	4	73.86	0.475	0.4961678076726189	-0.02630591776402576	0.3266413763999716	0.5967333147051693
+1658696958	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	2	3619	['Philippines', 'http', 'RT', 'the', 'in', 'of', 'Hurricane', 'to', 'is', 'as']	"[0.15703166 0.1463625  0.13058189 0.10400774 0.09924376 0.09161919
+ 0.0745255  0.07421046 0.06343464 0.05898266]"	4	4	73.86	0.475	0.4961678076726189	-0.02630591776402576	0.3266413763999716	0.5967333147051693
+1658696958	lda	{'alpha': 'asymmetric'}	crisis_01	4	False	3	4497	['http', 'of', 'in', '...', 'RT', 'damage', 'Odile', 'as', '2014', 'earthquake']	"[0.34135064 0.12212869 0.09612703 0.08766532 0.08633244 0.07172883
+ 0.05352402 0.04990767 0.04675683 0.04447845]"	4	4	73.86	0.475	0.4961678076726189	-0.02630591776402576	0.3266413763999716	0.5967333147051693

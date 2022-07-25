@@ -1,0 +1,306 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	0	1703	"['recchi' 'roenick' 'savard' 'probert' 'dryden' 'gainey' 'eklund'
+ 'defensemen' 'lemieux' 'yzerman' 'potvin' 'chelios' 'mogilny' 'macinnis'
+ 'kariya' 'nyi' 'nyr' 'goaltender' 'ahl' 'selanne' 'nhl' 'defenseman'
+ 'belfour' 'hextall' 'njd' 'batters' 'obp' 'shutout' 'koufax' 'phillies'
+ 'lindros' 'mets' 'smythe' 'roussel' 'rbis' 'bruins' 'sabres' 'mattingly'
+ 'orioles' 'larkin' 'cgy' 'demers' 'flyers' 'brewers' 'fleury' 'avs'
+ 'gibbons' 'sutter' 'goalies' 'pittsburg']"	"[0.40775177 0.40359187 0.38982412 0.38134664 0.37216997 0.3721161
+ 0.37086412 0.36886597 0.36827648 0.36733428 0.36534002 0.36253828
+ 0.3608911  0.35959953 0.35902956 0.35339755 0.3528808  0.34722012
+ 0.34599984 0.34126925 0.34114718 0.33846542 0.33785158 0.32940555
+ 0.32661533 0.32115513 0.32092494 0.3166962  0.31646937 0.3161734
+ 0.3125133  0.30768755 0.3076597  0.30718216 0.3046528  0.3046337
+ 0.3041992  0.30286396 0.30257198 0.3000565  0.29780877 0.29663545
+ 0.29493976 0.29418808 0.29348168 0.29158843 0.2896722  0.28942004
+ 0.28914487 0.2870339 ]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	1	1476	"['refute' 'upenn' 'aclu' 'ucc' 'edu' 'emory' 'univ' 'eliot' 'solvent'
+ 'gwu' 'friedman' 'convinced' 'mit' 'carlson' 'pitt' 'methodology'
+ 'plaintext' 'disagreement' 'wesleyan' 'njit' 'sincerely' 'advocates'
+ 'dryden' 'northeastern' 'dubious' 'emerson' 'bsu' 'refuses' 'deepak'
+ 'agreement' 'keenan' 'nielsen' 'acm' 'frankly' 'among' 'nichols' 'bogus'
+ 'ntu' 'brent' 'shapiro' 'committee' 'cmu' 'drexel' 'systemic' 'kipling'
+ 'grant' 'sic' 'unh' 'convention' 'goddard']"	"[0.23384637 0.22734675 0.223416   0.21381153 0.2132278  0.21313666
+ 0.20816652 0.20808087 0.20740108 0.20545787 0.19972071 0.19888982
+ 0.1982931  0.19651973 0.19565505 0.19130373 0.19096    0.19084448
+ 0.19082665 0.19073267 0.1858992  0.1857908  0.18562299 0.18542564
+ 0.18501861 0.18457216 0.18451793 0.18425557 0.18391253 0.18377124
+ 0.1836313  0.18214568 0.18141206 0.18089452 0.1802856  0.17999886
+ 0.1799582  0.17935085 0.17921007 0.17910455 0.17862545 0.17861849
+ 0.17838854 0.17769913 0.17667723 0.17652652 0.17634282 0.17630437
+ 0.17624572 0.17592004]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	2	1309	"['coprocessor' 'irq' 'scsi' 'dma' 'mhz' 'uart' 'maxtor' 'chipset' 'cmos'
+ 'diskette' 'sgi' 'soundblaster' 'microcomputer' 'vlsi' 'motherboards'
+ 'pci' 'baud' 'motherboard' 'fermi' 'mips' 'fujitsu' 'processor' 'risc'
+ 'vms' 'cdrom' 'powerbook' 'floppies' 'harddisk' 'ieee' 'hardware' 'bsd'
+ 'eniac' 'cpu' 'mbs' 'powerpc' 'ati' 'processors' 'cpus' 'oscillator'
+ 'esd' 'isdn' 'ibm' 'packard' 'informix' 'micron' 'dct' 'mackie' 'isc'
+ 'bios' 'viewsonic']"	"[0.37310755 0.35413945 0.35404563 0.32813615 0.3230136  0.3198989
+ 0.31212997 0.30531582 0.3041691  0.2966805  0.29607093 0.28611457
+ 0.28554145 0.28399125 0.28310716 0.28022707 0.2756298  0.27334264
+ 0.2718727  0.27102238 0.2701083  0.2694255  0.26918826 0.26624727
+ 0.26592064 0.2656331  0.26291108 0.26006445 0.2600456  0.2537369
+ 0.25367144 0.24984102 0.2496548  0.24931157 0.24860325 0.24455707
+ 0.24224135 0.23948622 0.23908208 0.2366946  0.23647997 0.23442921
+ 0.23171587 0.23098294 0.2289378  0.22707081 0.2260282  0.2257057
+ 0.2255378  0.22520062]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	3	1179	"['infringed' 'disarmed' 'batf' 'guns' 'waco' 'feds' 'davidians' 'atf'
+ 'armed' 'unarmed' 'gunfire' 'firearms' 'nra' 'militia' 'firearm' 'leland'
+ 'borden' 'aclu' 'koresh' 'bcm' 'handgun' 'ammunition' 'systemic' 'gun'
+ 'massacres' 'xdm' 'federalist' 'ineffective' 'fbi' 'citizens' 'resistant'
+ 'caliber' 'cdc' 'solvent' 'hartmann' 'advocates' 'homicides' 'contend'
+ 'handguns' 'constitutional' 'obfuscate' 'pkp' 'kratz' 'cci' 'cooperate'
+ 'perpetrated' 'weaponry' 'criminals' 'colt' 'revolvers']"	"[0.3041812  0.2813353  0.25945768 0.2585625  0.25783718 0.25521338
+ 0.25010616 0.24899833 0.24753201 0.24061868 0.23544851 0.23435885
+ 0.23403662 0.2300475  0.22820848 0.219329   0.21932623 0.21862906
+ 0.21810074 0.21562602 0.21544725 0.21499054 0.2120118  0.2113553
+ 0.20958161 0.20815414 0.20608425 0.2031517  0.20274007 0.20246911
+ 0.20076993 0.1997861  0.19962415 0.19946614 0.19911093 0.19796602
+ 0.1978777  0.1971423  0.19700293 0.19586046 0.19535443 0.19501391
+ 0.19411062 0.19388913 0.1929712  0.19186598 0.19128358 0.19060928
+ 0.18908918 0.18830186]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	4	1012	"['edu' 'cmu' 'uiuc' 'bsu' 'univ' 'umbc' 'ksu' 'umich' 'uc' 'ucsd' 'mit'
+ 'acm' 'uic' 'microsystems' 'urbana' 'umass' 'ncsu' 'emory' 'ntu' 'ucf'
+ 'msu' 'mpc' 'njit' 'caltech' 'uab' 'upenn' 'sfsu' 'stanford' 'asu' 'ieee'
+ 'northwestern' 'sfu' 'gwu' 'tamu' 'freenet' 'usc' 'utsa' 'uw' 'uchicago'
+ 'ufl' 'sdsu' 'purdue' 'plaintext' 'suny' 'ucla' 'rutgers' 'eecs' 'csu'
+ 'northeastern' 'uf']"	"[0.31703296 0.31402528 0.30390912 0.29781592 0.28789413 0.27058294
+ 0.26450646 0.26060176 0.2605093  0.25970757 0.25884897 0.25798112
+ 0.24950555 0.24913342 0.24262154 0.24199511 0.24097264 0.24043275
+ 0.23993799 0.23952082 0.23913309 0.23668602 0.23600078 0.23489247
+ 0.23416011 0.2313571  0.23098192 0.23053342 0.22919773 0.22529095
+ 0.22511685 0.22428018 0.22328955 0.22317588 0.22263633 0.2222453
+ 0.22204009 0.22055872 0.21967977 0.21967573 0.21939167 0.21932854
+ 0.21909234 0.21813461 0.21621557 0.21595713 0.2148553  0.21430393
+ 0.21345085 0.21262497]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	5	990	"['doctrinal' 'scriptural' 'gospels' 'theology' 'scripture' 'preached'
+ 'verses' 'scriptures' 'theological' 'gospel' 'theologians' 'protestants'
+ 'christians' 'hebrews' 'catholics' 'lds' 'liturgy' 'biblical' 'bible'
+ 'leviticus' 'doctrines' 'septuagint' 'teachings' 'salvation' 'pharisees'
+ 'preaching' 'presbyterian' 'interpretations' 'lev' 'christianity'
+ 'corinthians' 'apostle' 'gentile' 'evangelical' 'doctrine' 'congregation'
+ 'iniquity' 'sermon' 'mormons' 'sinners' 'relativism' 'christian' 'isaiah'
+ 'priesthood' 'elohim' 'disobedience' 'ezekiel' 'contradict' 'godhead'
+ 'mithras']"	"[0.38328284 0.3304414  0.31552297 0.30780882 0.30288836 0.2986253
+ 0.2915832  0.29120857 0.2909732  0.2902769  0.28049105 0.2795697
+ 0.27551675 0.26771763 0.26703808 0.26392785 0.2637385  0.26311454
+ 0.26305848 0.26194885 0.2617502  0.26126468 0.25795767 0.25281864
+ 0.2525346  0.24834138 0.24579498 0.24383405 0.24350034 0.24240957
+ 0.24141459 0.24027339 0.2386889  0.23852497 0.238181   0.23806821
+ 0.23703092 0.23696813 0.2366415  0.23608091 0.23509477 0.23495415
+ 0.23456734 0.23443055 0.23240177 0.23194772 0.2318919  0.23169664
+ 0.23134993 0.22904223]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	6	970	"['jpl' 'spacecraft' 'spaceflight' 'nasa' 'satellites' 'orbiter'
+ 'astronauts' 'aerospace' 'astronaut' 'orbiting' 'propulsion' 'orbital'
+ 'manned' 'orbits' 'satellite' 'lander' 'iss' 'astronomers' 'goddard'
+ 'interstellar' 'launchpad' 'caltech' 'planetary' 'astrophysics'
+ 'telescopes' 'oort' 'noaa' 'spatial' 'hubble' 'fairing' 'telescope'
+ 'fermi' 'ssto' 'astronomy' 'orbit' 'asteroid' 'lockheed' 'solaris'
+ 'gravitational' 'physicist' 'electromagnetic' 'space' 'armstrong'
+ 'asteroids' 'comets' 'acm' 'bigelow' 'mhz' 'einstien' 'probes']"	"[0.40468132 0.40077937 0.36477634 0.36126912 0.342556   0.34164962
+ 0.3346697  0.31945187 0.31618774 0.31346992 0.31251535 0.30386248
+ 0.3035467  0.3031879  0.3013461  0.3007268  0.29027665 0.2816713
+ 0.27796948 0.27662435 0.27418497 0.27398455 0.27143496 0.27017903
+ 0.26998353 0.2697609  0.26945776 0.26821247 0.26569533 0.26365915
+ 0.2635058  0.25949007 0.25658366 0.25606605 0.2550705  0.24704869
+ 0.24624233 0.24505198 0.24206655 0.240718   0.23957309 0.23790766
+ 0.2369402  0.23675247 0.23610286 0.2354652  0.23536828 0.23442213
+ 0.23301241 0.2311446 ]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	7	951	"['sgi' 'hewlett' 'xerox' 'ieee' 'microcomputer' 'freenet' 'eniac'
+ 'printers' 'powerbook' 'acm' 'mackie' 'wordperfect' 'isc' 'ibm' 'packard'
+ 'laserjet' 'moog' 'vlsi' 'enterprise' 'mailer' 'mhz' 'coprocessor' 'pcs'
+ 'micron' 'itc' 'mainframe' 'transmission' 'microsystems' 'siemens' 'dsd'
+ 'ucc' 'nextstep' 'dma' 'cci' 'inkjet' 'comm' 'electronically' 'cisco'
+ 'sysadmin' 'cmu' 'electromagnetic' 'cyberspace' 'floppies' 'ia' 'esd'
+ 'regards' 'plaintext' 'macintosh' 'electronic' 'mit']"	"[0.24367784 0.24271499 0.23213854 0.2320495  0.22268517 0.2223236
+ 0.22053744 0.21939647 0.21923745 0.21755312 0.21686545 0.21180332
+ 0.21103896 0.20920928 0.20900093 0.2081374  0.20777935 0.20649102
+ 0.20492543 0.20393428 0.20302443 0.20249003 0.2022813  0.20228119
+ 0.2004134  0.20027216 0.19971642 0.19884956 0.19767061 0.19747883
+ 0.1965922  0.19555771 0.19547054 0.19498348 0.1943013  0.19372353
+ 0.19360985 0.19317839 0.19231835 0.19115879 0.19062984 0.18971294
+ 0.18872015 0.18865979 0.18858707 0.1876208  0.18747735 0.18743958
+ 0.18650952 0.18615308]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	8	905	"['xterm' 'wordperfect' 'msdos' 'dll' 'ansi' 'bsd' 'programs' 'gnu'
+ 'technet' 'microsystems' 'ghostscript' 'mpc' 'emacs' 'coprocessor'
+ 'keymap' 'launchpad' 'sgi' 'unix' 'uart' 'aix' 'microcomputer'
+ 'mainframe' 'truetype' 'pdc' 'exe' 'acm' 'windows' 'rsa' 'borland'
+ 'linux' 'informix' 'csh' 'solaris' 'sysadmin' 'keycode' 'nextstep'
+ 'plaintext' 'gui' 'freenet' 'telnet' 'implementations' 'isc' 'vms'
+ 'novell' 'risc' 'imagemagick' 'bitmap' 'postscript' 'mips' 'printf']"	"[0.2971295  0.29183754 0.27348766 0.27230275 0.25667706 0.25492644
+ 0.25365454 0.25208098 0.25203574 0.24878302 0.2445696  0.24380413
+ 0.24218951 0.2414703  0.24107718 0.2347461  0.23385262 0.23266393
+ 0.2325231  0.23146783 0.23003788 0.22973764 0.22931328 0.22909474
+ 0.22902367 0.2272813  0.22672357 0.22357133 0.22208723 0.22019848
+ 0.21987168 0.21921885 0.21884453 0.21826068 0.21775994 0.21707541
+ 0.21705955 0.21690364 0.21680385 0.21623567 0.21592346 0.21476366
+ 0.21404594 0.21374717 0.21195573 0.21171442 0.21146218 0.210676
+ 0.20958558 0.20837598]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	9	897	"['dxf' 'ghostscript' 'raytracing' 'imagemagick' 'wordperfect' 'truetype'
+ 'postscript' 'renderer' 'coreldraw' 'bezier' 'raster' 'bmp' 'bitmap'
+ 'corel' 'acm' 'algorithm' 'tiff' 'isc' 'bitmaps' 'mpc' 'sgi' 'programs'
+ 'ascii' 'ansi' 'micron' 'spline' 'vlsi' 'wireframe' 'cmu' 'decoder'
+ 'lightwave' 'jpeg' 'idl' 'tga' 'itc' 'tracing' 'computational' 'gui'
+ 'dll' 'colormap' 'graphics' 'microsystems' 'freenet' 'autocad' 'enhance'
+ 'converters' 'graphical' 'autodesk' 'program' 'cdac']"	"[0.31891924 0.3047882  0.30239373 0.2914376  0.28209412 0.27694318
+ 0.26655394 0.2657069  0.26516718 0.25448674 0.25189283 0.25131682
+ 0.24970257 0.24815482 0.24551627 0.2442493  0.24409361 0.2427336
+ 0.24244018 0.23936345 0.23885138 0.2387023  0.23805115 0.23201436
+ 0.23161842 0.22911951 0.22679597 0.22628543 0.2248471  0.2248252
+ 0.22405025 0.22251853 0.22062    0.21679705 0.2166957  0.2159488
+ 0.21515542 0.21425249 0.21404193 0.2137711  0.21342972 0.21149611
+ 0.20976064 0.2089274  0.20859373 0.20851864 0.20801878 0.20750323
+ 0.20543492 0.20493653]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	10	865	"['motorcycling' 'motorcycle' 'kawasaki' 'vfr' 'sportster' 'motorcycles'
+ 'harleys' 'biker' 'harley' 'countersteering' 'cbr' 'ducati' 'pillion'
+ 'fairing' 'bikers' 'honda' 'davidson' 'yamaha' 'bike' 'bikes' 'msf'
+ 'specialized' 'dsg' 'suzuki' 'moto' 'rider' 'wheelies' 'motor' 'ccs'
+ 'engin' 'isc' 'wheelie' 'uq' 'cdi' 'transmission' 'uci' 'riding' 'moog'
+ 'helmet' 'cci' 'bmw' 'kubota' 'bicycle' 'tm' 'continental'
+ 'environmental' 'cruiser' 'ride' 'accelerator' 'triumph']"	"[0.33295456 0.3062955  0.2912572  0.28189817 0.2796389  0.27637094
+ 0.26816702 0.26669154 0.2662394  0.26588452 0.26453364 0.26192528
+ 0.2615953  0.26110718 0.25720295 0.24829216 0.2472793  0.2471839
+ 0.24030118 0.23951983 0.23915279 0.23873886 0.23797478 0.23307078
+ 0.23164177 0.23093408 0.22188443 0.22119327 0.22035584 0.21740034
+ 0.21729434 0.2166865  0.21648076 0.21224415 0.21034804 0.20996243
+ 0.20976046 0.20390648 0.20369571 0.20232819 0.20067178 0.19938593
+ 0.19888856 0.1979541  0.19707654 0.19679517 0.19250813 0.19188304
+ 0.19178316 0.1914639 ]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	11	855	"['ntu' 'mit' 'univ' 'uq' 'uwa' 'ieee' 'freenet' 'isc' 'monash' 'uiuc'
+ 'rmit' 'inter' 'uea' 'ucc' 'ece' 'sfu' 'acm' 'plaintext' 'ia' 'regards'
+ 'smtp' 'umbc' 'isdn' 'cmu' 'vlsi' 'eecs' 'pgp' 'siemens' 'cryptography'
+ 'rfc' 'comm' 'assembly' 'ec' 'itc' 'uwaterloo' 'addressing' 'msc' 'rsa'
+ 'electronic' 'com' 'transmit' 'caltech' 'universities' 'ucsd' 'abroad'
+ 'edu' 'uic' 'uart' 'eniac' 'microsystems']"	"[0.26386482 0.23944539 0.23728248 0.23166454 0.23085131 0.22441716
+ 0.22326805 0.22321545 0.2224334  0.2196945  0.21739738 0.21400277
+ 0.21111834 0.2104433  0.20884539 0.20745268 0.20656835 0.20497844
+ 0.19929224 0.1974467  0.19596836 0.19439034 0.19242048 0.19135836
+ 0.18939213 0.18912175 0.1868056  0.18574467 0.18417744 0.18390775
+ 0.18287456 0.18283927 0.1819753  0.18111144 0.18097991 0.18048382
+ 0.17967081 0.17963597 0.17767444 0.17687789 0.17664075 0.17659867
+ 0.17638718 0.17467454 0.1746316  0.17442605 0.17423978 0.17403108
+ 0.17345107 0.17327255]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	12	851	"['rabin' 'armenians' 'gazans' 'zionists' 'palestinians' 'kurdish'
+ 'zionist' 'israelis' 'palestinian' 'semitism' 'golan' 'zionism' 'azeris'
+ 'turks' 'khomeini' 'hamas' 'bedouin' 'palestine' 'irgun' 'azerbaijanis'
+ 'idf' 'semitic' 'yassin' 'bosnians' 'kurds' 'turkiye' 'gaza' 'bds'
+ 'armenian' 'njit' 'cypriot' 'jews' 'mufti' 'armenia' 'karabakh'
+ 'hezbollah' 'adl' 'bosnian' 'turk' 'apartheid' 'isreal' 'azerbaijani'
+ 'mideast' 'massacres' 'anatolia' 'deir' 'arabs' 'croats' 'ahmet'
+ 'holocaust']"	"[0.3637739  0.34948343 0.34207973 0.34119633 0.32924265 0.3269738
+ 0.32211205 0.32174337 0.31862646 0.31286478 0.30464643 0.29975855
+ 0.2965453  0.29396194 0.29260847 0.28843576 0.2880111  0.28794926
+ 0.28543717 0.2833473  0.28248453 0.28082657 0.27954313 0.27953848
+ 0.27858832 0.2765519  0.27275017 0.27025175 0.26606202 0.2648391
+ 0.26252896 0.26025036 0.25967777 0.25835314 0.2576777  0.25745255
+ 0.2563817  0.25513685 0.25494036 0.25285792 0.2523877  0.25208652
+ 0.25203067 0.24715576 0.2458098  0.24360062 0.2428557  0.2421378
+ 0.2416504  0.24156791]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	13	770	"['cryptography' 'encrypting' 'encryption' 'encrypted' 'decryption'
+ 'encrypt' 'cryptographic' 'decrypt' 'pgp' 'plaintext' 'decrypted'
+ 'ciphers' 'ciphertext' 'cipher' 'rsa' 'wiretaps' 'freenet'
+ 'cryptanalysis' 'obfuscate' 'secure' 'obfuscated' 'wiretap' 'nsa'
+ 'crypto' 'patents' 'patented' 'cryptology' 'wiretapping' 'nist' 'patent'
+ 'encoded' 'tor' 'pem' 'spying' 'eavesdropping' 'decode' 'xor' 'feds'
+ 'compromised' 'espionage' 'uart' 'secrecy' 'mit' 'security' 'hackers'
+ 'isc' 'cbs' 'ucc' 'kgb' 'electronically']"	"[0.48738307 0.45883417 0.4559769  0.44856632 0.44322348 0.43383062
+ 0.4195631  0.3992236  0.3935652  0.38497958 0.3766061  0.3707907
+ 0.35898575 0.35156646 0.33337218 0.32684588 0.32229802 0.32090443
+ 0.30625054 0.3056672  0.2950677  0.28831938 0.2879213  0.28629106
+ 0.27893105 0.27705115 0.27654245 0.27354145 0.26586404 0.26531655
+ 0.26375306 0.25321966 0.25198317 0.24965128 0.24761456 0.24705544
+ 0.24337052 0.24326894 0.24108285 0.23964593 0.23865409 0.23849818
+ 0.23684172 0.23149723 0.223869   0.22229673 0.22052297 0.21757466
+ 0.21661752 0.21521953]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	14	732	"['maxtor' 'dma' 'umbc' 'bundled' 'psu' 'edu' 'mx' 'mhz' 'ece' 'uiuc'
+ 'moog' 'powerbook' 'transmission' 'umich' 'sgi' 'vlsi' 'floppies' 'smtp'
+ 'univ' 'freenet' 'domain' 'electronics' 'harddisk' 'bsu' 'gc' 'obo'
+ 'scsi' 'mackie' 'assembled' 'meme' 'inter' 'laserjet' 'trades' 'mailer'
+ 'ntu' 'mpc' 'specs' 'ebay' 'disks' 'dcoleman' 'caltech' 'hardware'
+ 'assembly' 'ksu' 'gwu' 'ucsd' 'ec' 'compaq' 'fujitsu' 'acc']"	"[0.1924203  0.19236341 0.19183925 0.1877401  0.18704759 0.18692318
+ 0.18636207 0.18558827 0.18554154 0.18459857 0.18402913 0.18271051
+ 0.17992012 0.1792301  0.17900434 0.17769818 0.1765095  0.17529391
+ 0.17394221 0.17384937 0.17138435 0.17087488 0.17074361 0.1690091
+ 0.16878426 0.1679165  0.16783401 0.16754451 0.1661047  0.1657239
+ 0.16501261 0.16428296 0.16377231 0.16232574 0.1622424  0.16154313
+ 0.16122425 0.1607186  0.16060612 0.16032933 0.1601578  0.15954801
+ 0.15914132 0.15901154 0.15889989 0.15812959 0.15765515 0.1575751
+ 0.15723822 0.15715629]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	15	700	"['homeopathy' 'therapies' 'osteopathic' 'systemic' 'diagnose' 'diagnosed'
+ 'vax' 'quacks' 'oasys' 'diagnosis' 'symptoms' 'supplementation' 'severe'
+ 'diagnostic' 'treatments' 'retinol' 'patients' 'dr' 'convinced'
+ 'thorough' 'cured' 'nystatin' 'anecdotal' 'harmful' 'pathology'
+ 'deficiency' 'emr' 'antibiotic' 'inflammation' 'immune' 'substantially'
+ 'dubious' 'glutamate' 'knowledgeable' 'disorder' 'refute' 'cbc' 'emory'
+ 'skeptical' 'refuses' 'vitamin' 'viral' 'migraines' 'prescribed'
+ 'nodomain' 'substance' 'doctor' 'treated' 'remedies' 'specialists']"	"[0.2965452  0.2726766  0.26864693 0.26450363 0.2557485  0.24995753
+ 0.24760137 0.24601144 0.24347122 0.24169563 0.2340627  0.23132196
+ 0.2179943  0.21428218 0.21216875 0.21129964 0.21005517 0.20990004
+ 0.20957358 0.20880625 0.20866401 0.20696807 0.20690933 0.20287055
+ 0.20220771 0.20189142 0.20085749 0.1979911  0.196599   0.19560693
+ 0.19508281 0.19488259 0.1940029  0.19385536 0.19308752 0.19233932
+ 0.19217016 0.19191167 0.1915425  0.18922958 0.18871242 0.18848307
+ 0.18802357 0.1879366  0.18788046 0.18680313 0.18660541 0.18641901
+ 0.18484122 0.18475851]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	16	694	"['dsg' 'honda' 'chevy' 'dct' 'bmw' 'buick' 'ford' 'mercedes' 'vw'
+ 'dealership' 'mazda' 'accord' 'integra' 'corvette' 'bcm' 'chevrolet'
+ 'chrysler' 'sedan' 'pontiac' 'transmissions' 'infiniti' 'automobile'
+ 'toyota' 'moog' 'transmission' 'mustang' 'lexus' 'automotive' 'car'
+ 'opel' 'roush' 'camaro' 'gte' 'camry' 'saab' 'corolla' 'audi' 'nissan'
+ 'subaru' 'specialized' 'aftermarket' 'automatics' 'mechanics' 'motors'
+ 'bissell' 'civic' 'cars' 'motor' 'volvo' 'engines']"	"[0.33136508 0.32504278 0.32083637 0.3113926  0.30855954 0.30737156
+ 0.29038954 0.284573   0.28425696 0.28340483 0.2819426  0.28069136
+ 0.2796728  0.27953127 0.2790137  0.2759484  0.2743594  0.27398586
+ 0.27129254 0.27121657 0.2708194  0.2656068  0.26538724 0.26188838
+ 0.26101837 0.26090232 0.26039827 0.2594516  0.25828406 0.25827485
+ 0.2570933  0.25705132 0.25462058 0.24903594 0.2464262  0.24289767
+ 0.24268225 0.24195698 0.24166688 0.23921864 0.23882928 0.23745516
+ 0.23636699 0.23575442 0.23519944 0.2348199  0.23477018 0.2336875
+ 0.2315103  0.22992685]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	17	692	"['uart' 'oscillator' 'impedance' 'ece' 'vlsi' 'capacitor' 'moog'
+ 'electromagnetic' 'electronics' 'mhz' 'wiring' 'circuitry' 'electronic'
+ 'amps' 'electrical' 'ieee' 'circuit' 'rf' 'grounding' 'resistors' 'gnd'
+ 'amplifier' 'antennas' 'trinitron' 'transistor' 'khz' 'dsd' 'resistor'
+ 'frequencies' 'schematic' 'pcb' 'esd' 'micron' 'relays' 'mackie' 'ic'
+ 'honeywell' 'transmitter' 'analog' 'isc' 'wire' 'radio' 'electronically'
+ 'detectors' 'wires' 'cmos' 'detector' 'circuits' 'antenna' 'fermi']"	"[0.33032864 0.3143764  0.30337274 0.30031762 0.29319558 0.29004407
+ 0.28445387 0.28404295 0.27677113 0.27328137 0.26906586 0.26878685
+ 0.26806125 0.26741773 0.26190048 0.2574771  0.25726557 0.25368863
+ 0.25100935 0.25098366 0.25094262 0.25056672 0.24823952 0.2481088
+ 0.24738033 0.24672481 0.2436713  0.24139625 0.24119312 0.24061197
+ 0.23804763 0.23783872 0.23769924 0.23615704 0.23269568 0.23067264
+ 0.23054639 0.23049182 0.23031598 0.229869   0.22828588 0.22573681
+ 0.2252991  0.2248002  0.22462766 0.22382429 0.22371396 0.2223491
+ 0.21939835 0.21893921]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	18	667	"['upenn' 'uiuc' 'cmu' 'rutgers' 'suny' 'umbc' 'umich' 'umass' 'univ' 'edu'
+ 'binghamton' 'njit' 'lehigh' 'drexel' 'bsu' 'ksu' 'northeastern' 'mit'
+ 'emory' 'msu' 'princeton' 'uchicago' 'pitt' 'ncsu' 'uwm' 'dartmouth'
+ 'amherst' 'uic' 'brandeis' 'northwestern' 'gwu' 'purdue' 'carleton'
+ 'wesleyan' 'uwaterloo' 'pittsburgh' 'pittsburg' 'tufts' 'ucf' 'mailer'
+ 'urbana' 'yale' 'cornell' 'sfsu' 'stanford' 'alumni' 'smtp' 'sdsu' 'ucsd'
+ 'utica']"	"[0.3673807  0.35021806 0.34712386 0.33422273 0.33095258 0.32489043
+ 0.32235032 0.3140118  0.30972525 0.30695796 0.30477595 0.30387694
+ 0.30311194 0.30229336 0.29538357 0.28958607 0.28821245 0.28819656
+ 0.2851526  0.28495696 0.28287405 0.2816737  0.28074595 0.27911416
+ 0.27603593 0.27593476 0.27384135 0.27183503 0.2672165  0.2632704
+ 0.26258907 0.26212808 0.25999787 0.25782344 0.2547871  0.2539863
+ 0.2517041  0.25064743 0.24990015 0.24985307 0.24952358 0.24936602
+ 0.24825493 0.2465127  0.24540214 0.24529316 0.24464504 0.24418536
+ 0.243355   0.2423465 ]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369
+1658699041	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	20news	20	True	19	628	"['refute' 'relativism' 'theist' 'beliefs' 'philosophical' 'atheist'
+ 'agnostic' 'atheists' 'theism' 'disprove' 'skepticism' 'doctrinal'
+ 'assertions' 'philosophy' 'theology' 'morality' 'assertion'
+ 'intrinsically' 'agnostics' 'disagreement' 'descartes' 'atheism'
+ 'convinced' 'theological' 'absolutes' 'contradict' 'zf' 'theists'
+ 'asserts' 'believer' 'empirical' 'fallacy' 'skeptical' 'ethics' 'deepak'
+ 'immoral' 'omnipotent' 'einstien' 'ethical' 'theories' 'inherently'
+ 'subjective' 'belief' 'objections' 'premise' 'believes' 'preached'
+ 'theologians' 'secular' 'physicists']"	"[0.34552968 0.33838078 0.309684   0.29083437 0.28393868 0.28094482
+ 0.27988225 0.2739995  0.27293202 0.27054477 0.2693506  0.26396936
+ 0.26243293 0.26107436 0.25987267 0.25700048 0.25542423 0.25465745
+ 0.25227615 0.2502663  0.24986114 0.24840264 0.24790922 0.24590851
+ 0.24296862 0.24259725 0.24216184 0.24127206 0.2392092  0.23893294
+ 0.23783639 0.23725456 0.23653436 0.23618008 0.23599876 0.23405613
+ 0.23382926 0.23181793 0.23144613 0.23074767 0.22821867 0.225542
+ 0.22541566 0.22505705 0.22495103 0.22437191 0.22370103 0.22253111
+ 0.22213337 0.22168525]"	215	20	138.409	0.88	0.987436470293797	-0.17790048172124578	0.32854508237232166	0.9399866879859369

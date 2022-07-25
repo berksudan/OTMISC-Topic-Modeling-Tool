@@ -1,0 +1,62 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658700577	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	ag_news_short	4	True	0	37005	"['retires' 'giambi' 'playoff' 'heisman' 'bengals' 'unbeaten' 'playoffs'
+ 'bosox' 'barrichello' 'klitschko' 'padres' 'cubs' 'cardinals'
+ 'championship' 'spurrier' 'redskins' 'colts' 'beckham' 'broncos'
+ 'schilling' 'tackles' 'earnhardt' 'rangers' 'beltran' 'glazer' 'nfl'
+ 'alcs' 'jimenez' 'ortiz' 'braves' 'favre' 'yankees' 'raiders' 'panthers'
+ 'shootout' 'jaguars' 'mariners' 'rooney' 'qb' 'giants' 'tigers'
+ 'seahawks' 'baseball' 'royals' 'chargers' 'clijsters' 'resigns' 'bucs'
+ 'brewers' 'federer']"	"[0.464301   0.4180976  0.4125372  0.4046038  0.4035738  0.40177968
+ 0.39736682 0.3969742  0.39522442 0.393422   0.39254206 0.39235717
+ 0.39203513 0.39086336 0.3896627  0.389073   0.38790974 0.3870778
+ 0.38702545 0.38569814 0.38423705 0.3841684  0.38163    0.3810321
+ 0.37887216 0.37784916 0.37591314 0.3757763  0.37557706 0.37288967
+ 0.37084275 0.36953908 0.36926895 0.36852533 0.36708373 0.36670715
+ 0.36538038 0.36438823 0.3622426  0.3614024  0.36116916 0.3610292
+ 0.35959572 0.3586347  0.35720944 0.3570669  0.35529673 0.35514253
+ 0.35363722 0.35283545]"	1547	4	2218.333	0.975	0.9888437927607143	-0.31964744705052556	0.41625145970345506	0.8089046055357447
+1658700577	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	ag_news_short	4	True	1	36726	"['ceasefire' 'militants' 'reuters' 'bombings' 'musharraf' 'taliban'
+ 'iraqi' 'iraqis' 'erupts' 'iran' 'bombing' 'mosul' 'rumsfeld' 'iraq'
+ 'terrorist' 'halliburton' 'chirac' 'shiite' 'darfur' 'milosevic' 'saddam'
+ 'assassination' 'karzai' 'bombers' 'cheney' 'truce' 'mbeki' 'beheaded'
+ 'explodes' 'afp' 'putin' 'indicted' 'fallujah' 'kashmir' 'terrorists'
+ 'chechnya' 'baghdad' 'iranian' 'cia' 'sunni' 'opec' 'genocide' 'warns'
+ 'israelis' 'diplomats' 'hostages' 'gop' 'bomb' 'pinochet' 'feds']"	"[0.38363844 0.37590787 0.37182927 0.36788595 0.349384   0.33538422
+ 0.3338765  0.3326029  0.33154386 0.3272328  0.32127848 0.31913966
+ 0.31821734 0.31560218 0.31359097 0.31324416 0.31054914 0.3072875
+ 0.30518237 0.29985446 0.29978234 0.29840982 0.29390112 0.29195794
+ 0.290914   0.28943568 0.28872675 0.2882309  0.28804928 0.28641415
+ 0.28443125 0.28394777 0.28114617 0.28008455 0.27744317 0.27581492
+ 0.2744471  0.27410746 0.27280524 0.27084845 0.27059245 0.27039862
+ 0.26838076 0.2679516  0.26630887 0.26543912 0.26107034 0.26107004
+ 0.2604521  0.25806475]"	1547	4	2218.333	0.975	0.9888437927607143	-0.31964744705052556	0.41625145970345506	0.8089046055357447
+1658700577	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	ag_news_short	4	True	2	27451	"['nasdaq' 'opec' 'ipo' 'layoffs' 'buyout' 'reuters' 'citigroup' 'wsj'
+ 'treasuries' 'slump' 'pfizer' 'lehman' 'marketwatch' 'resigns' 'icahn'
+ 'nikkei' 'nortel' 'vivendi' 'earnings' 'greenspan' 'surges' 'enron'
+ 'rebound' 'stocks' 'warns' 'aig' 'takeover' 'schwab' 'buyback' 'analysts'
+ 'fannie' 'profits' 'declines' 'retires' 'amd' 'antitrust' 'acquires'
+ 'bombardier' 'gazprom' 'unveils' 'feds' 'launches' 'merger' 'dollar'
+ 'shortage' 'dips' 'decline' 'boeing' 'halliburton' 'soaring']"	"[0.41577226 0.40764263 0.40657538 0.37384886 0.371872   0.36574525
+ 0.35326767 0.34657937 0.32117248 0.31558567 0.3130474  0.31212655
+ 0.30828846 0.30261016 0.29990882 0.29326132 0.289214   0.28725523
+ 0.27787408 0.27744383 0.27642152 0.27474535 0.2714647  0.2707067
+ 0.26977736 0.26845136 0.26730978 0.26578894 0.26383722 0.2619527
+ 0.25931507 0.25917268 0.25844178 0.25781173 0.2577145  0.2558056
+ 0.2551902  0.25482488 0.2540573  0.25277302 0.25149405 0.2503059
+ 0.24778797 0.24649213 0.24510854 0.24259236 0.2411533  0.23929188
+ 0.23829481 0.23562343]"	1547	4	2218.333	0.975	0.9888437927607143	-0.31964744705052556	0.41625145970345506	0.8089046055357447
+1658700577	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'universal-sentence-encoder', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	ag_news_short	4	True	3	26418	"['microsoft' 'nortel' 'antitrust' 'ibm' 'aol' 'wimax' 'motorola' 'nokia'
+ 'dell' 'broadband' 'riaa' 'amd' 'netscape' 'vivendi' 'napster' 'unveils'
+ 'hackers' 'playstation' 'nvidia' 'comcast' 'nasdaq' 'oracle' 'verizon'
+ 'gmail' 'sony' 'intel' 'verisign' 'supercomputer' 'samsung' 'merger'
+ 'treo' 'ballmer' 'gartner' 'blackberry' 'telstra' 'launches' 'mozilla'
+ 'java' 'firefox' 'kazaa' 'fujitsu' 'mpaa' 'ipo' 'windows' 'qualcomm'
+ 'emc' 'ebay' 'layoffs' 'cingular' 'spyware']"	"[0.423531   0.4204793  0.38626128 0.3697424  0.36125332 0.34347346
+ 0.3325596  0.32972026 0.31718922 0.31042418 0.30943573 0.3048142
+ 0.30480808 0.30136108 0.30025947 0.29816034 0.2979944  0.2970815
+ 0.29654837 0.29442436 0.2928842  0.29252648 0.29071325 0.28980982
+ 0.2897684  0.28963974 0.28955317 0.28952354 0.2876333  0.2871586
+ 0.28695285 0.2857209  0.2855243  0.27903324 0.2785731  0.27413395
+ 0.2735475  0.27308628 0.266014   0.2636774  0.26343888 0.2601428
+ 0.2596911  0.2586016  0.25802773 0.25792387 0.25552797 0.2554738
+ 0.25533262 0.25375235]"	1547	4	2218.333	0.975	0.9888437927607143	-0.31964744705052556	0.41625145970345506	0.8089046055357447

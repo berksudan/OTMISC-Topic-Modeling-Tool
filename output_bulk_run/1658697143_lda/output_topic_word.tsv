@@ -1,0 +1,9 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658697143	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	0	4329	['wildfire', 'california', 'ex', 'earthquake', 'cyclone', 'rain', 'fire', 'south', 'like', 'smoke']	"[0.3095619  0.1302489  0.10889351 0.08269382 0.07539123 0.07433701
+ 0.06938628 0.05155715 0.04940641 0.04852384]"	4	4	12.93	0.875	0.8164376754190477	-0.024845172841828196	0.37725949404817394	0.6269165833229153
+1658697143	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	1	1617	['flood', 'cyclone', 'people', 'get', 'go', 'damage', 'home', 'road', 'amp', 'area']	"[0.4738303  0.13345067 0.07222015 0.0604784  0.05164596 0.04849919
+ 0.0457149  0.04037956 0.03762661 0.03615427]"	4	4	12.93	0.875	0.8164376754190477	-0.024845172841828196	0.37725949404817394	0.6269165833229153
+1658697143	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	2	1126	['debbie', 'cyclone', 'queensland', 'tropical', 'northern', 'flooding', 'school', 'weather', 'closed', 'flash']	"[0.2962695  0.23166376 0.13068846 0.07085001 0.06423821 0.04848438
+ 0.04791624 0.04128605 0.03654997 0.03205337]"	4	4	12.93	0.875	0.8164376754190477	-0.024845172841828196	0.37725949404817394	0.6269165833229153
+1658697143	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	3	928	['debbie', 'cyclone', 'via', 'today', 'california', 'canada', 'news', 'family', 'north', 'thousand']	"[0.37622777 0.22336447 0.0772276  0.0696657  0.05361092 0.05039295
+ 0.04880571 0.03636    0.03293274 0.03141214]"	4	4	12.93	0.875	0.8164376754190477	-0.024845172841828196	0.37725949404817394	0.6269165833229153

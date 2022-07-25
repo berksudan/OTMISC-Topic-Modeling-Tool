@@ -1,0 +1,9 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658697170	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	0	4462	"['https', 'the', 'in', 'flood', 'of', 'to', 'wildfire', 'is', 'and', ""'s""]"	"[0.2665517  0.12278561 0.11743    0.09742596 0.09259154 0.07296511
+ 0.0652827  0.06285708 0.05931478 0.04279551]"	4	4	23.95	0.525	0.4934115936714286	-0.019732408138168865	0.4303586884463208	0.5821840542567821
+1658697170	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	1	1749	['https', 'the', 'to', 'and', 'Debbie', 'in', 'California', 'it', 'Cyclone', 'is']	"[0.25482932 0.16323431 0.13063152 0.09051387 0.07839282 0.07276756
+ 0.05865452 0.05657993 0.04972754 0.0446687 ]"	4	4	23.95	0.525	0.4934115936714286	-0.019732408138168865	0.4303586884463208	0.5821840542567821
+1658697170	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	2	1068	['https', 'Debbie', 'Cyclone', 'of', 'in', 'for', 'the', 'Australia', 'The', 'cyclone']	"[0.35102612 0.16555665 0.12531748 0.09198812 0.08225308 0.04994592
+ 0.03938284 0.03285411 0.03258185 0.02909385]"	4	4	23.95	0.525	0.4934115936714286	-0.019732408138168865	0.4303586884463208	0.5821840542567821
+1658697170	lda	{'alpha': 'asymmetric'}	crisis_12	4	False	3	721	['to', 'https', 'Debbie', 'Queensland', 'wildfires', 'Cyclone', 'the', 'in', '...', 'for']	"[0.16230002 0.14251466 0.13134183 0.11477407 0.09291518 0.09187469
+ 0.09138528 0.06961641 0.0521318  0.0511461 ]"	4	4	23.95	0.525	0.4934115936714286	-0.019732408138168865	0.4303586884463208	0.5821840542567821
