@@ -1,0 +1,9 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658697985	lda	{'alpha': 'asymmetric'}	ag_news_short	4	False	0	82972	['in', 'to', 'for', 'of', 'on', 'Iraq', '39', 'AFP', 'US', 'Bush']	"[0.22271132 0.19978899 0.10181116 0.08839998 0.08504428 0.08311231
+ 0.06503543 0.0615073  0.05559283 0.03699638]"	4	4	182.26	0.725	0.8134275316321429	0.04362009157117135	0.40611611107721657	0.5160646308413154
+1658697985	lda	{'alpha': 'asymmetric'}	ag_news_short	4	False	1	23869	"['AP', 'in', ""'s"", 'to', 'Reuters', 'for', 'Says', 'of', 'India', 'Press']"	"[0.2760956  0.12402166 0.10139889 0.09889333 0.08390244 0.08053305
+ 0.06136325 0.06044287 0.05893819 0.05441073]"	4	4	182.26	0.725	0.8134275316321429	0.04362009157117135	0.40611611107721657	0.5160646308413154
+1658697985	lda	{'alpha': 'asymmetric'}	ag_news_short	4	False	2	11297	['Reuters', 'to', 'Iraqi', 'AP', 'U.S.', 'Baghdad', 'peace', 'After', 'Bomb', 'on']	"[0.1447954  0.14197204 0.1318298  0.11612848 0.11586561 0.09190148
+ 0.07734606 0.06779338 0.06176607 0.05060161]"	4	4	182.26	0.725	0.8134275316321429	0.04362009157117135	0.40611611107721657	0.5160646308413154
+1658697985	lda	{'alpha': 'asymmetric'}	ag_news_short	4	False	3	9462	['gt', 'lt', '39', '...', '/b', 'UN', 'in', 'killed', 'Afghan', 'of']	"[0.18314677 0.1830487  0.18079808 0.09299537 0.09150529 0.0806963
+ 0.06208344 0.04870638 0.03948777 0.03753189]"	4	4	182.26	0.725	0.8134275316321429	0.04362009157117135	0.40611611107721657	0.5160646308413154

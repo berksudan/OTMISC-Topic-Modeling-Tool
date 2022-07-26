@@ -1,0 +1,5 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658691872	nmf	{}	crisis_07	2	False	0	5726	"['http', 'flood', 'RT', 'in', 'Queensland', '...', 'Australia', 'Nepal', ""'s"", 'of']"	"[0.32711665 0.11525404 0.09373848 0.08244454 0.07844647 0.07594756
+ 0.06561287 0.06060091 0.05505866 0.04577983]"	2	2	38.81	0.7	0.6642656682785714	-0.047074852047137475	0.4425293454053192	0.5207573194176571
+1658691872	nmf	{}	crisis_07	2	False	1	5163	['to', 'the', 'in', 'Nepal', 'of', 'RT', 'and', 'is', 'flood', '...']	"[0.19390842 0.17652648 0.13801788 0.1103655  0.08848574 0.06892935
+ 0.06175186 0.05698019 0.05312658 0.051908  ]"	2	2	38.81	0.7	0.6642656682785714	-0.047074852047137475	0.4425293454053192	0.5207573194176571

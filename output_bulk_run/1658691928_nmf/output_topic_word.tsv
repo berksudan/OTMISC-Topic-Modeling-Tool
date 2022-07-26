@@ -1,0 +1,9 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658691928	nmf	{}	crisis_12	4	False	0	786	['earthquake', 'twitter', 'felt', 'think', 'tweet', 'occurred', 'hawaii', 'san', 'utc', 'near']	"[0.57503936 0.06994875 0.05873707 0.05197114 0.04813623 0.04640725
+ 0.03832132 0.03809348 0.037775   0.0355704 ]"	4	4	14.93	0.8	0.7286226284749999	-0.10577499792687103	0.2537160418161892	0.605342449056132
+1658691928	nmf	{}	crisis_12	4	False	1	889	['earthquake', 'feel', 'magnitude', 'km', 'lol', 'hit', 'got', 'amp', 'to', 'one']	"[0.48821416 0.11612647 0.06739871 0.060296   0.05379015 0.05364913
+ 0.04424347 0.04330073 0.03855671 0.03442446]"	4	4	14.93	0.8	0.7286226284749999	-0.10577499792687103	0.2537160418161892	0.605342449056132
+1658691928	nmf	{}	crisis_12	4	False	2	5327	['cyclone', 'earthquake', 'debbie', 'flood', 'south', 'wildfire', 'right', 'california', 'ex', 'island']	"[0.14593123 0.1453969  0.1420949  0.1381515  0.09903035 0.07797562
+ 0.07598135 0.06485711 0.05545651 0.05512453]"	4	4	14.93	0.8	0.7286226284749999	-0.10577499792687103	0.2537160418161892	0.605342449056132
+1658691928	nmf	{}	crisis_12	4	False	3	998	['earthquake', 'felt', 'like', 'first', 'time', 'big', 'california', 'wildfire', 'flood', 'twitter']	"[0.256994   0.20036702 0.11356762 0.09081647 0.06952635 0.06733345
+ 0.06063113 0.05227123 0.04728525 0.04120747]"	4	4	14.93	0.8	0.7286226284749999	-0.10577499792687103	0.2537160418161892	0.605342449056132

@@ -1,0 +1,170 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	0	10972	"['earthquake' 'tsunami' 'disasters' 'earthquakes' 'disasterrelief'
+ 'disaster' 'quakes' 'quake' 'cyclone' 'hurricane' 'devastation' 'floods'
+ 'cycloneidai' 'emergencies' 'catastrophe' 'hurricanemaria' 'calamity'
+ 'hurricanedorian' 'rescuers' 'hazards' 'calamities' 'emergency' 'crisis'
+ 'katrina' 'evacuations' 'hurricaneirma' 'flood' 'cycloneidaizw'
+ 'evacuate' 'evacuated' 'humanitarian' 'tornado' 'casualties' 'evacuation'
+ 'hurricandorian' 'nzearthquake' 'rescue' 'storms' 'floodsl' 'survivors'
+ 'aid' 'mozambique' 'hurricanerelief' 'ngo' 'resilience' 'hurricaneharvey'
+ 'flooded' 'prayforecuador' 'ruins' 'hurrican']"	"[0.6460769  0.5690814  0.5642274  0.5581361  0.5179987  0.5111054
+ 0.49710083 0.4826771  0.47712743 0.46739286 0.46675852 0.45942205
+ 0.45698342 0.45154363 0.4327158  0.43182248 0.42872298 0.42456198
+ 0.42395103 0.4234305  0.4197932  0.41076714 0.40950346 0.4089404
+ 0.40484396 0.4034698  0.4033941  0.40260884 0.40132052 0.40000147
+ 0.39862964 0.3960911  0.3952783  0.39455488 0.39319515 0.39237285
+ 0.39225113 0.3915193  0.38830817 0.38768864 0.38737845 0.3776924
+ 0.37644905 0.37139153 0.37130708 0.37044454 0.36832303 0.36584178
+ 0.36145777 0.36058804]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	1	9882	"['hurricane' 'flooding' 'floods' 'flooded' 'flood' 'storms' 'hurricanes'
+ 'floodsl' 'hurricanemaria' 'hurricanedorian' 'katrina' 'floodwaters'
+ 'hurricaneharvey' 'disasters' 'evacuations' 'evacuate' 'hurricaneirma'
+ 'hurricaneprep' 'hurricanerelief' 'evacuation' 'evacuated' 'storm'
+ 'disasterrelief' 'disaster' 'cyclone' 'floodrelief' 'hurrican'
+ 'devastation' 'tornado' 'hurricandorian' 'landfall' 'evacuees' 'tsunami'
+ 'rescues' 'rescuers' 'wildfires' 'weatherchannel' 'shelters' 'rain'
+ 'orleans' 'raining' 'rains' 'emergencies' 'hazards' 'rescue' 'evacuating'
+ 'noaa' 'californiafires' 'emergency' 'tornadoes']"	"[0.6578469  0.6255276  0.62224126 0.60981953 0.59201    0.5771567
+ 0.56646633 0.5605964  0.5589434  0.55543077 0.5553952  0.55338466
+ 0.552402   0.53252447 0.530408   0.53019714 0.5298468  0.5287168
+ 0.52593875 0.5161402  0.5095365  0.5013325  0.49159688 0.49156106
+ 0.4864077  0.48466653 0.48112786 0.456928   0.45497242 0.4541033
+ 0.44943738 0.44780552 0.44520417 0.4349658  0.4315781  0.43073428
+ 0.4259854  0.42437178 0.41821113 0.41560876 0.41533023 0.41161358
+ 0.40927693 0.4045794  0.40446264 0.4002079  0.3968827  0.39638025
+ 0.39237893 0.38660157]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	2	9303	"['californiafires' 'wildfires' 'californiafire' 'fires' 'wildfire'
+ 'campfire' 'greecefires' 'firefighters' 'fire' 'athensfires'
+ 'paradisefire' 'firefighting' 'firefighter' 'katrina' 'disasters'
+ 'disaster' 'flames' 'burning' 'evacuations' 'burns' 'fortmacfire'
+ 'hillfire' 'burned' 'woolseyfire' 'hazards' 'fema' 'rescuers' 'blaze'
+ 'evacuation' 'disasterrelief' 'floods' 'butte' 'evacuate' 'blazes'
+ 'devastation' 'burn' 'hurrican' 'burnt' 'hurricane' 'casualties'
+ 'catastrophe' 'ymmfire' 'calif' 'californias' 'evacuees' 'deaths' 'flood'
+ 'calamities' 'tragedy' 'floridians']"	"[0.74879    0.7351506  0.7180151  0.66186213 0.6208     0.5623583
+ 0.5515327  0.54268026 0.52721053 0.5225922  0.4911788  0.4907803
+ 0.46719387 0.45522285 0.44550607 0.44344363 0.43412876 0.43233967
+ 0.43010676 0.42512745 0.4230166  0.41594347 0.4158333  0.41307223
+ 0.41251358 0.41068137 0.4095474  0.4094831  0.4051313  0.40431362
+ 0.39779344 0.3958875  0.39422244 0.38897616 0.38708046 0.38519967
+ 0.37801316 0.3754796  0.3745476  0.37107396 0.363745   0.36223438
+ 0.36213583 0.3618529  0.36131483 0.36064082 0.35802078 0.35554594
+ 0.35339975 0.3528825 ]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	3	9212	"['donation' 'charities' 'donations' 'donated' 'donates' 'donate'
+ 'donating' 'charity' 'fundraising' 'donors' 'donateforkerala' 'aid'
+ 'fundraiser' 'volunteers' 'volunteer' 'funding' 'needy' 'volunteering'
+ 'hurricaneharvey' 'rescuers' 'generosity' 'volunteered' 'funded'
+ 'humanitarian' 'unicef' 'contribute' 'disasterrelief' 'shelters'
+ 'hurricanerelief' 'contributions' 'rescue' 'giving' 'assistance'
+ 'katrina' 'rescues' 'hurricaneprep' 'hurricane' 'fund' 'hurricanemaria'
+ 'contribution' 'ngos' 'ngo' 'flooded' 'providing' 'grant' 'kindness'
+ 'hurricanedorian' 'provides' 'supplies' 'solidarity']"	"[0.6666895  0.6540037  0.651495   0.64421    0.6417225  0.63705003
+ 0.63081944 0.61679846 0.5882517  0.58541876 0.544667   0.54260314
+ 0.5279124  0.5264574  0.48198494 0.46515363 0.46182543 0.4609818
+ 0.45773768 0.45713618 0.453255   0.45284262 0.45064116 0.44937825
+ 0.44557023 0.4434794  0.4411735  0.44018316 0.43637788 0.42510355
+ 0.4247386  0.42137533 0.41780257 0.41648597 0.41423827 0.41356426
+ 0.41251656 0.41052756 0.4079143  0.40269327 0.39822674 0.39594692
+ 0.39515132 0.39281178 0.39172655 0.3910517  0.39076054 0.39060473
+ 0.39029175 0.38989723]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	4	8566	"['keralarescue' 'keralas' 'kerala' 'keralasos' 'keralarains' 'keralaflood'
+ 'keralafloods' 'kochi' 'ernakulam' 'indiaforkerala' 'floods' 'tamilnadu'
+ 'lanka' 'assam' 'cochin' 'nadu' 'karnataka' 'bihar' 'uttarakhand' 'tamil'
+ 'villages' 'vijayan' 'ngo' 'maharashtra' 'floodsl' 'odisha' 'flooded'
+ 'livelihoods' 'flood' 'vijayanpinarayi' 'flooding' 'floodwaters'
+ 'rahulgandhi' 'pradesh' 'charities' 'indiannavy' 'gujarat' 'sri' 'hindu'
+ 'bjp' 'bangalore' 'nsitharaman' 'delhi' 'tsunami' 'indias' 'hyderabad'
+ 'disasters' 'srilanka' 'india' 'kashmir']"	"[0.6628647  0.66143405 0.6557958  0.63338923 0.627875   0.6259607
+ 0.6248781  0.5444802  0.5340453  0.4763252  0.46170747 0.45614725
+ 0.4528122  0.4476144  0.44742465 0.4447221  0.43823907 0.4340346
+ 0.43214548 0.4274153  0.42114806 0.41391468 0.41334003 0.41248357
+ 0.4065425  0.4032878  0.4025467  0.40086484 0.3979261  0.39734852
+ 0.39377844 0.3931814  0.39147714 0.389335   0.38890707 0.3864618
+ 0.38534892 0.3851297  0.3759461  0.3749745  0.37439016 0.37279406
+ 0.36997503 0.36959803 0.36898547 0.3668719  0.36613238 0.36557484
+ 0.36522013 0.36513555]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	5	6500	"['katrina' 'hurricane' 'hurricaneharvey' 'hurricanemaria' 'hurricaneirma'
+ 'hurricanerelief' 'prayers' 'hurricanedorian' 'rescuers' 'evacuate'
+ 'rescue' 'hurricanes' 'disasters' 'prayforitaly' 'hurrican' 'flooded'
+ 'hurricaneprep' 'disaster' 'prayforathens' 'disasterrelief' 'shelters'
+ 'charities' 'prayforecuador' 'aid' 'evacuated' 'evacuations' 'prayer'
+ 'emergencies' 'rescued' 'shelter' 'charity' 'evacuation' 'floods'
+ 'rescues' 'hurricandorian' 'rescuing' 'orleans' 'humanitarian' 'storms'
+ 'pray' 'prayforkerala' 'praying' 'storm' 'devastation' 'prayfortexas'
+ 'evacuees' 'prayingforitaly' 'floodsl' 'flood' 'prayforgreece']"	"[0.57093054 0.550668   0.5235987  0.5051093  0.49938434 0.49519914
+ 0.49417257 0.49404523 0.48614022 0.47811145 0.47205806 0.46896008
+ 0.46423313 0.4621206  0.45948744 0.4588586  0.45673156 0.45608154
+ 0.4546144  0.45120233 0.45032215 0.450064   0.44817984 0.44628248
+ 0.44433883 0.4430447  0.44097647 0.44063246 0.4386335  0.43697256
+ 0.43505442 0.43426195 0.4300557  0.42992508 0.4269317  0.4248867
+ 0.4222962  0.42164302 0.4216229  0.41849688 0.4175434  0.41486812
+ 0.4116755  0.41120136 0.4097969  0.40787393 0.406533   0.4038735
+ 0.4025367  0.3996442 ]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	6	6162	"['hurricane' 'hurricanemaria' 'hurricaneirma' 'puertorico' 'puerto'
+ 'hurricanedorian' 'hurricanes' 'hurricaneharvey' 'rico' 'hurricaneprep'
+ 'katrina' 'ricos' 'juan' 'hurricanerelief' 'disasters' 'cyclone'
+ 'caribbean' 'hurricandorian' 'cuba' 'haiti' 'disaster' 'hurrican'
+ 'marias' 'floods' 'maria' 'ricans' 'tropical' 'dominica' 'flooded'
+ 'cuban' 'landfall' 'disasterrelief' 'storms' 'dominican' 'mariapr'
+ 'jamaica' 'flood' 'orleans' 'devastation' 'tsunami' 'cycloneidai'
+ 'evacuate' 'islands' 'storm' 'rican' 'flooding' 'bahamas' 'sierranevada'
+ 'floodsl' 'maarten']"	"[0.5875819  0.5702771  0.556257   0.5426942  0.5412086  0.53573793
+ 0.49957234 0.49094957 0.48418725 0.47333676 0.4637676  0.45809197
+ 0.4440161  0.43993568 0.43334997 0.42840132 0.42652208 0.41993225
+ 0.4158631  0.4101801  0.40831995 0.4014396  0.3993875  0.38695276
+ 0.38655645 0.38385916 0.3829186  0.38202265 0.3801787  0.3770013
+ 0.3716726  0.36636275 0.3651864  0.35885182 0.3540082  0.35219926
+ 0.34412992 0.34352547 0.34228808 0.3416109  0.34126925 0.34103006
+ 0.34088993 0.34035206 0.33873296 0.33753252 0.33163637 0.3301794
+ 0.32986897 0.32743746]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	7	5825	"['harvey' 'harveys' 'hurricane' 'hurricaneharvey' 'katrina' 'harveyflood'
+ 'flooded' 'floods' 'hurricanes' 'harveyrelief' 'flood' 'flooding'
+ 'hurricanedorian' 'hurricaneirma' 'storms' 'orleans' 'hurricanemaria'
+ 'hurricaneprep' 'floodsl' 'houstonflood' 'houston' 'hurricanerelief'
+ 'floodwaters' 'disasters' 'houstonfloods' 'houstonstrong' 'houstons'
+ 'hurrican' 'storm' 'cyclone' 'evacuated' 'disaster' 'surge' 'devastation'
+ 'weatherchannel' 'galveston' 'surges' 'evacuate' 'evacuations'
+ 'hurricandorian' 'dallas' 'austin' 'evacuation' 'tornado' 'floodrelief'
+ 'disasterrelief' 'beaumont' 'texans' 'texasstrong' 'gulf']"	"[0.63732827 0.63026416 0.6054692  0.5789568  0.56309783 0.53098696
+ 0.5146283  0.5020593  0.49698228 0.49632037 0.49274534 0.49144632
+ 0.46497136 0.46377355 0.46228653 0.4579869  0.4555682  0.45111883
+ 0.45086187 0.4494611  0.44860235 0.44729978 0.44472802 0.44208607
+ 0.43324232 0.42290998 0.4213887  0.42057747 0.41000104 0.4037829
+ 0.40114784 0.40000916 0.399472   0.39896917 0.39461088 0.39413404
+ 0.39385474 0.3935496  0.38012826 0.38008612 0.37702316 0.37195188
+ 0.36927265 0.36039168 0.35778022 0.3568035  0.35001054 0.34634867
+ 0.34613568 0.34606284]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	8	5100	"['irma' 'hurricane' 'hurricaneirma' 'irmas' 'katrina' 'hurricanes'
+ 'hurricanemaria' 'fema' 'hurricanedorian' 'hurricaneharvey'
+ 'hurricaneprep' 'disasters' 'storms' 'disaster' 'wildfires' 'evacuate'
+ 'devastation' 'storm' 'hurrican' 'hurricanerelief' 'evacuations'
+ 'landfall' 'floods' 'evacuation' 'evacuated' 'cyclone' 'flooded'
+ 'irmahurricane' 'flood' 'disasterrelief' 'hurricandorian' 'flooding'
+ 'noaa' 'orleans' 'survivors' 'wildfire' 'rescuers' 'evacuees' 'rescue'
+ 'californiafires' 'floodsl' 'aftermath' 'florida' 'fl' 'emergencies'
+ 'fla' 'tsunami' 'catastrophe' 'bahama' 'devastating']"	"[0.57915866 0.55554307 0.55266935 0.5411155  0.5141704  0.5052283
+ 0.49134538 0.47615573 0.46472955 0.45019585 0.43426555 0.43384653
+ 0.42760554 0.424703   0.4173499  0.4164577  0.4141838  0.41227108
+ 0.4088249  0.40484974 0.40449154 0.39929366 0.3970573  0.39339912
+ 0.38245547 0.38076115 0.37724707 0.3771605  0.37027562 0.3701196
+ 0.36830482 0.36381447 0.35472068 0.3489841  0.34844938 0.34839252
+ 0.34835225 0.34568247 0.3445925  0.34402984 0.34141743 0.34131762
+ 0.34018177 0.33990455 0.33934718 0.3392034  0.33850712 0.33144045
+ 0.32911682 0.32797632]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398
+1658705983	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_17	10	True	9	4962	"['hurricane' 'hurricanedorian' 'dorian' 'dorians' 'hurricanemaria'
+ 'hurricaneirma' 'hurricanes' 'hurricaneprep' 'hurricanerelief'
+ 'hurricaneharvey' 'dorianflorida' 'dorianhurricane' 'cyclone' 'storms'
+ 'katrina' 'landfall' 'storm' 'bahamas' 'evacuate' 'hurricandorian'
+ 'disasters' 'flooding' 'disaster' 'floods' 'flooded' 'tornado'
+ 'disasterrelief' 'flood' 'gulf' 'nassau' 'evacuated' 'cycloneidaizw'
+ 'floodsl' 'galveston' 'evacuations' 'evacuation' 'hurrican' 'island'
+ 'devastation' 'islands' 'coast' 'bahama' 'wildfires' 'greecefires'
+ 'orleans' 'coastal' 'tropical' 'floodwaters' 'warns' 'florida']"	"[0.644441   0.6006397  0.5922835  0.58840084 0.5558857  0.54589176
+ 0.5454637  0.5313765  0.52469635 0.5192361  0.5186998  0.51234597
+ 0.5068771  0.48273093 0.48183125 0.48016146 0.47365773 0.43248934
+ 0.4241199  0.41910774 0.41848645 0.4085209  0.40737146 0.40557823
+ 0.4026734  0.4022978  0.40127897 0.39581388 0.39324054 0.3920339
+ 0.3825323  0.37743363 0.3746208  0.3741449  0.37255806 0.37078637
+ 0.3690903  0.36727953 0.3611038  0.36098945 0.35960066 0.35581395
+ 0.35548913 0.35366726 0.3528111  0.35090962 0.3470828  0.3468253
+ 0.3438261  0.34338057]"	447	10	4031.974	0.69	0.8707241503390476	-0.1713232590146738	0.2862061576839505	0.7936506528600398

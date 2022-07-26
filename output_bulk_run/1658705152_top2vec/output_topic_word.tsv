@@ -1,0 +1,33 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658705152	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_07	2	True	0	5483	"['nepal' 'nepalearthquake' 'nepalquake' 'kathmandu' 'nepalese' 'everest'
+ 'earthquake' 'humanitarian' 'unicef' 'indiawithnepal' 'mt' 'earthquakes'
+ 'rescuers' 'newsbrisbane' 'india' 'disaster' 'villages' 'rescue' 'floods'
+ 'delhi' 'modi' 'prayfornepal' 'pakistan' 'rescued' 'quake' 'indians'
+ 'news' 'survivors' 'aid' 'emergency' 'govt' 'narendramodi' 'gorkha'
+ 'crisis' 'devastation' 'rss' 'flooded' 'visit' 'prayers' 'displaced'
+ 'affected' 'efforts' 'sbsnews' 'bbc' 'donation' 'httpa' 'evacuated'
+ 'relief' 'indian' 'israel']"	"[0.7226397  0.69913435 0.67068744 0.64421356 0.62862176 0.4206134
+ 0.40419778 0.38656378 0.364744   0.3560232  0.34630856 0.34361055
+ 0.33320552 0.33238393 0.33017665 0.3266319  0.32502598 0.32408074
+ 0.3192467  0.31250513 0.3067146  0.30039492 0.2984462  0.29841766
+ 0.29625157 0.29224724 0.28894067 0.28885376 0.2856778  0.2802349
+ 0.2799942  0.27897695 0.27782458 0.27710128 0.2769469  0.27595657
+ 0.27370554 0.27077177 0.26720172 0.26707098 0.2667789  0.26627713
+ 0.26464346 0.2638801  0.26362243 0.26282907 0.26170504 0.2607356
+ 0.25954592 0.25747925]"	138	2	486.155	1.0	1.0	-0.3660398480928667	0.47232184733939653	0.9854128855813007
+1658705152	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	crisis_07	2	True	1	5406	"['floods' 'flood' 'flooding' 'flooded' 'floodwaters' 'queensland'
+ 'brisbanetimes' 'queenslanders' 'brisbane' 'nsw' 'auspol' 'storms'
+ 'sydney' 'ipswich' 'devastation' 'disaster' 'river' 'cyclone' 'rains'
+ 'rain' 'australia' 'storm' 'rescuers' 'waters' 'qldfloods' 'australian'
+ 'evacuated' 'wales' 'tornado' 'qld' 'toll' 'rescue' 'rescued' 'au'
+ 'coast' 'devastating' 'survivors' 'earthquake' 'extremeweather' 'crisis'
+ 'victims' 'warnings' 'abcnews' 'villages' 'news' 'minister' 'emergency'
+ 'aid' 'deaths' 'aftermath']"	"[0.6668583  0.6351577  0.62375635 0.62029624 0.6109818  0.55760753
+ 0.5446026  0.5271015  0.5158602  0.47545364 0.4313995  0.42619792
+ 0.42008072 0.41713038 0.41017735 0.40771708 0.39907113 0.39221263
+ 0.39157903 0.38359332 0.3679305  0.36328632 0.36192727 0.3591004
+ 0.35654694 0.35335454 0.34482694 0.3445173  0.3399688  0.33841717
+ 0.32860902 0.32041562 0.31457028 0.31171468 0.30892432 0.30712253
+ 0.3041247  0.30202022 0.29509556 0.28904182 0.28775927 0.28369606
+ 0.28336376 0.28258246 0.27949116 0.2787877  0.27855316 0.27830416
+ 0.27747202 0.27637413]"	138	2	486.155	1.0	1.0	-0.3660398480928667	0.47232184733939653	0.9854128855813007

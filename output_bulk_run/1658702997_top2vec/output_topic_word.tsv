@@ -1,0 +1,156 @@
+run_id	method	method_specific_params	dataset	num_given_topics	reduced	topic_num	topic_size	topic_words	word_scores	num_detected_topics	num_final_topics	duration_secs	diversity_unique	diversity_inv_rbo	coherence_npmi	coherence_v	rand_index
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	0	8145	"['ignorance' 'beliefs' 'educate' 'belief' 'religions' 'morality'
+ 'religious' 'ignorant' 'reality' 'humanity' 'teachings' 'amen'
+ 'christianity' 'religion' 'christians' 'terrorism' 'muslims' 'genocide'
+ 'discussion' 'believers' 'argue' 'morals' 'atheists' 'racism' 'secular'
+ 'beleive' 'propaganda' 'debate' 'believing' 'peace' 'believes' 'greed'
+ 'statement' 'moral' 'allah' 'believed' 'truth' 'prejudice' 'society'
+ 'salvation' 'faith' 'mental' 'islam' 'judgement' 'spirituality'
+ 'overcome' 'terrorists' 'according' 'understanding' 'reasoning']"	"[0.4751596  0.44503203 0.4142153  0.41375804 0.40679258 0.4028593
+ 0.39970425 0.39554593 0.3935309  0.39286768 0.39284477 0.39159545
+ 0.3881799  0.38665962 0.38182235 0.38180757 0.37758186 0.3713736
+ 0.3710572  0.37071759 0.3689022  0.3672589  0.36430907 0.36349767
+ 0.36337003 0.36071518 0.35930833 0.35880202 0.35862878 0.35771498
+ 0.357553   0.35698032 0.3553254  0.35275328 0.35197484 0.34830892
+ 0.34340078 0.34229577 0.34171367 0.34121466 0.33996958 0.3390384
+ 0.33847052 0.33809495 0.3374818  0.33720273 0.33638215 0.33617708
+ 0.3347388  0.33466214]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	1	6747	"['courses' 'certification' 'requirements' 'guides' 'schooling' 'paperwork'
+ 'educational' 'diploma' 'careers' 'scholarship' 'advertise'
+ 'qualifications' 'scholarships' 'hiring' 'obtaining' 'commerce'
+ 'applications' 'admissions' 'agencies' 'accredited' 'contacting' 'loans'
+ 'apply' 'businesses' 'mba' 'resources' 'admission' 'resume' 'institute'
+ 'schools' 'websites' 'applying' 'recommendation' 'opportunities'
+ 'education' 'employment' 'mailing' 'requirement' 'application' 'jobs'
+ 'earn' 'certificate' 'publications' 'commission' 'income' 'lending'
+ 'scams' 'documentation' 'papers' 'study']"	"[0.47378165 0.4465233  0.43223262 0.42354822 0.4193555  0.4180029
+ 0.41061234 0.40105528 0.39813727 0.39808342 0.3979164  0.39468372
+ 0.394301   0.3928553  0.39178455 0.38377112 0.3836509  0.38254803
+ 0.3817026  0.3811875  0.37981027 0.3796847  0.37861717 0.37646848
+ 0.3746724  0.37460417 0.37432393 0.3735738  0.3715986  0.3714011
+ 0.37042353 0.3691901  0.3686192  0.36837447 0.36758155 0.363684
+ 0.36147282 0.36116177 0.36103645 0.35958445 0.3595134  0.3586023
+ 0.35805646 0.3527571  0.35275427 0.35212338 0.3507295  0.35003895
+ 0.34972525 0.34968483]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	2	6138	"['so' 'yeah' 'um' 'ye' 'uh' 'noh' 'no' 'but' 'not' 'em' 'that' 'we'
+ 'certainly' 'he' 'right' 'soo' 'ya' 'yes' 'shouldn' 'aren' 'potentially'
+ 'and' 'yea' 'initially' 'don' 'they' 'nah' 'yep' 'okay' 'last' 'bout'
+ 'team' 'lo' 'ok' 'er' 'then' 'correct' 'its' 'of' 'will' 'stating' 'im'
+ 'actually' 'says' 'above' 'anymore' 'isn' 'na' 'nr' 'ne']"	"[0.63060135 0.6293919  0.62580746 0.61425424 0.60670143 0.6061411
+ 0.6034106  0.60276544 0.6017075  0.5993649  0.5990414  0.59561914
+ 0.59538054 0.5930338  0.58977616 0.5896661  0.58837724 0.5841886
+ 0.5803858  0.57904834 0.57690144 0.5761814  0.5759804  0.5714208
+ 0.5693555  0.56419075 0.5640702  0.5630631  0.5629571  0.56244814
+ 0.56227505 0.5608866  0.55989933 0.5596452  0.55920994 0.5588579
+ 0.55764115 0.5570309  0.5565107  0.55608344 0.5554901  0.5554481
+ 0.5547152  0.55448127 0.55257946 0.5522683  0.5518836  0.5515208
+ 0.5505569  0.54986274]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	3	6012	"['genital' 'ejaculation' 'nactually' 'spell' 'riddle' 'orgasm' 'ejaculate'
+ 'sex' 'penis' 'vagina' 'nnothing' 'masturbation' 'funniest' 'tongue'
+ 'intercourse' 'sexual' 'sexually' 'nnot' 'spelling' 'sperm' 'habit'
+ 'nasty' 'semen' 'means' 'gross' 'smelling' 'vaginal' 'nnow' 'pronounced'
+ 'curious' 'breasts' 'flesh' 'oral' 'words' 'bodily' 'nint' 'toy' 'jokes'
+ 'nany' 'something' 'chewing' 'breast' 'spelled' 'wondered' 'slang'
+ 'mystery' 'swear' 'nose' 'irritation' 'question']"	"[0.5095594  0.49262396 0.48465508 0.48403513 0.48332506 0.48151273
+ 0.4775577  0.47544658 0.47317007 0.4725933  0.46861786 0.46617532
+ 0.4655091  0.46523368 0.4641723  0.46330994 0.46285743 0.46025813
+ 0.45957625 0.4589432  0.45753074 0.45746648 0.45720342 0.45685333
+ 0.45612139 0.4560787  0.45528978 0.45390978 0.45210946 0.4511983
+ 0.45053443 0.45034385 0.45029497 0.44858792 0.44782874 0.4468295
+ 0.4459798  0.4458953  0.44575596 0.44287416 0.4422838  0.44193166
+ 0.44146913 0.44122124 0.44096988 0.44067723 0.44056308 0.4382419
+ 0.4378831  0.43733335]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	4	5840	"['download' 'downloading' 'downloads' 'webpage' 'browser' 'reinstall'
+ 'firefox' 'mozilla' 'uninstall' 'downloaded' 'homepage' 'configure'
+ 'unable' 'settings' 'upload' 'adware' 'spyware' 'loading' 'website'
+ 'using' 'install' 'aspx' 'itunes' 'windows' 'malware' 'pc' 'geocities'
+ 'microsoft' 'ie' 'cannot' 'hotmail' 'site' 'ndownload' 'supported'
+ 'limewire' 'software' 'youtube' 'myspace' 'cant' 'installing' 'gmail'
+ 'yahoo' 'web' 'server' 'sites' 'use' 'mobile' 'installed' 'adaware'
+ 'file']"	"[0.5661737  0.5657342  0.5511806  0.5039514  0.5025749  0.49878865
+ 0.49256057 0.4615301  0.4596962  0.454002   0.44715583 0.44549215
+ 0.4394442  0.436093   0.43453032 0.43321058 0.43261713 0.4296291
+ 0.42777565 0.42556626 0.42338118 0.4193649  0.41928148 0.418688
+ 0.41777387 0.41373038 0.41150224 0.4100411  0.4095537  0.40875813
+ 0.40724832 0.40705678 0.40665126 0.40552387 0.40483993 0.4037929
+ 0.40325832 0.40313047 0.40178293 0.40021577 0.39960355 0.39885893
+ 0.3923848  0.39227995 0.3919654  0.39156723 0.38926303 0.38839233
+ 0.387469   0.38419524]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	5	5774	"['relationship' 'dating' 'marry' 'relationships' 'flirt' 'rejection'
+ 'marriage' 'flirting' 'engaged' 'romance' 'affair' 'gf' 'girlfriend'
+ 'jealousy' 'girlfriends' 'boyfriend' 'affection' 'insecure' 'honesty'
+ 'advice' 'crush' 'loves' 'single' 'lovers' 'bf' 'couples' 'married'
+ 'intimate' 'romantic' 'virginity' 'fiance' 'divorced' 'couple' 'advise'
+ 'situation' 'spouse' 'husbands' 'together' 'kissing' 'commitment'
+ 'relate' 'love' 'mutual' 'friendship' 'marriages' 'kiss' 'lust' 'divorce'
+ 'sex' 'dated']"	"[0.5053614  0.48984352 0.48607832 0.44912064 0.41989887 0.4139458
+ 0.39957517 0.38989815 0.37967765 0.3749578  0.37351677 0.37288076
+ 0.36962897 0.36915296 0.36757362 0.36755344 0.36314952 0.34929633
+ 0.34691387 0.3467541  0.3460526  0.34119445 0.3407659  0.34027806
+ 0.33631688 0.3357994  0.33504903 0.3347875  0.33406132 0.33314937
+ 0.32873437 0.32852054 0.32417738 0.32118195 0.31778878 0.3149811
+ 0.31472242 0.31291544 0.31254148 0.30960637 0.30811882 0.3076196
+ 0.3042516  0.30422443 0.3037319  0.3021815  0.30155483 0.2980887
+ 0.29798448 0.2977895 ]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	6	5772	"['remedies' 'treatment' 'treatments' 'complications' 'remedy' 'diagnosis'
+ 'pills' 'webmd' 'medicines' 'symptom' 'medications' 'prescribed' 'reflux'
+ 'pains' 'illnesses' 'swelling' 'pill' 'exercise' 'medication' 'patients'
+ 'illness' 'supplements' 'diagnosed' 'herbal' 'supplement' 'unhealthy'
+ 'meds' 'dehydration' 'deficiency' 'diet' 'medicine' 'prescription'
+ 'treat' 'discomfort' 'disease' 'ulcers' 'prevention' 'health' 'headaches'
+ 'aspirin' 'diseases' 'treated' 'surgery' 'medical' 'symptoms' 'advise'
+ 'recovery' 'clinic' 'advised' 'exercises']"	"[0.43735033 0.43421066 0.43340814 0.40655392 0.40060234 0.3979301
+ 0.39683974 0.390331   0.3877185  0.38312924 0.36927545 0.36775512
+ 0.35560307 0.3425649  0.34080082 0.33368087 0.33162868 0.33093593
+ 0.3277564  0.3274914  0.3274242  0.32716078 0.32702798 0.32523504
+ 0.3250082  0.32351476 0.32057393 0.3161665  0.3161373  0.3152594
+ 0.31284    0.31255722 0.3115852  0.30874753 0.30554563 0.3054266
+ 0.3010141  0.2996028  0.29845044 0.2982963  0.29685605 0.29640663
+ 0.29563278 0.29561037 0.29514855 0.29468578 0.2925781  0.29199326
+ 0.29173464 0.2910196 ]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	7	5577	"['mathematical' 'homework' 'chemistry' 'physics' 'maths' 'nitrogen' 'math'
+ 'formulas' 'quantities' 'calculations' 'formula' 'mathematics' 'science'
+ 'equations' 'geometry' 'reactions' 'calculate' 'gases' 'materials'
+ 'dioxide' 'nucleus' 'calculated' 'calculation' 'substances'
+ 'proportional' 'quantity' 'astronomy' 'reaction' 'mechanism' 'theory'
+ 'determine' 'determining' 'formed' 'energy' 'atmosphere' 'atoms' 'oxygen'
+ 'solar' 'kinetic' 'algebra' 'experiment' 'gravity' 'howstuffworks'
+ 'computing' 'concentration' 'elements' 'simplest' 'calculator'
+ 'decreases' 'chloride']"	"[0.47801298 0.46775234 0.45958808 0.44439542 0.43892956 0.43708307
+ 0.4365632  0.43283504 0.43139517 0.43029812 0.4253729  0.42385453
+ 0.418636   0.40980947 0.40686238 0.40573633 0.3987472  0.3961327
+ 0.39366892 0.39338326 0.38923198 0.38872272 0.3864683  0.3847763
+ 0.3834667  0.38079584 0.38052142 0.380146   0.37979925 0.3762821
+ 0.3749666  0.37452072 0.3743328  0.373109   0.37286198 0.37148783
+ 0.37109625 0.37025386 0.37021396 0.36960334 0.36884263 0.36840862
+ 0.36744457 0.36726743 0.36649495 0.36632997 0.366207   0.36582965
+ 0.3652966  0.36524862]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	8	5168	"['singer' 'celebrity' 'famous' 'song' 'sang' 'nick' 'fame' 'songs' 'cast'
+ 'musical' 'who' 'idol' 'lyrics' 'movie' 'rap' 'artist' 'kelly' 'chris'
+ 'album' 'influenced' 'actor' 'rocky' 'bobby' 'name' 'dj' 'sean' 'cena'
+ 'randy' 'ryan' 'billy' 'him' 'favorites' 'johnny' 'adam' 'eddie' 'scene'
+ 'imdb' 'james' 'rock' 'grace' 'brothers' 'favorite' 'concert' 'lil'
+ 'music' 'artists' 'wwe' 'wayne' 'michael' 'names']"	"[0.53566486 0.5059712  0.4910764  0.48944885 0.4874151  0.47723502
+ 0.47404402 0.47199178 0.46747762 0.467174   0.4641326  0.46395305
+ 0.46108103 0.45847255 0.45827693 0.45040077 0.45031074 0.4438117
+ 0.44318092 0.43820733 0.4379943  0.43635818 0.4326412  0.4304511
+ 0.42941338 0.4289502  0.42891538 0.4287033  0.42860162 0.428333
+ 0.42829335 0.4282068  0.4252873  0.42527997 0.42506954 0.42440253
+ 0.42309177 0.42216474 0.4216647  0.42138833 0.42091542 0.4178261
+ 0.4167758  0.416421   0.41506058 0.41501325 0.41425583 0.41335803
+ 0.4132455  0.4129845 ]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
+1658702997	top2vec	{'doc2vec_speed': 'learn', 'min_count': 30, 'embedding_model': 'all-MiniLM-L6-v2', 'umap_args': {'n_neighbors': 15, 'n_components': 5, 'metric': 'cosine', 'random_state': 42}, 'hdbscan_args': {'min_cluster_size': 10, 'metric': 'euclidean', 'cluster_selection_method': 'eom'}}	yahoo	10	True	9	4827	"['locations' 'location' 'places' 'nearby' 'anywhere' 'place' 'where'
+ 'nowhere' 'stores' 'shops' 'located' 'near' 'tickets' 'city' 'cities'
+ 'wherever' 'town' 'everywhere' 'central' 'overseas' 'london' 'ny' 'area'
+ 'customs' 'facility' 'tourist' 'country' 'ebay' 'towns' 'nz' 'locate'
+ 'sale' 'beach' 'urban' 'seeking' 'coast' 'museum' 'walmart' 'north'
+ 'abroad' 'cheap' 'shop' 'mall' 'around' 'site' 'website' 'holiday' 'uk'
+ 'visit' 'resort']"	"[0.67960787 0.64107317 0.606573   0.58763075 0.58194923 0.5761029
+ 0.5673584  0.56101626 0.5601047  0.55920625 0.5535239  0.5507711
+ 0.5367627  0.5348537  0.5264882  0.51675713 0.5134475  0.5104196
+ 0.5031576  0.50200737 0.50017047 0.49877045 0.49838758 0.4974556
+ 0.49647877 0.49569348 0.4934757  0.49328056 0.49214837 0.49086034
+ 0.49072084 0.4897762  0.48558968 0.48540467 0.48507962 0.48463964
+ 0.48461312 0.48397744 0.48186284 0.4815994  0.48072955 0.48072827
+ 0.48070216 0.4804262  0.48026183 0.47923458 0.47875875 0.47855842
+ 0.4784778  0.47787145]"	547	10	5179.318	1.0	1.0	-0.19954592721124884	0.3133449618457887	0.8614694000455563
