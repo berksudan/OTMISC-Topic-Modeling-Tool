@@ -405,13 +405,15 @@ def visualize_topic_similarity_matrix(
     freq_df = df_output_doc_topic[['Assigned Topic Num', 'Real Label']].rename(columns={'Assigned Topic Num': 'Topic'})
     freq_df = freq_df.groupby('Topic')['Real Label'].count().reset_index(name='Count')
     freq_df = freq_df.loc[freq_df.Topic != -1, :]  # Necessary step for BERTopic
+
+    non_reduced_topics = list(set(df_output_topic_word['topic_num'].values))
+
     if topics is not None:
         topics = list(topics)
     elif top_n_topics is not None:
         topics = sorted(freq_df.Topic.to_list()[:top_n_topics])
     else:
         topics = sorted(freq_df.Topic.to_list())
-
     # Order heatmap by similar clusters of topics
     if n_clusters:
         if n_clusters >= len(set(topics)):
@@ -429,10 +431,10 @@ def visualize_topic_similarity_matrix(
         mapping = [cluster for cluster in mapping.values()]
         sorted_topics = [topic for cluster in mapping for topic in cluster]
     else:
-        sorted_topics = topics
+        sorted_topics = sorted(topics)
 
     # Select embeddings
-    indices = np.array([topics.index(topic) for topic in sorted_topics])
+    indices = np.array([non_reduced_topics.index(topic) for topic in sorted_topics])
     tpc_embeddings = tpc_embeddings[indices]
     distance_matrix = cosine_similarity(tpc_embeddings)
 
