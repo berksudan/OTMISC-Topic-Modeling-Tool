@@ -30,7 +30,7 @@ We uploaded both pptx and pdf file of the midterm and final presentation
 ## Repository structure
 
 - `docs` includes documents for this work, such as task description and literature research.
-- `nltk_data` includes 
+- `nltk_data` includes the downloaded files from nltk
 - `data` includes all the datasets used in this work
 - `notebooks` includes all the demo notebooks (for different algorithms) and one bulk run notebook
 - `src` includes py files that consist of the pipeline of this work
