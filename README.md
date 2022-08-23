@@ -17,6 +17,25 @@ _________________________________________________________
 * Drawing observations on the applicability of certain algorithms’ clusters to different types of datasets.
 * Having an outcome including metric-based evaluation, as well as, human based evaluation to the algorithms.
 
+## Deliverables
+
+- Final Project Report:
+    - .pdf can be found [here](reports_and_presentations/OTMISC_Our_Topic_Modeling_Is_Super_Cool__A_systematic_comparison_of_Topic_Modeling_algorithms_on_short_and_long_text_datasets.pdf)
+    - .tex and .bib sources can be found [here](reports_and_presentations/latex)
+- Presentations:
+We uploaded both pptx and pdf file of the midterm and final presentation
+    - Midterm presentation slides can be found [here](reports_and_presentations/Midterm_Presentation_[2022.06.22].pdf)
+    - Final presentation slides can be found [here](reports_and_presentations/Final_Presentation_[2022.07.26].pdf)
+
+## Repository structure
+
+- `docs` includes documents for this work, such as task description and literature research.
+- `nltk_data` includes 
+- `data` includes all the datasets used in this work
+- `notebooks` includes all the demo notebooks (for different algorithms) and one bulk run notebook
+- `src` includes py files that consist of the pipeline of this work
+- `reports_and_presentations` includes the final paper and midterm/final presentations
+
 ## Datasets
 
 * Explored the provided datasets to unveil the inherent characteristics.
