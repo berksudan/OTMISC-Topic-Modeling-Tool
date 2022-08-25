@@ -1,5 +1,7 @@
 # OTMISC: Our Topic Modeling Is Super Cool
 
+> **Advisors:** PhD Candidate (M.Sc.) Miriam Anschütz, PhD Candidate (M.Sc.) Ahmed Mosharafa
+
 <div align="center">
   <img src="./docs/Images/logo.jpg" width="25%">
   <p>An advanced topic modeling tool that can do many things!</p>
@@ -7,9 +9,7 @@
 
 _________________________________________________________
 
-**Supervisor:** Professor Dr. Georg Groh
-
-**Advisors:** PhD Candidate (M.Sc.) Miriam Anschütz, PhD Candidate (M.Sc.) Ahmed Mosharafa
+## Introduction
 
 **Project Scope:**
 
@@ -17,15 +17,24 @@ _________________________________________________________
 * Drawing observations on the applicability of certain algorithms’ clusters to different types of datasets.
 * Having an outcome including metric-based evaluation, as well as, human based evaluation to the algorithms.
 
-## Deliverables
+## Contributors
+
+| Contributor                                                                                         | GitHub Account                                       | Email Address                                                 | LinkedIn Account                                                                    | Other Links                                            |
+|-----------------------------------------------------------------------------------------------------|------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------|--------------------------------------------------------|
+| <center><img src="./docs/Images/berk_sudan_profile_photo.jpg" height="200"/><br>Berk Sudan</center> | [github.com/berksudan](https://github.com/berksudan) | [berk.sudan@protonmail.com](mailto:berk.sudan@protonmail.com) | [🔗](https://linkedin.com/in/berksudan)                                             | [medium.com/@berksudan](https://medium.com/@berksudan) |
+| <center>![](??.jpg)Ferdinand Kapl</center>                                                          | [github.com/????](https://github.com/???)            | [???@???.com](mailto:???@???.com)                             | [🔗](https://linkedin.com/in/???)                                                   | -                                                      |
+| <center><img src="./docs/Images/yuyin_lang_profile_photo.jpg" height="200"/><br>Yuyin Lang</center> | [github.com/YuyinLang](https://github.com/YuyinLang) | [yuyin.lang@gmail.com](mailto:yuyin.lang@gmail.com)           | [🔗](https://www.linkedin.com/in/yuyin-lang-%E9%83%8E%E7%BE%BD%E5%AF%85-27aa7722a/) | -                                                      |
+
+## Project Report
 
 - Final Project Report:
-    - .pdf can be found [here](reports_and_presentations/OTMISC_Our_Topic_Modeling_Is_Super_Cool__A_systematic_comparison_of_Topic_Modeling_algorithms_on_short_and_long_text_datasets.pdf)
-    - .tex and .bib sources can be found [here](reports_and_presentations/latex)
+    - .pdf can be
+      found [here](docs/reports_and_presentations/OTMISC_Our_Topic_Modeling_Is_Super_Cool__A_systematic_comparison_of_Topic_Modeling_algorithms_on_short_and_long_text_datasets.pdf)
+    - .tex and .bib sources can be found [here](docs/reports_and_presentations/latex)
 - Presentations:
-We uploaded both pptx and pdf file of the midterm and final presentation
-    - Midterm presentation slides can be found [here](reports_and_presentations/Midterm_Presentation_[2022.06.22].pdf)
-    - Final presentation slides can be found [here](reports_and_presentations/Final_Presentation_[2022.07.26].pdf)
+  We uploaded both pptx and pdf file of the midterm and final presentation
+    - Midterm presentation slides can be found [here](docs/reports_and_presentations/Midterm_Presentation_[2022.06.22].pdf)
+    - Final presentation slides can be found [here](docs/reports_and_presentations/Final_Presentation_[2022.07.26].pdf)
 
 ## Repository structure
 
