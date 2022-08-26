@@ -115,7 +115,7 @@ The following evaluation metrics are used for a metric based assessment of the p
   together as topic?; in [-1,1] and 1 for perfect association
 * **Coherence V**: metric for coherence of topic words evaluated by large sliding windows over the text together with
   indirect cosine similarity based on NPMI; in [0,1] and 1 for perfect association
-* **Rand Index**: similarity measure for the two clusterings given by the topic model and the real labels, in [0,1] and
+* **Rand Index**: similarity measure for the two clusters given by the topic model and the real labels, in [0,1] and
   1 for perfect match
 
 ## References
