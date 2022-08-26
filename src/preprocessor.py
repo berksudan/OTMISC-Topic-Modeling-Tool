@@ -1,6 +1,3 @@
-# import multiprocessing
-# from functools import reduce, partial
-import os
 import pprint
 import re
 import time
@@ -17,7 +14,11 @@ from nltk import RegexpTokenizer, WordNetLemmatizer
 from nltk.corpus import stopwords
 from symspellpy import SymSpell, Verbosity
 
-nltk.data.path = ['../nltk_data', 'nltk_data']
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+nltk.download('punkt')
+
 sym_spell = SymSpell(max_dictionary_edit_distance=3, prefix_length=7)  # Setup SymSpell for typo correction
 
 if not sym_spell.word_count:
@@ -217,7 +218,7 @@ def __preprocess(data: List[str], str_methods: Tuple, tokenized_methods: Tuple[s
         print(f'[INFO] [PREPROCESSOR] Then, these tokenized preprocessing methods will be applied in order:')
         pprint.pprint(tokenized_methods, indent=3, width=40)
     # with get_context("spawn").Pool(processes=multiprocessing.cpu_count()) as pool:
-    #    x = pool.map(partial(__instance_preprocess, str_methods=str_methods, tokenized_methods=tokenized_methods), data)
+    #  x = pool.map(partial(__instance_preprocess, str_methods=str_methods, tokenized_methods=tokenized_methods), data)
 
     x = [__instance_preprocess(a_str, str_methods=str_methods, tokenized_methods=tokenized_methods) for a_str in data]
     return x

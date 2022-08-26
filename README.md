@@ -1,7 +1,5 @@
 # OTMISC: Our Topic Modeling Is Super Cool
 
-> **Advisors:** PhD Candidate (M.Sc.) Miriam Anschütz, PhD Candidate (M.Sc.) Ahmed Mosharafa
-
 <div align="center">
   <img src="./docs/Images/logo.jpg" width="25%">
   <p>An advanced topic modeling tool that can do many things!</p>
@@ -11,11 +9,18 @@ _________________________________________________________
 
 ## Introduction
 
-**Project Scope:**
+This project is developed by Computer Science and Mathematics master students at TUM (Technical University of Munich)
+for the course "Master's Practical Course - Machine Learning for Natural Language Processing Applications"
+in SS22 (Summer Semester 2022).
+Since this project is still in its infancy, we suggest those who want to use this project to be careful.
 
-* Evaluating different Topic Modeling algorithms on short/long text dataset
-* Drawing observations on the applicability of certain algorithms’ clusters to different types of datasets.
-* Having an outcome including metric-based evaluation, as well as, human based evaluation to the algorithms.
+* **Project Advisors:**
+    * PhD Candidate (M.Sc.) Miriam Anschütz
+    * PhD Candidate (M.Sc.) Ahmed Mosharafa
+* **Project Scope:**
+    * Evaluating different Topic Modeling algorithms on short/long text dataset.
+    * Drawing observations on the applicability of certain algorithms’ clusters to different types of datasets.
+    * Having an outcome including metric-based evaluation, as well as, human based evaluation to the algorithms.
 
 ## Contributors
 
@@ -25,25 +30,31 @@ _________________________________________________________
 | <center>![](??.jpg)Ferdinand Kapl</center>                                                          | [github.com/????](https://github.com/???)            | [???@???.com](mailto:???@???.com)                             | [🔗](https://linkedin.com/in/???)                                                   | -                                                      |
 | <center><img src="./docs/Images/yuyin_lang_profile_photo.jpg" height="200"/><br>Yuyin Lang</center> | [github.com/YuyinLang](https://github.com/YuyinLang) | [yuyin.lang@gmail.com](mailto:yuyin.lang@gmail.com)           | [🔗](https://www.linkedin.com/in/yuyin-lang-%E9%83%8E%E7%BE%BD%E5%AF%85-27aa7722a/) | -                                                      |
 
-## Project Report
-
-- Final Project Report:
-    - .pdf can be
-      found [here](docs/reports_and_presentations/OTMISC_Our_Topic_Modeling_Is_Super_Cool__A_systematic_comparison_of_Topic_Modeling_algorithms_on_short_and_long_text_datasets.pdf)
-    - .tex and .bib sources can be found [here](docs/reports_and_presentations/latex)
-- Presentations:
-  We uploaded both pptx and pdf file of the midterm and final presentation
-    - Midterm presentation slides can be found [here](docs/reports_and_presentations/Midterm_Presentation_[2022.06.22].pdf)
-    - Final presentation slides can be found [here](docs/reports_and_presentations/Final_Presentation_[2022.07.26].pdf)
-
 ## Repository structure
 
-- `docs` includes documents for this work, such as task description and literature research.
-- `nltk_data` includes the downloaded files from nltk
+- `docs` includes documents for this work, such as task description, final paper, presentations, and literature
+  research.
 - `data` includes all the datasets used in this work
 - `notebooks` includes all the demo notebooks (for different algorithms) and one bulk run notebook
 - `src` includes py files that consist of the pipeline of this work
-- `reports_and_presentations` includes the final paper and midterm/final presentations
+
+## Project Report and Presentations
+
+- Final Project Report: [pdf](./docs/Report/Final%20Report.pdf)
+  , [LaTeX](./docs/Report/LaTeX%20Files%20of%20Final%20Report).
+- Presentations:
+    - Final Presentation: [pdf](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.pdf)
+      , [odp](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.odp)
+      , [pptx](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.pptx).
+    - Midterm Presentation: [pdf](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.pdf)
+      , [odp](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.odp)
+      , [pptx](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.pptx).
+    - Intermediate Presentation - #2: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pdf)
+      , [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.odp)
+      , [pptx](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pptx).
+    - Intermediate Presentation - #1: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.pdf)
+      , [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.odp)
+      , [pptx](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.pptx).
 
 ## Datasets
 
@@ -64,7 +75,7 @@ _________________________________________________________
 | AG News Titles            | Yes          | Short Text Dataset                  | No                   | 4           | 127600          | (32K - 32K - 32K - 32K)                                                                                                 |
 
 + If you want to see unavailable but analyzed datasets, please
-  visit [./docs/Intermediate% Results/unavailable_datasets.md](./docs/Intermediate%20Results/unavailable_datasets.md)
+  visit: [unavailable_datasets.md](./docs/Intermediate%20Results/unavailable_datasets.md).
 
 ## Deployment and Run
 
@@ -82,13 +93,16 @@ $ ./build_for_linux.sh
 
 ### Run
 
-To run the Jupyter Notebook, just execute the following command:
++ To run the Jupyter Notebook, just execute the following command:
 
 ```bash
 $ ./run_jupyter.sh
 ```
 
-* For windows and other operating systems, it can be done via Anaconda or similar tools.
+**Note:** For windows and other operating systems, it can be done via Anaconda or similar tools.
+
++ Then, you can run the notebooks in `./notebooks`. There is one notebook for each algorithm and a general main runner
+that executes a config parametrically.
 
 ### Evaluation Metrics
 
