@@ -24,11 +24,11 @@ Since this project is still in its infancy, we suggest those who want to use thi
 
 ## Contributors
 
-| Contributor                                                                                         | GitHub Account                                       | Email Address                                                 | LinkedIn Account                                                                    | Other Links                                            |
-|-----------------------------------------------------------------------------------------------------|------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------|--------------------------------------------------------|
-| <center><img src="./docs/Images/berk_sudan_profile_photo.jpg" height="200"/><br>Berk Sudan</center> | [github.com/berksudan](https://github.com/berksudan) | [berk.sudan@protonmail.com](mailto:berk.sudan@protonmail.com) | [🔗](https://linkedin.com/in/berksudan)                                             | [medium.com/@berksudan](https://medium.com/@berksudan) |
-| <center>![](??.jpg)Ferdinand Kapl</center>                                                          | [github.com/????](https://github.com/???)            | [???@???.com](mailto:???@???.com)                             | [🔗](https://linkedin.com/in/???)                                                   | -                                                      |
-| <center><img src="./docs/Images/yuyin_lang_profile_photo.jpg" height="200"/><br>Yuyin Lang</center> | [github.com/YuyinLang](https://github.com/YuyinLang) | [yuyin.lang@gmail.com](mailto:yuyin.lang@gmail.com)           | [🔗](https://www.linkedin.com/in/yuyin-lang-%E9%83%8E%E7%BE%BD%E5%AF%85-27aa7722a/) | -                                                      |
+| Contributor                                                                                                 | GitHub Account                                       | Email Address                                                 | LinkedIn Account                                                                    | Other Links                                            |
+|-------------------------------------------------------------------------------------------------------------|------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------|--------------------------------------------------------|
+| <center><img src="./docs/Images/berk_sudan_profile_photo.jpg" height="200"/><br>Berk Sudan</center>         | [github.com/berksudan](https://github.com/berksudan) | [berk.sudan@protonmail.com](mailto:berk.sudan@protonmail.com) | [🔗](https://linkedin.com/in/berksudan)                                             | [medium.com/@berksudan](https://medium.com/@berksudan) |
+| <center><img src="./docs/Images/ferdinand_kapl_profile_photo.jpg" height="200"/><br>Ferdinand Kapl</center> | [github.com/????](https://github.com/???)            | [???@???.com](mailto:???@???.com)                             | [🔗](https://linkedin.com/in/???)                                                   | -                                                      |
+| <center><img src="./docs/Images/yuyin_lang_profile_photo.jpg" height="200"/><br>Yuyin Lang</center>         | [github.com/YuyinLang](https://github.com/YuyinLang) | [yuyin.lang@gmail.com](mailto:yuyin.lang@gmail.com)           | [🔗](https://www.linkedin.com/in/yuyin-lang-%E9%83%8E%E7%BE%BD%E5%AF%85-27aa7722a/) | -                                                      |
 
 ## Repository structure
 
@@ -40,21 +40,21 @@ Since this project is still in its infancy, we suggest those who want to use thi
 
 ## Project Report and Presentations
 
-- Final Project Report: [pdf](./docs/Report/Final%20Report.pdf)
-  , [LaTeX](./docs/Report/LaTeX%20Files%20of%20Final%20Report).
+- Final Project Report: [pdf](./docs/Report/Final%20Report.pdf),
+  [LaTeX](./docs/Report/LaTeX%20Files%20of%20Final%20Report).
 - Presentations:
-    - Final Presentation: [pdf](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.pdf)
-      , [odp](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.odp)
-      , [pptx](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.pptx).
-    - Midterm Presentation: [pdf](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.pdf)
-      , [odp](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.odp)
-      , [pptx](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.pptx).
-    - Intermediate Presentation - #2: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pdf)
-      , [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.odp)
-      , [pptx](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pptx).
-    - Intermediate Presentation - #1: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.pdf)
-      , [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.odp)
-      , [pptx](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.pptx).
+    - Final Presentation: [pdf](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.pdf),
+      [odp](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.odp),
+      [pptx](./docs/Presentations/Final%20Presentation%20%5B2022.07.26%5D.pptx).
+    - Midterm Presentation: [pdf](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.pdf),
+      [odp](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.odp),
+      [pptx](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.pptx).
+    - Intermediate Presentation - #2: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pdf),
+      [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.odp)
+      [pptx](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pptx).
+    - Intermediate Presentation - #1: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.pdf),
+      [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.odp),
+      [pptx](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.pptx).
 
 ## Datasets
 
@@ -102,7 +102,7 @@ $ ./run_jupyter.sh
 **Note:** For windows and other operating systems, it can be done via Anaconda or similar tools.
 
 + Then, you can run the notebooks in `./notebooks`. There is one notebook for each algorithm and a general main runner
-that executes a config parametrically.
+  that executes a config parametrically.
 
 ### Evaluation Metrics
 
