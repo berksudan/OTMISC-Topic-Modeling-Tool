@@ -50,7 +50,7 @@ Since this project is still in its infancy, we suggest those who want to use thi
       [odp](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.odp),
       [pptx](./docs/Presentations/Midterm%20Presentation%20%5B2022.06.22%5D.pptx).
     - Intermediate Presentation - #2: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pdf),
-      [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.odp)
+      [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.odp),
       [pptx](./docs/Presentations/Intermediate%20Presentation%20%5B2022.07.14%5D.pptx).
     - Intermediate Presentation - #1: [pdf](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.pdf),
       [odp](./docs/Presentations/Intermediate%20Presentation%20%5B2022.06.09%5D.odp),
@@ -102,7 +102,7 @@ $ ./run_jupyter.sh
 **Note:** For windows and other operating systems, it can be done via Anaconda or similar tools.
 
 + Then, you can run the notebooks in `./notebooks`. There is one notebook for each algorithm and a general main runner
-  that executes a config parametrically.
+  that executes with a config parametrically.
 
 ### Evaluation Metrics
 
